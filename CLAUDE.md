@@ -90,8 +90,11 @@ points `DB_HOST`/`REDIS_HOST` at `127.0.0.1` using `FORWARD_DB_PORT` (`54320`) a
 already runs unrelated containers on those default ports — check `backend/.env` before assuming
 the defaults elsewhere.
 
-`vendor/bin/pest` doesn't need the containers at all — it runs against an in-memory SQLite
-database (see "Commands" below).
+`vendor/bin/pest` needs the `pgsql` container running too: the sync version sequence (ADR 0003)
+is Postgres-only DDL, so tests run against a real Postgres database — a separate `testing`
+database on the same container (auto-created by `docker/postgres/create-testing-database.sql` on
+first boot; already-running containers got it created manually once, see git history). Tests
+don't touch your seeded dev data: `testing` is a distinct database from `laravel`.
 
 ## Commands
 
@@ -99,7 +102,7 @@ All run from `backend/`:
 
 | Purpose | Command |
 |---|---|
-| Run tests | `vendor/bin/pest` (or `php artisan test`) — uses in-memory SQLite, no containers needed |
+| Run tests | `vendor/bin/pest` (or `php artisan test`) — needs `docker compose up -d` (Postgres) first |
 | Static analysis | `vendor/bin/phpstan analyse --memory-limit=512M` (Larastan, level 7; default 128M limit is too low for this codebase) |
 | Format PHP | `vendor/bin/pint` (check-only: `vendor/bin/pint --test`) |
 | Frontend lint/format | `npm run check` (fix: `npm run check:fix`) |
@@ -110,13 +113,18 @@ All run from `backend/`:
 
 ## Current status
 
-Phase 2 (monorepo + Docker + tooling) is complete. The `app/Domain/*` structure, migrations,
-`Syncable` trait, and the sync API described above are the target design for Phases 3–5 and are
-**not implemented yet** — don't assume they exist until the corresponding ADR-linked migration/
-Action files are actually present under `backend/app/Domain`.
+Phases 2 and 3 are complete: monorepo/Docker/tooling, and the full data model — migrations,
+models, the `Syncable` trait + sequence, factories, the `DemoDataSeeder`, Policies, and the
+Business/Finance/Identity Actions, all covered by Pest tests (including cross-organization policy
+denial). The actual sync API (`SyncRegistry`, `/api/sync/push`, `/api/sync/pull`) is Phase 5 and
+**not implemented yet**.
 
-Known follow-up once Phase 3 adds the Postgres-only `CREATE SEQUENCE sync_version_seq` migration:
-the test suite's SQLite-in-memory database can't run that migration, so the testing database will
-need to move to real Postgres (CI already provisions a `postgres`/`redis` service in
-`.github/workflows/tests.yml` for this reason — local `phpunit.xml` still needs updating at that
-point).
+Registering now also creates an `Organization` (required, since `users.organization_id` is
+NOT NULL) — `App\Domain\Identity\Actions\RegisterOrganizationAndUser`, wired into Fortify's
+`CreateNewUser`. This pulled a small piece of Phase 4's "register creates an organization" scope
+forward into Phase 3, since the schema change made it unavoidable; the UI for it (an
+"Organization name" field on `/register`) is bare-bones English for now — full French copy is
+still Phase 4 work.
+
+No web UI exists yet for businesses/categories/transactions/dashboard (Phase 4), and the
+dashboard page is still the starter kit's placeholder.

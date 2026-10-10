@@ -10,6 +10,7 @@ services:
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
             - 'multibiz-pgsql:/var/lib/postgresql'
+            - './docker/postgres/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
             - multibiz
         healthcheck:

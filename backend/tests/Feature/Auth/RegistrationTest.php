@@ -14,6 +14,7 @@ test('registration screen can be rendered', function () {
 
 test('new users can register', function () {
     $response = $this->post(route('register.store'), [
+        'organization_name' => 'Test Org',
         'name' => 'Test User',
         'email' => 'test@example.com',
         'password' => 'password',
@@ -22,4 +23,6 @@ test('new users can register', function () {
 
     $this->assertAuthenticated();
     $response->assertRedirect(route('dashboard', absolute: false));
+
+    $this->assertDatabaseHas('organizations', ['name' => 'Test Org']);
 });
