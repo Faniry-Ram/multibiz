@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import type { ReactNode, Ref } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -6,15 +7,17 @@ import { cn } from '@/lib/utils';
 
 function TopBar({
     searchPlaceholder = "Rechercher dans l'historique…",
-    onSearchFocus,
+    searchInputRef,
     syncLabel,
     onNoteEntry,
+    userMenu,
     className,
 }: {
     searchPlaceholder?: string;
-    onSearchFocus?: () => void;
+    searchInputRef?: Ref<HTMLInputElement>;
     syncLabel: string;
     onNoteEntry: () => void;
+    userMenu?: ReactNode;
     className?: string;
 }) {
     return (
@@ -31,9 +34,9 @@ function TopBar({
                 </label>
                 <input
                     id="cmdk"
+                    ref={searchInputRef}
                     type="search"
                     placeholder={searchPlaceholder}
-                    onFocus={onSearchFocus}
                     className="min-w-0 flex-1 border-none bg-transparent text-sm outline-none placeholder:text-muted"
                 />
                 <kbd className="num rounded-[5px] border border-border px-1.5 py-0.5 text-[11px] text-muted">
@@ -54,6 +57,8 @@ function TopBar({
                 </span>
                 Noter un flux
             </Button>
+
+            {userMenu}
         </header>
     );
 }

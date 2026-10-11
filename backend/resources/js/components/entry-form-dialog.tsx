@@ -11,6 +11,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -20,6 +21,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import type { SidebarProject } from '@/types';
 
 export type EntryType =
     | 'sale'
@@ -67,20 +69,37 @@ function today(): string {
     return new Date().toISOString().slice(0, 10);
 }
 
+type EntryFormDialogProps = {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+    batches?: Batch[];
+} & (
+    | { project: { id: string }; categories: Category[]; projects?: undefined }
+    | {
+          projects: SidebarProject[];
+          project?: undefined;
+          categories?: undefined;
+      }
+);
+
 export function EntryFormDialog({
     open,
     onOpenChange,
-    project,
-    categories,
     batches = [],
-}: {
-    open: boolean;
-    onOpenChange: (open: boolean) => void;
-    project: { id: string };
-    categories: Category[];
-    batches?: Batch[];
-}) {
+    ...props
+}: EntryFormDialogProps) {
     const [type, setType] = useState<EntryType>('expense');
+    const [selectedProjectId, setSelectedProjectId] = useState(
+        props.projects ? props.projects[0]?.id : undefined,
+    );
+
+    const selectedProject = props.projects
+        ? props.projects.find((p) => p.id === selectedProjectId)
+        : undefined;
+    const projectId = props.projects ? selectedProject?.id : props.project.id;
+    const categories = props.projects
+        ? (selectedProject?.categories ?? [])
+        : props.categories;
 
     const categoryKindForType: Record<EntryType, Category['kind'] | null> = {
         sale: 'income',
@@ -98,6 +117,24 @@ export function EntryFormDialog({
         ? categories.filter((category) => category.kind === relevantKind)
         : [];
 
+    if (props.projects && !projectId) {
+        return (
+            <Dialog open={open} onOpenChange={onOpenChange}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Noter un flux</DialogTitle>
+                    </DialogHeader>
+                    <div className="px-5 py-4">
+                        <EmptyState
+                            title="Aucun projet pour l'instant"
+                            description="Créez un projet avant de pouvoir noter un flux."
+                        />
+                    </div>
+                </DialogContent>
+            </Dialog>
+        );
+    }
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent>
@@ -106,7 +143,7 @@ export function EntryFormDialog({
                 </DialogHeader>
 
                 <Form
-                    {...EntryController.store.form(project.id)}
+                    {...EntryController.store.form(projectId as string)}
                     options={{ preserveScroll: true }}
                     onSuccess={() => onOpenChange(false)}
                     resetOnSuccess
@@ -114,6 +151,34 @@ export function EntryFormDialog({
                     {({ processing, errors }) => (
                         <>
                             <div className="flex flex-col gap-4 px-5 py-4">
+                                {props.projects && (
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="global-project">
+                                            Projet
+                                        </Label>
+                                        <Select
+                                            value={selectedProjectId}
+                                            onValueChange={setSelectedProjectId}
+                                        >
+                                            <SelectTrigger
+                                                id="global-project"
+                                                className="w-full"
+                                            >
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {props.projects.map((p) => (
+                                                    <SelectItem
+                                                        key={p.id}
+                                                        value={p.id}
+                                                    >
+                                                        {p.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                )}
                                 <div className="grid gap-2">
                                     <Label htmlFor="type">Type de flux</Label>
                                     <Select

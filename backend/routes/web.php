@@ -11,6 +11,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('pocket', [PocketController::class, 'index'])->name('pocket');
     Route::get('historique', [HistoryController::class, 'index'])->name('history');
+
+    // Phase 3 — the nav already links here (per the maquette) ahead of the real pages.
+    Route::inertia('analyse', 'coming-soon', ['title' => 'Analyse'])->name('analysis');
+    Route::inertia('taches', 'coming-soon', ['title' => 'Tâches'])->name('tasks');
 });
 
 if (app()->environment('local')) {

@@ -1,4 +1,6 @@
 import type { Auth } from '@/types/auth';
+import type { Appearance } from '@/hooks/use-appearance';
+import type { SidebarProject, SyncStatus } from '@/types/navigation';
 
 declare module 'react' {
     interface InputHTMLAttributes<T> {
@@ -11,7 +13,10 @@ declare module '@inertiajs/core' {
         sharedPageProps: {
             name: string;
             auth: Auth;
-            sidebarOpen: boolean;
+            appearance: Appearance;
+            sidebarProjects: SidebarProject[];
+            syncStatus: SyncStatus;
+            activeTimer: null;
             [key: string]: unknown;
         };
     }
