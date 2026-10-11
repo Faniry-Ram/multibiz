@@ -37,62 +37,67 @@ export function BatchFormDialog({
                     options={{ preserveScroll: true }}
                     onSuccess={() => onOpenChange(false)}
                     resetOnSuccess
-                    className="space-y-4"
                 >
                     {({ processing, errors }) => (
                         <>
-                            <div className="grid gap-2">
-                                <Label htmlFor="initial_headcount">
-                                    Effectif de départ
-                                </Label>
-                                <Input
-                                    id="initial_headcount"
-                                    name="initial_headcount"
-                                    type="number"
-                                    min="1"
-                                    required
-                                    placeholder="50"
-                                />
-                                <InputError
-                                    message={errors.initial_headcount}
-                                />
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Nom (optionnel)</Label>
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    placeholder="Bande de printemps"
-                                />
-                                <InputError message={errors.name} />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col gap-4 px-5 py-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="started_on">
-                                        Date de début
+                                    <Label htmlFor="initial_headcount">
+                                        Effectif de départ
                                     </Label>
                                     <Input
-                                        id="started_on"
-                                        name="started_on"
-                                        type="date"
-                                        defaultValue={today()}
-                                    />
-                                    <InputError message={errors.started_on} />
-                                </div>
-                                <div className="grid gap-2">
-                                    <Label htmlFor="planned_end_on">
-                                        Fin prévue (optionnel)
-                                    </Label>
-                                    <Input
-                                        id="planned_end_on"
-                                        name="planned_end_on"
-                                        type="date"
+                                        id="initial_headcount"
+                                        name="initial_headcount"
+                                        type="number"
+                                        min="1"
+                                        required
+                                        placeholder="50"
                                     />
                                     <InputError
-                                        message={errors.planned_end_on}
+                                        message={errors.initial_headcount}
                                     />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="name">
+                                        Nom (optionnel)
+                                    </Label>
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        placeholder="Bande de printemps"
+                                    />
+                                    <InputError message={errors.name} />
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="started_on">
+                                            Date de début
+                                        </Label>
+                                        <Input
+                                            id="started_on"
+                                            name="started_on"
+                                            type="date"
+                                            defaultValue={today()}
+                                        />
+                                        <InputError
+                                            message={errors.started_on}
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="planned_end_on">
+                                            Fin prévue (optionnel)
+                                        </Label>
+                                        <Input
+                                            id="planned_end_on"
+                                            name="planned_end_on"
+                                            type="date"
+                                        />
+                                        <InputError
+                                            message={errors.planned_end_on}
+                                        />
+                                    </div>
                                 </div>
                             </div>
 

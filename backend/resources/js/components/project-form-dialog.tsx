@@ -67,65 +67,66 @@ export function ProjectFormDialog({
                     options={{ preserveScroll: true }}
                     onSuccess={() => onOpenChange(false)}
                     resetOnSuccess
-                    className="space-y-4"
                 >
                     {({ processing, errors }) => (
                         <>
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Nom</Label>
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    required
-                                    defaultValue={project?.name}
-                                    placeholder="Poulets de chair"
-                                />
-                                <InputError message={errors.name} />
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="flex flex-col gap-4 px-5 py-4">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="model">Modèle</Label>
-                                    <Select
-                                        name="model"
-                                        defaultValue={
-                                            project?.model ?? 'simple'
-                                        }
-                                    >
-                                        <SelectTrigger
-                                            id="model"
-                                            className="w-full"
+                                    <Label htmlFor="name">Nom</Label>
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        required
+                                        defaultValue={project?.name}
+                                        placeholder="Poulets de chair"
+                                    />
+                                    <InputError message={errors.name} />
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="model">Modèle</Label>
+                                        <Select
+                                            name="model"
+                                            defaultValue={
+                                                project?.model ?? 'simple'
+                                            }
                                         >
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {Object.entries(MODEL_LABELS).map(
-                                                ([value, label]) => (
+                                            <SelectTrigger
+                                                id="model"
+                                                className="w-full"
+                                            >
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {Object.entries(
+                                                    MODEL_LABELS,
+                                                ).map(([value, label]) => (
                                                     <SelectItem
                                                         key={value}
                                                         value={value}
                                                     >
                                                         {label}
                                                     </SelectItem>
-                                                ),
-                                            )}
-                                        </SelectContent>
-                                    </Select>
-                                    <InputError message={errors.model} />
-                                </div>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <InputError message={errors.model} />
+                                    </div>
 
-                                <div className="grid gap-2">
-                                    <Label htmlFor="color">Couleur</Label>
-                                    <Input
-                                        id="color"
-                                        name="color"
-                                        type="color"
-                                        className="h-9 w-full p-1"
-                                        defaultValue={
-                                            project?.color ?? '#2563eb'
-                                        }
-                                    />
-                                    <InputError message={errors.color} />
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="color">Couleur</Label>
+                                        <Input
+                                            id="color"
+                                            name="color"
+                                            type="color"
+                                            className="h-9 w-full p-1"
+                                            defaultValue={
+                                                project?.color ?? '#2563eb'
+                                            }
+                                        />
+                                        <InputError message={errors.color} />
+                                    </div>
                                 </div>
                             </div>
 

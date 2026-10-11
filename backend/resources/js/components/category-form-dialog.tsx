@@ -62,45 +62,51 @@ export function CategoryFormDialog({
                     options={{ preserveScroll: true }}
                     onSuccess={() => onOpenChange(false)}
                     resetOnSuccess
-                    className="space-y-4"
                 >
                     {({ processing, errors }) => (
                         <>
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Nom</Label>
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    required
-                                    defaultValue={category?.name}
-                                    placeholder="Ventes"
-                                />
-                                <InputError message={errors.name} />
-                            </div>
+                            <div className="flex flex-col gap-4 px-5 py-4">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="name">Nom</Label>
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        required
+                                        defaultValue={category?.name}
+                                        placeholder="Ventes"
+                                    />
+                                    <InputError message={errors.name} />
+                                </div>
 
-                            <div className="grid gap-2">
-                                <Label htmlFor="kind">Type</Label>
-                                <Select
-                                    name="kind"
-                                    defaultValue={category?.kind ?? 'expense'}
-                                >
-                                    <SelectTrigger id="kind" className="w-full">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {Object.entries(KIND_LABELS).map(
-                                            ([value, label]) => (
-                                                <SelectItem
-                                                    key={value}
-                                                    value={value}
-                                                >
-                                                    {label}
-                                                </SelectItem>
-                                            ),
-                                        )}
-                                    </SelectContent>
-                                </Select>
-                                <InputError message={errors.kind} />
+                                <div className="grid gap-2">
+                                    <Label htmlFor="kind">Type</Label>
+                                    <Select
+                                        name="kind"
+                                        defaultValue={
+                                            category?.kind ?? 'expense'
+                                        }
+                                    >
+                                        <SelectTrigger
+                                            id="kind"
+                                            className="w-full"
+                                        >
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {Object.entries(KIND_LABELS).map(
+                                                ([value, label]) => (
+                                                    <SelectItem
+                                                        key={value}
+                                                        value={value}
+                                                    >
+                                                        {label}
+                                                    </SelectItem>
+                                                ),
+                                            )}
+                                        </SelectContent>
+                                    </Select>
+                                    <InputError message={errors.kind} />
+                                </div>
                             </div>
 
                             <DialogFooter>

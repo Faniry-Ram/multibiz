@@ -94,9 +94,19 @@ export function useAppearance(): UseAppearanceReturn {
         () => 'system',
     );
 
-    const resolvedAppearance: ResolvedAppearance = isDarkMode(appearance)
-        ? 'dark'
-        : 'light';
+    // Resolved separately (not derived inline from `appearance`) because
+    // `isDarkMode('system')` reads `window.matchMedia`, which is unavailable
+    // during SSR — deriving it in the render body would make the first
+    // client render disagree with the server-rendered HTML and trigger a
+    // hydration mismatch. `getServerSnapshot` below pins it to 'light' (the
+    // same value `isDarkMode` already resolves to when `window` is
+    // undefined), matching what the server actually rendered; the real
+    // value is picked up on the next sync after hydration.
+    const resolvedAppearance: ResolvedAppearance = useSyncExternalStore(
+        subscribe,
+        () => (isDarkMode(currentAppearance) ? 'dark' : 'light'),
+        () => 'light',
+    );
 
     const updateAppearance = (mode: Appearance): void => {
         currentAppearance = mode;
