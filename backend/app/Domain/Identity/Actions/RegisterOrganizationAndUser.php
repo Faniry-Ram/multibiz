@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class RegisterOrganizationAndUser
 {
-    public function handle(string $organizationName, string $name, string $email, string $password): User
+    public function handle(string $organizationName, string $name, string $email, string $password, ?string $currency = null): User
     {
-        return DB::transaction(function () use ($organizationName, $name, $email, $password) {
-            $organization = Organization::create(['name' => $organizationName]);
+        return DB::transaction(function () use ($organizationName, $name, $email, $password, $currency) {
+            $organization = Organization::create([
+                'name' => $organizationName,
+                'currency' => $currency ?? 'MGA',
+            ]);
 
             $user = User::create([
                 'name' => $name,
