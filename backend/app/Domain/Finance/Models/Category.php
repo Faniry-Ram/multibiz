@@ -2,9 +2,9 @@
 
 namespace App\Domain\Finance\Models;
 
-use App\Domain\Business\Models\Business;
-use App\Domain\Finance\Enums\TransactionType;
+use App\Domain\Finance\Enums\CategoryKind;
 use App\Domain\Identity\Models\User;
+use App\Domain\Project\Models\Project;
 use App\Domain\Sync\Concerns\Syncable;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -16,17 +16,19 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property string $id
- * @property string $business_id
+ * @property string $project_id
  * @property string $name
- * @property TransactionType $kind
- * @property string|null $color
+ * @property CategoryKind $kind
+ * @property Carbon|null $archived_at
  * @property int|null $created_by
+ * @property string|null $device_id
+ * @property Carbon $recorded_at
  * @property int $version
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  */
-#[Fillable(['business_id', 'name', 'kind', 'color', 'created_by'])]
+#[Fillable(['project_id', 'name', 'kind', 'archived_at', 'created_by', 'device_id', 'recorded_at'])]
 class Category extends Model
 {
     /** @use HasFactory<CategoryFactory> */
@@ -38,16 +40,18 @@ class Category extends Model
     protected function casts(): array
     {
         return [
-            'kind' => TransactionType::class,
+            'kind' => CategoryKind::class,
+            'archived_at' => 'datetime',
+            'recorded_at' => 'datetime',
         ];
     }
 
     /**
-     * @return BelongsTo<Business, $this>
+     * @return BelongsTo<Project, $this>
      */
-    public function business(): BelongsTo
+    public function project(): BelongsTo
     {
-        return $this->belongsTo(Business::class);
+        return $this->belongsTo(Project::class);
     }
 
     /**
@@ -59,10 +63,10 @@ class Category extends Model
     }
 
     /**
-     * @return HasMany<Transaction, $this>
+     * @return HasMany<Entry, $this>
      */
-    public function transactions(): HasMany
+    public function entries(): HasMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Entry::class);
     }
 }

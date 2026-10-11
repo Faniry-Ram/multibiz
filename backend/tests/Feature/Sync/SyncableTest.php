@@ -1,20 +1,20 @@
 <?php
 
-use App\Domain\Business\Models\Business;
 use App\Domain\Organization\Models\Organization;
+use App\Domain\Project\Models\Project;
 
 test('a syncable model gets a uuid primary key', function () {
-    $business = Business::factory()->create();
+    $project = Project::factory()->create();
 
-    expect($business->id)->toBeString()
-        ->and(strlen($business->id))->toBe(36);
+    expect($project->id)->toBeString()
+        ->and(strlen($project->id))->toBe(36);
 });
 
 test('version is populated from the shared sequence and strictly increases across models', function () {
     $organization = Organization::factory()->create();
 
-    $first = Business::factory()->create(['organization_id' => $organization->id]);
-    $second = Business::factory()->create(['organization_id' => $organization->id]);
+    $first = Project::factory()->create(['organization_id' => $organization->id]);
+    $second = Project::factory()->create(['organization_id' => $organization->id]);
 
     expect($second->version)->toBeGreaterThan($first->version);
 
@@ -25,13 +25,13 @@ test('version is populated from the shared sequence and strictly increases acros
 });
 
 test('soft deleting a syncable model keeps the row queryable via withTrashed', function () {
-    $business = Business::factory()->create();
-    $versionBeforeDelete = $business->version;
+    $project = Project::factory()->create();
+    $versionBeforeDelete = $project->version;
 
-    $business->delete();
+    $project->delete();
 
-    expect(Business::find($business->id))->toBeNull()
-        ->and(Business::withTrashed()->find($business->id))->not->toBeNull()
-        ->and($business->trashed())->toBeTrue()
-        ->and($business->version)->toBeGreaterThan($versionBeforeDelete);
+    expect(Project::find($project->id))->toBeNull()
+        ->and(Project::withTrashed()->find($project->id))->not->toBeNull()
+        ->and($project->trashed())->toBeTrue()
+        ->and($project->version)->toBeGreaterThan($versionBeforeDelete);
 });

@@ -1,40 +1,44 @@
 <?php
 
-use App\Domain\Business\Models\Business;
+use App\Domain\Finance\Actions\ArchiveCategory;
 use App\Domain\Finance\Actions\CreateCategory;
-use App\Domain\Finance\Actions\DeleteCategory;
+use App\Domain\Finance\Actions\UnarchiveCategory;
 use App\Domain\Finance\Actions\UpdateCategory;
 use App\Domain\Finance\Data\CategoryData;
-use App\Domain\Finance\Enums\TransactionType;
+use App\Domain\Finance\Enums\CategoryKind;
 use App\Domain\Finance\Models\Category;
+use App\Domain\Project\Models\Project;
 
-test('creates a category for a business', function () {
-    $business = Business::factory()->create();
+test('creates a category for a project', function () {
+    $project = Project::factory()->create();
 
     $category = app(CreateCategory::class)->handle(
-        $business,
-        new CategoryData(name: 'Ventes', kind: TransactionType::Income),
+        $project,
+        new CategoryData(name: 'Ventes', kind: CategoryKind::Income),
     );
 
-    expect($category->business_id)->toBe($business->id)
-        ->and($category->kind)->toBe(TransactionType::Income)
+    expect($category->project_id)->toBe($project->id)
+        ->and($category->kind)->toBe(CategoryKind::Income)
         ->and($category->version)->toBeGreaterThan(0);
 });
 
 test('updates a category', function () {
-    $category = Category::factory()->create(['name' => 'Old', 'kind' => TransactionType::Income]);
+    $category = Category::factory()->create(['name' => 'Old', 'kind' => CategoryKind::Income]);
 
-    app(UpdateCategory::class)->handle($category, new CategoryData(name: 'New', kind: TransactionType::Expense));
+    app(UpdateCategory::class)->handle($category, new CategoryData(name: 'New', kind: CategoryKind::Expense));
 
     expect($category->refresh())
         ->name->toBe('New')
-        ->kind->toBe(TransactionType::Expense);
+        ->kind->toBe(CategoryKind::Expense);
 });
 
-test('soft deletes a category', function () {
+test('archives and unarchives a category without deleting it', function () {
     $category = Category::factory()->create();
 
-    app(DeleteCategory::class)->handle($category);
+    app(ArchiveCategory::class)->handle($category);
+    expect($category->refresh()->archived_at)->not->toBeNull()
+        ->and($category->trashed())->toBeFalse();
 
-    expect($category->trashed())->toBeTrue();
+    app(UnarchiveCategory::class)->handle($category);
+    expect($category->refresh()->archived_at)->toBeNull();
 });

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Domain\Identity\Models\User;
+use App\Domain\Organization\Enums\Role;
 use App\Domain\Organization\Models\Organization;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'organization_id' => Organization::factory(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -45,5 +45,17 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Attach the user to a (new, unless given) organization with the given role.
+     */
+    public function forOrganization(?Organization $organization = null, Role $role = Role::Owner): static
+    {
+        return $this->afterCreating(function (User $user) use ($organization, $role) {
+            $organization ??= Organization::factory()->create();
+
+            $organization->users()->attach($user, ['role' => $role->value]);
+        });
     }
 }

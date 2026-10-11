@@ -3,6 +3,7 @@
 namespace App\Domain\Identity\Actions;
 
 use App\Domain\Identity\Models\User;
+use App\Domain\Organization\Enums\Role;
 use App\Domain\Organization\Models\Organization;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +14,15 @@ class RegisterOrganizationAndUser
         return DB::transaction(function () use ($organizationName, $name, $email, $password) {
             $organization = Organization::create(['name' => $organizationName]);
 
-            return User::create([
-                'organization_id' => $organization->id,
+            $user = User::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => $password,
             ]);
+
+            $organization->users()->attach($user, ['role' => Role::Owner->value]);
+
+            return $user;
         });
     }
 }

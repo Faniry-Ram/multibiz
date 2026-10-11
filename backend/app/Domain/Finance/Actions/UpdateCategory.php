@@ -12,7 +12,6 @@ class UpdateCategory
         $category->update([
             'name' => $data->name,
             'kind' => $data->kind,
-            'color' => $data->color,
         ]);
 
         return $category;

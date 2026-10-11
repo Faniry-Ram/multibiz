@@ -2,13 +2,15 @@
 
 namespace App\Domain\Identity\Models;
 
+use App\Domain\Organization\Enums\Role;
 use App\Domain\Organization\Models\Organization;
+use App\Domain\Organization\Models\OrganizationUser;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -16,7 +18,6 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
- * @property int $organization_id
  * @property string $name
  * @property string $email
  * @property Carbon|null $email_verified_at
@@ -25,7 +26,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['organization_id', 'name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -46,10 +47,29 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * @return BelongsTo<Organization, $this>
+     * @return BelongsToMany<Organization, $this, OrganizationUser, 'pivot'>
      */
-    public function organization(): BelongsTo
+    public function organizations(): BelongsToMany
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsToMany(Organization::class, 'organization_user')
+            ->using(OrganizationUser::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    /**
+     * Phase 1 gives every user exactly one organization membership, created at
+     * registration — see App\Domain\Identity\Actions\RegisterOrganizationAndUser.
+     */
+    public function organization(): Organization
+    {
+        return $this->organizations()->firstOrFail();
+    }
+
+    public function roleIn(Organization $organization): ?Role
+    {
+        $membership = $this->organizations()->where('organizations.id', $organization->id)->first();
+
+        return $membership?->pivot->role;
     }
 }

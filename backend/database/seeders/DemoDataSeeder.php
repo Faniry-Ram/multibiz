@@ -2,71 +2,82 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Business\Actions\CreateBusiness;
-use App\Domain\Business\Data\BusinessData;
-use App\Domain\Finance\Actions\CreateTransaction;
-use App\Domain\Finance\Data\TransactionData;
-use App\Domain\Finance\Enums\PaymentMethod;
+use App\Domain\Finance\Actions\CreateEntry;
+use App\Domain\Finance\Data\EntryData;
+use App\Domain\Finance\Enums\EntryType;
 use App\Domain\Identity\Models\User;
+use App\Domain\Organization\Enums\Role;
 use App\Domain\Organization\Models\Organization;
+use App\Domain\Project\Actions\CreateProject;
+use App\Domain\Project\Data\ProjectData;
+use App\Domain\Project\Enums\ProjectModel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
 /**
- * 1 organization, 1 user, 3 businesses (each seeded with the default categories via
- * CreateBusiness), and ~60 transactions spread over the last 3 months.
+ * 1 organization, 1 user, 2 projects (poultry + eggs) seeded with a handful of entries
+ * each. The exact figures from the project mission (batches, margins, laying rate)
+ * land in a dedicated seeder once Analytics (capital récupéré, verdict) is built —
+ * see docs/audit-architecture.md, plan step 9.
  */
 class DemoDataSeeder extends Seeder
 {
-    private const BUSINESSES = [
-        ['name' => 'Épicerie Tana', 'type' => 'Épicerie', 'color' => '#16a34a'],
-        ['name' => 'Resto Zandry', 'type' => 'Restaurant', 'color' => '#dc2626'],
-        ['name' => 'Salon Vita', 'type' => 'Salon de coiffure', 'color' => '#2563eb'],
-    ];
-
-    private const TRANSACTIONS_PER_BUSINESS = 20;
-
     public function run(): void
     {
         $organization = Organization::create(['name' => 'MultiBiz Demo']);
 
         $user = User::factory()->create([
-            'organization_id' => $organization->id,
             'name' => 'Rina Andria',
             'email' => 'test@example.com',
         ]);
 
-        $createBusiness = app(CreateBusiness::class);
-        $createTransaction = app(CreateTransaction::class);
+        $organization->users()->attach($user, ['role' => Role::Owner->value]);
 
-        foreach (self::BUSINESSES as $businessAttributes) {
-            $business = $createBusiness->handle(
-                $organization,
-                new BusinessData(...$businessAttributes),
-                $user,
-            );
+        $createProject = app(CreateProject::class);
+        $createEntry = app(CreateEntry::class);
 
-            $categories = $business->categories;
+        $poultry = $createProject->handle($organization, new ProjectData(
+            name: 'Poulets de chair',
+            model: ProjectModel::Lots,
+            color: '#D97706',
+            started_on: Carbon::now()->subMonths(3),
+        ), $user);
 
-            for ($i = 0; $i < self::TRANSACTIONS_PER_BUSINESS; $i++) {
-                $category = $categories->random();
-                $isIncome = $category->kind->value === 'income';
+        $eggs = $createProject->handle($organization, new ProjectData(
+            name: 'Œufs',
+            model: ProjectModel::Herd,
+            color: '#0891B2',
+            started_on: Carbon::now()->subMonths(2),
+        ), $user);
 
-                $createTransaction->handle(
-                    $business,
-                    new TransactionData(
-                        category_id: $category->id,
-                        type: $category->kind,
-                        amount: $isIncome
-                            ? fake()->numberBetween(50_000, 2_000_000)
-                            : fake()->numberBetween(5_000, 400_000),
-                        payment_method: fake()->randomElement(PaymentMethod::cases()),
-                        occurred_at: Carbon::instance(fake()->dateTimeBetween('-3 months')),
-                        note: fake()->boolean(30) ? fake()->sentence() : null,
-                    ),
-                    $user,
-                );
-            }
-        }
+        $saleCategory = $poultry->categories()->where('name', 'Ventes')->first();
+        $expenseCategory = $poultry->categories()->where('name', 'Aliments / Intrants')->first();
+
+        $createEntry->handle($poultry, new EntryData(
+            type: EntryType::Sale,
+            occurred_at: Carbon::now()->subWeeks(2),
+            category_id: $saleCategory->id,
+            quantity: 41,
+            unit_price: 13_000,
+            note: 'Vente bande 1',
+        ), $user);
+
+        $createEntry->handle($poultry, new EntryData(
+            type: EntryType::Expense,
+            occurred_at: Carbon::now()->subMonths(1),
+            category_id: $expenseCategory->id,
+            amount: 360_000,
+        ), $user);
+
+        $eggSaleCategory = $eggs->categories()->where('name', 'Ventes')->first();
+
+        $createEntry->handle($eggs, new EntryData(
+            type: EntryType::Sale,
+            occurred_at: Carbon::now()->subDays(3),
+            category_id: $eggSaleCategory->id,
+            quantity: 36,
+            unit_price: 500,
+            note: 'Vente œufs',
+        ), $user);
     }
 }

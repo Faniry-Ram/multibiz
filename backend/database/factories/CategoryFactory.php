@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Domain\Business\Models\Business;
-use App\Domain\Finance\Enums\TransactionType;
+use App\Domain\Finance\Enums\CategoryKind;
 use App\Domain\Finance\Models\Category;
+use App\Domain\Project\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +20,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'business_id' => Business::factory(),
+            'project_id' => Project::factory(),
             'name' => fake()->word(),
-            'kind' => fake()->randomElement(TransactionType::cases()),
-            'color' => fake()->safeHexColor(),
+            'kind' => fake()->randomElement(CategoryKind::cases()),
+            'recorded_at' => now(),
         ];
     }
 }

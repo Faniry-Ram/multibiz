@@ -19,6 +19,9 @@ class OrganizationFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'currency' => 'MGA',
+            'timezone' => 'Indian/Antananarivo',
+            'week_starts_on' => 1,
         ];
     }
 }
