@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz — Connexion</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--chart:#2563EB;--heat:37,99,235;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--c1:#64748B;--c2:#94A3B8;--c3:#CBD5E1;--grid:rgba(15,23,42,0.07);--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2;--brand:#2563EB}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--chart:#60A5FA;--heat:96,165,250;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--c1:#94A3B8;--c2:#64748B;--c3:#334155;--grid:rgba(148,163,184,0.09);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6;--brand:#1D4ED8}
+.mb input,.mb select{color:var(--text)}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="display: flex; flex-wrap: wrap; min-height: 900px; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif">
+
+<section aria-label="Présentation de MultiBiz" style="flex: 1 1 560px; box-sizing: border-box; padding: 40px 56px; background-color: var(--brand); background-image: radial-gradient(rgba(255,255,255,0.13) 1px, transparent 1px); background-size: 22px 22px; color: #FFFFFF; display: flex; flex-direction: column; gap: 40px">
+  <div style="display: flex; align-items: center; gap: 10px">
+    <span style="width: 34px; height: 34px; border-radius: 9px; background: #FFFFFF; color: #2563EB; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500">mb</span>
+    <span style="font-size: 19px; font-weight: 700; letter-spacing: -0.02em">MultiBiz</span>
+  </div>
+
+  <div style="margin: auto 0; display: flex; flex-direction: column; gap: 22px; max-width: 520px">
+    <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #BFDBFE">// le carnet de bord de vos petits business</span>
+    <h1 style="margin: 0; font-size: 44px; line-height: 1.08; font-weight: 700; letter-spacing: -0.035em">Savoir ce qui marche, et à quel moment.</h1>
+    <p style="margin: 0; font-size: 16.5px; line-height: 1.6; color: #DBEAFE">Notez chaque vente, chaque sac de provende, chaque apport. MultiBiz garde tout l'historique et vous montre, projet par projet, ce qui rapporte et ce qui coûte.</p>
+
+    <div aria-label="Exemple de projets suivis" style="display: flex; flex-direction: column; gap: 10px; margin-top: 6px">
+      <sc-for list="{{demo}}" as="d" hint-placeholder-count="3">
+        <div style="display: flex; align-items: center; gap: 14px; padding: 13px 16px; border-radius: 14px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18)">
+          <span style="{{d.dot}}"></span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 14.5px; font-weight: 600">{{d.name}}</span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #BFDBFE">{{d.meta}}</span>
+          </span>
+          <span style="flex: none; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: {{d.tone}}">{{d.verdict}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; font-size: 13.5px; color: #DBEAFE">
+    <sc-for list="{{perks}}" as="p" hint-placeholder-count="3">
+      <li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg>{{p}}</li>
+    </sc-for>
+  </ul>
+</section>
+
+<main style="flex: 1 1 520px; box-sizing: border-box; padding: 28px 40px 40px; background: var(--surface); display: flex; flex-direction: column">
+  <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px">
+    <label for="lang" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Langue</label>
+    <select id="lang" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option>Français</option><option>Malagasy</option></select>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+  </div>
+
+  <div style="margin: auto; width: 100%; max-width: 410px; display: flex; flex-direction: column; gap: 24px; padding: 24px 0">
+    <div role="tablist" aria-label="Connexion ou inscription" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface2)">
+      <button type="button" role="tab" aria-selected="{{tabs.inSel}}" onClick="{{tabs.goIn}}" style="{{tabs.inStyle}}">Se connecter</button>
+      <button type="button" role="tab" aria-selected="{{tabs.upSel}}" onClick="{{tabs.goUp}}" style="{{tabs.upStyle}}">Créer un compte</button>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <h2 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.03em">{{copy.title}}</h2>
+      <p style="margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--muted)">{{copy.sub}}</p>
+    </div>
+
+    <form style="display: flex; flex-direction: column; gap: 16px">
+      <sc-if value="{{isUp}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label for="f-name" style="font-size: 13.5px; font-weight: 600">Prénom et nom</label>
+          <input id="f-name" type="text" autocomplete="name" placeholder="Faniry Rakoto" style="box-sizing: border-box; height: 46px; padding: 0 14px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px">
+        </div>
+      </sc-if>
+      <div style="display: flex; flex-direction: column; gap: 7px">
+        <label for="f-id" style="font-size: 13.5px; font-weight: 600">E-mail ou numéro de téléphone</label>
+        <input id="f-id" type="text" autocomplete="username" value="faniry@exemple.mg" style="box-sizing: border-box; height: 46px; padding: 0 14px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 7px">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px">
+          <label for="f-pwd" style="font-size: 13.5px; font-weight: 600">Mot de passe</label>
+          <sc-if value="{{isIn}}" hint-placeholder-val="{{ true }}"><a href="#" style="font-size: 13px; font-weight: 500; text-decoration: none">Mot de passe oublié ?</a></sc-if>
+        </div>
+        <div style="display: flex; align-items: center; height: 46px; box-sizing: border-box; padding: 0 6px 0 14px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg)">
+          <input id="f-pwd" type="{{pwd.type}}" autocomplete="{{pwd.auto}}" value="motdepasse" style="flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 15px; outline: none">
+          <button type="button" onClick="{{pwd.toggle}}" style="all: unset; cursor: pointer; padding: 7px 9px; border-radius: 8px; font-size: 12.5px; font-weight: 600; color: var(--primary-text)">{{pwd.label}}</button>
+        </div>
+        <sc-if value="{{isUp}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12.5px; color: var(--muted)">8 caractères minimum, dont un chiffre.</span></sc-if>
+      </div>
+      <sc-if value="{{isUp}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label for="f-cur" style="font-size: 13.5px; font-weight: 600">Devise de mes projets</label>
+          <select id="f-cur" style="box-sizing: border-box; height: 46px; padding: 0 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px"><option>Ariary (Ar)</option><option>Euro (€)</option><option>Franc CFA (FCFA)</option></select>
+        </div>
+      </sc-if>
+      <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text2); cursor: pointer">
+        <input type="checkbox" checked="{{check.on}}" onChange="{{check.toggle}}" style="margin: 0; width: 17px; height: 17px; accent-color: #2563EB">{{check.label}}
+      </label>
+      <a href="{{copy.href}}" style="box-sizing: border-box; height: 48px; border-radius: 11px; background: #2563EB; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px">{{copy.cta}}<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </form>
+
+    <div aria-hidden="true" style="display: flex; align-items: center; gap: 12px; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)"><span style="flex: 1; height: 1px; background: var(--border)"></span>ou<span style="flex: 1; height: 1px; background: var(--border)"></span></div>
+    <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 46px; border-radius: 11px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14.5px; font-weight: 600">
+      <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 01-2.2 3.3v2.7h3.5c2.1-1.9 3.3-4.7 3.3-8z"></path><path fill="#34A853" d="M12 23c3 0 5.4-1 7.2-2.7l-3.5-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.2v2.8A11 11 0 0012 23z"></path><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 010-4.3V7.1H2.2a11 11 0 000 9.9l3.6-2.8z"></path><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.1-3.1A11 11 0 002.2 7.1l3.6 2.8C6.7 7.3 9.1 5.4 12 5.4z"></path></svg>
+      Continuer avec Google
+    </button>
+    <p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-size: 13px; line-height: 1.5; color: var(--text2)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex: none; margin-top: 1px; color: var(--primary-text)"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg>
+      <span>{{copy.note}}</span>
+    </p>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: "in", show: false, remember: true, terms: false };
+  }
+  renderVals() {
+    const s = this.state;
+    const dark = s.dark ?? (this.props.theme === "dark");
+    const up = s.tab === "up";
+    const tabStyle = (on) => "all: unset; cursor: pointer; box-sizing: border-box; height: 40px; border-radius: 9px; text-align: center; font-size: 14px; font-weight: 600; " + (on ? "background: var(--surface); color: var(--text); box-shadow: var(--shadow);" : "color: var(--muted);");
+    const demo = [
+      ["Poulets de chair", "#FCD34D", "+ 476 000 Ar · 73 % du capital récupéré", "Rentable", "#047857"],
+      ["Revente en ligne", "#67E8F9", "marge en baisse depuis août", "À surveiller", "#A16207"],
+      ["Œufs (pondeuses)", "#F9A8D4", "J56 · 63 % de ponte, ça monte", "En démarrage", "#1D4ED8"]
+    ].map(([name, c, meta, verdict, tone]) => ({ name, meta, verdict, tone, dot: "flex: none; width: 11px; height: 11px; border-radius: 4px; background: " + c }));
+    return {
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      demo,
+      perks: ["Fonctionne hors ligne sur le téléphone", "Historique jamais effacé", "Synchronisé dès que le réseau revient"],
+      isUp: up, isIn: !up,
+      tabs: {
+        inSel: up ? "false" : "true", upSel: up ? "true" : "false",
+        inStyle: tabStyle(!up), upStyle: tabStyle(up),
+        goIn: () => this.setState({ tab: "in" }),
+        goUp: () => this.setState({ tab: "up" })
+      },
+      copy: up ? {
+        title: "Créer mon carnet",
+        sub: "Une minute pour le compte, puis on crée ensemble votre premier projet.",
+        cta: "Créer mon compte",
+        href: "Web-Nouveau-Projet.dc.html",
+        note: "Vos données restent à vous : export complet en CSV ou Excel, à tout moment."
+      } : {
+        title: "Bon retour",
+        sub: "Reprenez là où vous vous êtes arrêté. Ce que vous avez noté hors ligne sur le téléphone sera synchronisé à la connexion.",
+        cta: "Se connecter",
+        href: "Main.dc.html",
+        note: "Connexion chiffrée. Sur un appareil partagé, décochez « Rester connecté »."
+      },
+      pwd: {
+        type: s.show ? "text" : "password",
+        auto: up ? "new-password" : "current-password",
+        label: s.show ? "Masquer" : "Afficher",
+        toggle: () => this.setState({ show: !s.show })
+      },
+      check: up ? {
+        on: s.terms, label: "J'accepte les conditions d'utilisation",
+        toggle: () => this.setState({ terms: !s.terms })
+      } : {
+        on: s.remember, label: "Rester connecté sur cet appareil",
+        toggle: () => this.setState({ remember: !s.remember })
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

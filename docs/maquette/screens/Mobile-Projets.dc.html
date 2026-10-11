@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz mobile — Mes projets</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="padding: 18px 20px 0; display: flex; align-items: center; gap: 8px">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)">// 3 projets actifs</span>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.03em">Mes projets</h1>
+    </div>
+    <a href="Mobile-Historique.dc.html" aria-label="Hors ligne, 3 flux en attente de synchronisation" style="box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--neg-soft); color: var(--neg); font-size: 13px; font-weight: 600; text-decoration: none">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5"></path></svg>
+      3 en attente
+    </a>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+  </header>
+
+  <section aria-label="Bilan des projets" style="margin: 14px 20px 0; padding: 14px 16px; border-radius: 16px; background: #2563EB; color: #FFFFFF; display: flex; flex-direction: column; gap: 10px">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 10px">
+      <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12.5px; color: #DBEAFE">Résultat cumulé</span><span style="font-family: 'Geist Mono', monospace; font-size: 22px; font-weight: 500">+ 691 000 Ar</span></span>
+      <span style="display: flex; flex-direction: column; gap: 2px; text-align: right"><span style="font-size: 12.5px; color: #DBEAFE">Capital récupéré</span><span style="font-family: 'Geist Mono', monospace; font-size: 22px; font-weight: 500">39 %</span></span>
+    </div>
+    <div style="height: 6px; border-radius: 999px; background: rgba(255,255,255,0.25)"><div style="width: 39%; height: 100%; border-radius: 999px; background: #FFFFFF"></div></div>
+    <span style="font-size: 12px; color: #DBEAFE">1 059 000 Ar encore à récupérer sur 1 750 000 engagés</span>
+  </section>
+
+  <div role="radiogroup" aria-label="Trier les projets" style="margin: 14px 20px 0; display: flex; gap: 6px">
+    <sc-for list="{{sorts}}" as="o" hint-placeholder-count="3"><button type="button" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.label}}</button></sc-for>
+  </div>
+
+  <section aria-label="Projets" style="margin: 10px 20px 0; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{projects}}" as="p" hint-placeholder-count="3">
+      <a href="{{p.href}}" style="display: flex; flex-direction: column; gap: 10px; padding: 13px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none; box-shadow: var(--shadow)">
+        <span style="display: flex; align-items: center; gap: 11px">
+          <span style="{{p.avatar}}">{{p.ini}}</span>
+          <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 15px; font-weight: 700">{{p.name}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{p.type}}</span>
+          </span>
+          <span style="{{p.badgeStyle}}">{{p.badge}}</span>
+        </span>
+        <span style="display: flex; align-items: center; gap: 12px">
+          <span style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+            <span style="font-size: 11.5px; color: var(--muted)">Résultat</span>
+            <span style="{{p.resStyle}}">{{p.res}}</span>
+          </span>
+          <svg role="img" aria-label="{{p.sparkLabel}}" width="120" height="34" viewBox="0 0 120 34" style="flex: none; overflow: visible">
+            <line x1="0" x2="120" y1="{{p.zero}}" y2="{{p.zero}}" style="stroke: var(--border)" stroke-dasharray="3 3"></line>
+            <polyline points="{{p.spark}}" fill="none" style="{{p.sparkStyle}}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+          </svg>
+        </span>
+        <span style="display: flex; flex-direction: column; gap: 5px">
+          <span style="display: flex; justify-content: space-between; font-size: 11.5px; color: var(--muted)"><span>capital récupéré</span><span style="font-family: 'Geist Mono', monospace">{{p.rec}}</span></span>
+          <span style="height: 5px; border-radius: 999px; background: var(--surface2); display: block"><span style="{{p.recBar}}"></span></span>
+        </span>
+        <span style="display: flex; align-items: center; gap: 7px; padding-top: 9px; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text2)"><span style="width: 6px; height: 6px; border-radius: 999px; background: {{p.color}}"></span>{{p.today}}</span>
+      </a>
+    </sc-for>
+    <a href="Web-Nouveau-Projet.dc.html" style="box-sizing: border-box; height: 48px; border-radius: 14px; border: 1.5px dashed var(--c3); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; text-decoration: none"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Nouveau projet</a>
+  </section>
+
+  <nav aria-label="Navigation" style="margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 12px 22px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center">
+    <a href="Mobile-Accueil.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>
+      Aujourd'hui
+    </a>
+    <a href="Mobile-Projets.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--primary-text); text-decoration: none; font-size: 11px; font-weight: 600">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"></path></svg>
+      Projets
+    </a>
+    <div style="display: flex; justify-content: center">
+      <a href="Mobile-Saisie.dc.html" aria-label="Noter un flux" style="width: 54px; height: 54px; border-radius: 16px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; margin-top: -24px; box-shadow: 0 8px 20px rgba(37,99,235,0.35)">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </a>
+    </div>
+    <a href="Mobile-Historique.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      Historique
+    </a>
+    <a href="Web-Poche.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01"></path></svg>
+      Poche
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sort: "res" };
+  }
+  renderVals() {
+    const s = this.state;
+    const dark = s.dark ?? (this.props.theme === "dark");
+    const V = { rentable: ["Rentable", "var(--pos-soft)", "var(--pos)"], surveiller: ["À surveiller", "var(--warn-soft)", "var(--warn)"], demarrage: ["En démarrage", "var(--primary-soft)", "var(--primary-text)"] };
+    const RAW = [
+      { ini: "pc", name: "Poulets de chair", type: "Élevage par lots · bande 4, J21", color: "var(--b1)", v: "rentable", res: 476000, rec: 73, age: 222, href: "Mobile-Lot.dc.html", today: "1 perte ce matin · vaccin Gumboro à faire",
+        pts: [[1, -650], [30, -900], [55, -477], [91, -777], [111, -178], [152, -468], [174, 196], [213, -54], [223, -174]], label: "Trajectoire, capital compris : en dents de scie qui monte à chaque bande vendue" },
+      { ini: "re", name: "Revente en ligne", type: "Revente avec stock · 4 produits", color: "var(--b3)", v: "surveiller", res: 335000, rec: 84, age: 131, href: "Web-Projet-Revente.dc.html", today: "2 coques vendues · 1 colis à expédier",
+        pts: [[92, -400], [121, -280], [152, -160], [183, -100], [213, -70], [223, -65]], label: "Trajectoire, capital compris : monte vite puis ralentit depuis août" },
+      { ini: "œu", name: "Œufs (pondeuses)", type: "Élevage par effectif · 30 poules", color: "var(--b2)", v: "demarrage", res: -120000, rec: 0, age: 56, href: "Web-Projet-Effectif.dc.html", today: "19 œufs pondus · 36 vendus · 59 en stock",
+        pts: [[167, -700], [183, -760], [198, -805], [213, -820], [223, -820]], label: "Trajectoire, capital compris : se stabilise depuis les premières pontes" }
+    ];
+    const order = { res: (a, b) => b.res - a.res, rec: (a, b) => b.rec - a.rec, age: (a, b) => a.age - b.age }[s.sort];
+    const fmt = (n) => Math.round(Math.abs(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const projects = RAW.slice().sort(order).map((p) => {
+      const xs = p.pts.map((q) => q[0]), ys = p.pts.map((q) => q[1]).concat([0]);
+      const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+      const sx = (x) => ((x - x0) / (x1 - x0 || 1) * 116 + 2).toFixed(1);
+      const sy = (y) => (32 - (y - y0) / (y1 - y0 || 1) * 30).toFixed(1);
+      return {
+        ini: p.ini, name: p.name, type: p.type, color: p.color, href: p.href, today: p.today, sparkLabel: p.label,
+        avatar: "flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; color: #FFFFFF; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; background: " + p.color,
+        badge: V[p.v][0],
+        badgeStyle: "flex: none; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: " + V[p.v][1] + "; color: " + V[p.v][2],
+        res: (p.res >= 0 ? "+ " : "− ") + fmt(p.res) + " Ar",
+        resStyle: "font-family: 'Geist Mono', monospace; font-size: 17px; font-weight: 500; color: " + (p.res >= 0 ? "var(--pos)" : "var(--neg)"),
+        spark: p.pts.map(([x, y]) => sx(x) + "," + sy(y)).join(" "),
+        sparkStyle: "stroke: " + p.color,
+        zero: sy(0),
+        rec: p.rec + " %",
+        recBar: "display: block; height: 100%; border-radius: 999px; background: var(--pos); width: " + Math.max(2, p.rec) + "%"
+      };
+    });
+    const sorts = [["res", "Résultat"], ["rec", "Capital récupéré"], ["age", "Plus récents"]].map(([id, label]) => ({
+      label, on: s.sort === id ? "true" : "false",
+      pick: () => this.setState({ sort: id }),
+      style: "all: unset; cursor: pointer; box-sizing: border-box; height: 34px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; " + (s.sort === id ? "background: var(--primary-soft); color: var(--primary-text); box-shadow: inset 0 0 0 1.5px #2563EB;" : "border: 1px solid var(--border); color: var(--text2); background: var(--surface);")
+    }));
+    return {
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      projects, sorts
+    };
+  }
+}
+</script>
+</body>
+</html>

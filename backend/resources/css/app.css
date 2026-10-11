@@ -2,6 +2,10 @@
 
 @import 'tw-animate-css';
 
+/* Geist / Geist Mono, self-hosted via @fontsource-variable (see docs/maquette/README.md §2). */
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
@@ -9,127 +13,175 @@
 
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Geist Variable', 'Geist', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-mono:
+        'Geist Mono Variable', 'Geist Mono', ui-monospace, 'SFMono-Regular',
+        monospace;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
 
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-
-    --color-card: var(--card);
-    --color-card-foreground: var(--card-foreground);
-
-    --color-popover: var(--popover);
-    --color-popover-foreground: var(--popover-foreground);
+    /* MultiBiz design tokens — docs/maquette/tokens.css is the source of truth. */
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-surface2: var(--surface2);
+    --color-border: var(--border);
+    --color-text: var(--text);
+    --color-text2: var(--text2);
+    --color-muted: var(--muted);
 
     --color-primary: var(--primary);
-    --color-primary-foreground: var(--primary-foreground);
+    --color-primary-foreground: #ffffff;
+    --color-primary-soft: var(--primary-soft);
+    --color-primary-text: var(--primary-text);
 
-    --color-secondary: var(--secondary);
-    --color-secondary-foreground: var(--secondary-foreground);
+    --color-pos: var(--pos);
+    --color-pos-soft: var(--pos-soft);
+    --color-neg: var(--neg);
+    --color-neg-soft: var(--neg-soft);
+    --color-warn: var(--warn);
+    --color-warn-soft: var(--warn-soft);
+    --color-slate-soft: var(--slate-soft);
+    --color-slate-text: var(--slate-text);
 
-    --color-muted: var(--muted);
-    --color-muted-foreground: var(--muted-foreground);
+    --color-chart: var(--chart);
+    --color-c1: var(--c1);
+    --color-c2: var(--c2);
+    --color-c3: var(--c3);
+    --color-b1: var(--b1);
+    --color-b2: var(--b2);
+    --color-b3: var(--b3);
+    --color-b4: var(--b4);
+    --color-b5: var(--b5);
+    --color-b6: var(--b6);
 
-    --color-accent: var(--accent);
-    --color-accent-foreground: var(--accent-foreground);
+    /* shadcn-era aliases, kept so components not yet rebuilt from the maquette
+       (auth/settings layouts, radix primitives) still render in the new palette. */
+    --color-background: var(--bg);
+    --color-foreground: var(--text);
+    --color-card: var(--surface);
+    --color-card-foreground: var(--text);
+    --color-popover: var(--surface);
+    --color-popover-foreground: var(--text);
+    --color-secondary: var(--surface2);
+    --color-secondary-foreground: var(--text);
+    --color-muted-foreground: var(--muted);
+    --color-accent: var(--surface2);
+    --color-accent-foreground: var(--text);
+    --color-destructive: var(--neg);
+    --color-destructive-foreground: var(--neg);
+    --color-input: var(--border);
+    --color-ring: var(--primary);
 
-    --color-destructive: var(--destructive);
-    --color-destructive-foreground: var(--destructive-foreground);
-
-    --color-border: var(--border);
-    --color-input: var(--input);
-    --color-ring: var(--ring);
-
-    --color-chart-1: var(--chart-1);
-    --color-chart-2: var(--chart-2);
-    --color-chart-3: var(--chart-3);
-    --color-chart-4: var(--chart-4);
-    --color-chart-5: var(--chart-5);
-
-    --color-sidebar: var(--sidebar);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar: var(--surface);
+    --color-sidebar-foreground: var(--text);
+    --color-sidebar-primary: var(--primary);
+    --color-sidebar-primary-foreground: #ffffff;
+    --color-sidebar-accent: var(--surface2);
+    --color-sidebar-accent-foreground: var(--text);
+    --color-sidebar-border: var(--border);
+    --color-sidebar-ring: var(--primary);
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.87 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
+    --bg: #f8fafc; /* fond de page */
+    --surface: #ffffff; /* cartes, barre latérale, barre du haut */
+    --surface2: #f1f5f9; /* rails de barres, segmented control */
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text2: #334155; /* texte secondaire, liens de navigation */
+    --muted: #64748b; /* méta, libellés, axes */
+
+    --primary: #2563eb; /* boutons principaux (toujours #2563EB, même en sombre) */
+    --primary-soft: #eff6ff; /* fonds sélectionnés, notes d'info */
+    --primary-text: #1d4ed8; /* liens, texte sur primary-soft, eyebrows « // » */
+
+    --chart: #2563eb; /* série principale des graphiques */
+    --heat: 37, 99, 235; /* rgb pour les aires : rgba(var(--heat), 0.10) */
+    --grid: rgba(15, 23, 42, 0.07); /* fond à points */
+
+    --pos: #047857;
+    --pos-soft: #ecfdf5; /* rentable, entrées d'argent */
+    --neg: #c2410c;
+    --neg-soft: #fff7ed; /* en perte, pertes, retard */
+    --warn: #a16207;
+    --warn-soft: #fef9c3; /* à surveiller, stock bas */
+    --slate-soft: #f1f5f9;
+    --slate-text: #334155; /* « Correct », notes, neutre */
+
+    --c1: #64748b;
+    --c2: #94a3b8;
+    --c3: #cbd5e1; /* gris de séries secondaires / postes de coût */
+
+    /* couleurs fixes par projet (réservées : une couleur = un projet) */
+    --b1: #d97706; /* ambre */
+    --b2: #db2777; /* rose */
+    --b3: #0891b2; /* cyan */
+    --b4: #7c3aed; /* violet */
+    --b5: #65a30d; /* olive */
+    --b6: #475569; /* ardoise */
+
+    --shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
+    --dot-grid: radial-gradient(var(--grid) 1px, transparent 1px);
+
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.87 0 0);
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.145 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.145 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.396 0.141 25.723);
-    --destructive-foreground: oklch(0.637 0.237 25.331);
-    --border: oklch(0.269 0 0);
-    --input: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.985 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.269 0 0);
-    --sidebar-ring: oklch(0.439 0 0);
+    --bg: #020617;
+    --surface: #0f172a;
+    --surface2: #1e293b;
+    --border: #1e293b;
+    --text: #f1f5f9;
+    --text2: #cbd5e1;
+    --muted: #94a3b8;
+
+    --primary-soft: rgba(59, 130, 246, 0.16);
+    --primary-text: #93c5fd;
+
+    --chart: #60a5fa;
+    --heat: 96, 165, 250;
+    --grid: rgba(148, 163, 184, 0.09);
+
+    --pos: #34d399;
+    --pos-soft: rgba(52, 211, 153, 0.13);
+    --neg: #fb923c;
+    --neg-soft: rgba(251, 146, 60, 0.13);
+    --warn: #facc15;
+    --warn-soft: rgba(250, 204, 21, 0.12);
+    --slate-soft: rgba(148, 163, 184, 0.14);
+    --slate-text: #cbd5e1;
+
+    --c1: #94a3b8;
+    --c2: #64748b;
+    --c3: #334155;
+
+    --b2: #e0569a; /* rose éclairci pour le contraste en sombre */
+    --b3: #0ea5c6; /* cyan éclairci */
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+html {
+    color-scheme: light;
+}
+
+html.dark {
+    color-scheme: dark;
+}
+
+.dot-grid {
+    background-image: var(--dot-grid);
+    background-size: 22px 22px;
+}
+
+.num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
 }
 
 @layer base {
@@ -138,6 +190,6 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply bg-bg text-text;
     }
 }

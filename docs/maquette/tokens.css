@@ -1,0 +1,76 @@
+/* MultiBiz — design tokens extraits de la maquette.
+   À coller dans resources/css/app.css. Le mode sombre s'active avec la classe .dark sur <html>. */
+
+:root {
+  --font-sans: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+
+  --bg: #F8FAFC;            /* fond de page */
+  --surface: #FFFFFF;       /* cartes, barre latérale, barre du haut */
+  --surface2: #F1F5F9;      /* rails de barres, segmented control */
+  --border: #E2E8F0;
+  --text: #0F172A;
+  --text2: #334155;         /* texte secondaire, liens de navigation */
+  --muted: #64748B;         /* méta, libellés, axes */
+
+  --primary: #2563EB;       /* boutons principaux (toujours #2563EB, même en sombre) */
+  --primary-soft: #EFF6FF;  /* fonds sélectionnés, notes d'info */
+  --primary-text: #1D4ED8;  /* liens, texte sur primary-soft, eyebrows « // » */
+
+  --chart: #2563EB;         /* série principale des graphiques */
+  --heat: 37, 99, 235;      /* rgb pour les aires : rgba(var(--heat), 0.10) */
+  --grid: rgba(15, 23, 42, 0.07); /* fond à points */
+
+  --pos: #047857;  --pos-soft: #ECFDF5;   /* rentable, entrées d'argent */
+  --neg: #C2410C;  --neg-soft: #FFF7ED;   /* en perte, pertes, retard */
+  --warn: #A16207; --warn-soft: #FEF9C3;  /* à surveiller, stock bas */
+  --slate-soft: #F1F5F9; --slate-text: #334155; /* « Correct », notes, neutre */
+
+  --c1: #64748B; --c2: #94A3B8; --c3: #CBD5E1; /* gris de séries secondaires / postes de coût */
+
+  /* couleurs fixes par projet (réservées : une couleur = un projet) */
+  --b1: #D97706;  /* ambre */
+  --b2: #DB2777;  /* rose */
+  --b3: #0891B2;  /* cyan */
+  --b4: #7C3AED;  /* violet */
+  --b5: #65A30D;  /* olive */
+  --b6: #475569;  /* ardoise */
+
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
+  --dot-grid: radial-gradient(var(--grid) 1px, transparent 1px);
+}
+
+.dark {
+  --bg: #020617;
+  --surface: #0F172A;
+  --surface2: #1E293B;
+  --border: #1E293B;
+  --text: #F1F5F9;
+  --text2: #CBD5E1;
+  --muted: #94A3B8;
+
+  --primary-soft: rgba(59, 130, 246, 0.16);
+  --primary-text: #93C5FD;
+
+  --chart: #60A5FA;
+  --heat: 96, 165, 250;
+  --grid: rgba(148, 163, 184, 0.09);
+
+  --pos: #34D399;  --pos-soft: rgba(52, 211, 153, 0.13);
+  --neg: #FB923C;  --neg-soft: rgba(251, 146, 60, 0.13);
+  --warn: #FACC15; --warn-soft: rgba(250, 204, 21, 0.12);
+  --slate-soft: rgba(148, 163, 184, 0.14); --slate-text: #CBD5E1;
+
+  --c1: #94A3B8; --c2: #64748B; --c3: #334155;
+
+  --b2: #E0569A;  /* rose éclairci pour le contraste en sombre */
+  --b3: #0EA5C6;  /* cyan éclairci */
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+html { color-scheme: light; }
+html.dark { color-scheme: dark; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+.dot-grid { background-image: var(--dot-grid); background-size: 22px 22px; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz mobile — Aujourd'hui</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="padding: 18px 20px 0; display: flex; align-items: center; gap: 8px">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)">// sam. 10 oct.</span>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.03em">Aujourd'hui</h1>
+    </div>
+    <a href="Mobile-Historique.dc.html" aria-label="Hors ligne, 3 flux en attente de synchronisation" style="box-sizing: border-box; text-decoration: none; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--neg-soft); color: var(--neg); font-size: 13px; font-weight: 600">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5"></path></svg>
+      3 en attente
+    </a>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+  </header>
+
+  <section aria-labelledby="m-todo" style="margin: 14px 20px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 12px 14px 4px; box-shadow: var(--shadow)">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 4px">
+      <h2 id="m-todo" style="margin: 0; font-size: 15px; font-weight: 700">À faire</h2>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">{{todoCount}}</span>
+    </div>
+    <sc-for list="{{todos}}" as="t" hint-placeholder-count="4">
+      <label style="display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--border); cursor: pointer; min-height: 30px">
+        <input type="checkbox" checked="{{t.done}}" onChange="{{t.toggle}}" style="margin: 0; width: 20px; height: 20px; accent-color: #2563EB; flex: none">
+        <span style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+          <span style="{{t.textStyle}}">{{t.text}}</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted)"><span style="width: 7px; height: 7px; border-radius: 2px; background: {{t.color}}"></span>{{t.meta}}</span>
+        </span>
+      </label>
+    </sc-for>
+  </section>
+
+  <section aria-label="Noter un flux" style="margin: 12px 20px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+    <a href="Mobile-Saisie.dc.html" style="box-sizing: border-box; height: 62px; border-radius: 14px; background: #2563EB; color: #FFFFFF; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Vente</a>
+    <a href="Mobile-Saisie.dc.html" style="box-sizing: border-box; height: 62px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--neg); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"></path></svg>Dépense</a>
+    <a href="Mobile-Saisie.dc.html" style="box-sizing: border-box; height: 62px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 4v16M3 8l4-4 4 4M17 20V4M21 16l-4 4-4-4"></path></svg>Effectif</a>
+    <a href="Mobile-Saisie.dc.html" style="box-sizing: border-box; height: 62px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--warn); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; font-weight: 600; text-decoration: none"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"></path></svg>Note</a>
+  </section>
+
+  <section aria-labelledby="m-proj" style="margin: 14px 20px 0; display: flex; flex-direction: column; gap: 8px">
+    <h2 id="m-proj" style="margin: 0; font-size: 15px; font-weight: 700">Mes projets aujourd'hui</h2>
+    <sc-for list="{{projects}}" as="p" hint-placeholder-count="3">
+      <a href="{{p.href}}" style="display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none">
+        <span style="{{p.avatar}}">{{p.ini}}</span>
+        <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 14.5px; font-weight: 600">{{p.name}}</span>
+          <span style="font-size: 12px; color: var(--muted)">{{p.meta}}</span>
+        </span>
+        <span style="{{p.valStyle}}">{{p.val}}</span>
+      </a>
+    </sc-for>
+  </section>
+
+  <nav aria-label="Navigation" style="margin-top: auto; background: var(--surface); border-top: 1px solid var(--border); padding: 8px 12px 22px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center">
+    <a href="Mobile-Accueil.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--primary-text); text-decoration: none; font-size: 11px; font-weight: 600">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>
+      Aujourd'hui
+    </a>
+    <a href="Mobile-Projets.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"></path></svg>
+      Projets
+    </a>
+    <div style="display: flex; justify-content: center">
+      <a href="Mobile-Saisie.dc.html" aria-label="Noter un flux" style="width: 54px; height: 54px; border-radius: 16px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; margin-top: -24px; box-shadow: 0 8px 20px rgba(37,99,235,0.35)">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </a>
+    </div>
+    <a href="Mobile-Historique.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      Historique
+    </a>
+    <a href="Web-Poche.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01"></path></svg>
+      Poche
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { done: { t2: true } };
+  }
+  renderVals() {
+    const dark = this.state.dark ?? ((this.props.theme ?? "dark") === "dark");
+    const s = this.state;
+    const todos = [
+      ["t1", "Vaccin Gumboro, bande 4", "Poulets · J21 · rappel automatique", "var(--b1)"],
+      ["t2", "Noter la ponte du matin", "Œufs · tous les jours", "var(--b2)"],
+      ["t3", "Expédier 2 coques iPhone 13", "Revente · vendu à 7 h", "var(--b3)"],
+      ["t4", "Racheter de l'aliment pondeuses", "Œufs · reste 2 jours", "var(--b2)"]
+    ].map(([id, text, meta, color]) => {
+      const done = !!s.done[id];
+      return { text, meta, color, done,
+        toggle: () => this.setState({ done: { ...this.state.done, [id]: !this.state.done[id] } }),
+        textStyle: "font-size: 14px; font-weight: 500; " + (done ? "text-decoration: line-through; color: var(--muted);" : "") };
+    });
+    const projects = [
+      ["pc", "Poulets de chair", "Bande 4 · J21 · 77 poulets", "−1 perte", "var(--b1)", "neg", "Mobile-Lot.dc.html"],
+      ["oe", "Œufs (pondeuses)", "Ponte 63 % · 36 œufs vendus", "+ 18 000", "var(--b2)", "pos", "Web-Projet-Effectif.dc.html"],
+      ["re", "Revente en ligne", "1 commande à expédier", "+ 24 000", "var(--b3)", "pos", "Web-Projet-Revente.dc.html"]
+    ].map(([ini, name, meta, val, color, tone, href]) => ({
+      ini, name, meta, val, href,
+      avatar: "flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: #FFFFFF; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; background: " + color,
+      valStyle: "flex: none; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; color: " + (tone === "pos" ? "var(--pos)" : "var(--neg)")
+    }));
+    return {
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      todos,
+      todoCount: todos.filter((t) => !t.done).length + " restantes",
+      projects
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz — Historique</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--chart:#2563EB;--heat:37,99,235;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--c1:#64748B;--c2:#94A3B8;--c3:#CBD5E1;--grid:rgba(15,23,42,0.07);--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--chart:#60A5FA;--heat:96,165,250;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--c1:#94A3B8;--c2:#64748B;--c3:#334155;--grid:rgba(148,163,184,0.09);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+.mb input,.mb select{color:var(--text)}
+.mb select{background:var(--surface)}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="display: flex; flex-wrap: wrap; min-height: 1320px; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif">
+
+<nav aria-label="Navigation principale" style="flex: 1 1 240px; box-sizing: border-box; padding: 22px 14px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 22px">
+  <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 0 10px; text-decoration: none; color: var(--text)">
+    <span style="width: 32px; height: 32px; border-radius: 9px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500">mb</span>
+    <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em">MultiBiz</span>
+  </a>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <span style="padding: 0 12px 6px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// piloter</span>
+    <sc-for list="{{navA}}" as="n" hint-placeholder-count="6">
+      <a href="{{n.href}}" aria-current="{{n.current}}" style="{{n.style}}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{n.icon}}"></path></svg>{{n.label}}</a>
+    </sc-for>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 12px 6px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// mes projets</span>
+      <a href="Web-Nouveau-Projet.dc.html" aria-label="Nouveau projet" style="box-sizing: border-box; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border)"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></a>
+    </div>
+    <sc-for list="{{projNav}}" as="p" hint-placeholder-count="3">
+      <a href="{{p.href}}" aria-current="{{p.current}}" style="{{p.style}}"><span style="{{p.dot}}"></span><span style="flex: 1; min-width: 0">{{p.name}}</span><span style="{{p.mStyle}}">{{p.m}}</span></a>
+    </sc-for>
+    <span style="padding: 6px 12px 0; font-size: 12px; color: var(--muted)">% du capital récupéré</span>
+  </div>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg)">
+    <span style="display: flex; align-items: center; gap: 7px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--neg)"></span>// chrono en cours</span>
+    <span style="font-size: 14px; font-weight: 600">Poulets de chair</span>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">00:42:10</span>
+      <button type="button" style="all: unset; cursor: pointer; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600">Arrêter</button>
+    </div>
+  </div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 36px; background: var(--surface); border-bottom: 1px solid var(--border)">
+    <div style="flex: 1 1 280px; max-width: 480px; display: flex; align-items: center; gap: 10px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--muted)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <label for="cmdk" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rechercher dans l'historique</label>
+      <input id="cmdk" type="search" placeholder="Rechercher : aliment, bande 3, coques…" style="flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 14px; outline: none">
+      <kbd style="font-family: 'Geist Mono', monospace; font-size: 11px; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--border); color: var(--muted)">⌘K</kbd>
+    </div>
+    <span style="margin-left: auto; display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 12.5px; font-weight: 500"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--pos)"></span>Synchronisé · il y a 2 min</span>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+    <a href="Web-Formulaires.dc.html" style="box-sizing: border-box; height: 40px; padding: 0 16px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; text-decoration: none"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Noter un flux</a>
+  </header>
+
+  <div style="flex: 1; box-sizing: border-box; padding: 28px 36px 48px; display: flex; flex-direction: column; gap: 18px; background-image: radial-gradient(var(--grid) 1px, transparent 1px); background-size: 22px 22px">
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--primary-text)">// historique · 1 284 flux depuis le 2 mars</span>
+        <h1 style="margin: 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -0.03em">Tout ce qui s'est passé</h1>
+      </div>
+      <div style="display: flex; gap: 8px">
+        <label for="h-period" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Période</label>
+        <select id="h-period" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); font: inherit; font-size: 13.5px"><option>Derniers jours</option><option>Ce mois</option><option>Depuis le début</option><option>Personnalisé…</option></select>
+        <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 40px; padding: 0 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); font-size: 13.5px; font-weight: 600; display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>Exporter CSV</button>
+      </div>
+    </div>
+
+    <section aria-label="Filtres" style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow)">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
+        <span style="width: 64px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">projet</span>
+        <sc-for list="{{projF}}" as="b" hint-placeholder-count="4">
+          <button type="button" aria-pressed="{{b.on}}" onClick="{{b.pick}}" style="{{b.style}}"><span style="{{b.dot}}"></span>{{b.label}}</button>
+        </sc-for>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
+        <span style="width: 64px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">type</span>
+        <sc-for list="{{typeF}}" as="t" hint-placeholder-count="7">
+          <button type="button" aria-pressed="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Résumé de la sélection" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px">
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Flux affichés</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">{{sum.count}}</span></div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Ventes</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500; color: var(--pos)">{{sum.in}}</span></div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Dépenses</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500; color: var(--neg)">{{sum.out}}</span></div>
+      <div style="background: #2563EB; color: #FFFFFF; border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12.5px; color: #EFF6FF">Résultat de la sélection</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">{{sum.net}}</span></div>
+    </section>
+
+    <section aria-label="Flux" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 6px 22px 16px; box-shadow: var(--shadow)">
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 8px">
+          <span style="font-size: 14px; font-weight: 700">{{g.day}}</span>
+          <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">{{g.n}}</span>
+        </div>
+        <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+            <span style="flex: none; width: 42px; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">{{r.time}}</span>
+            <span style="{{r.typeStyle}}">{{r.type}}</span>
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 14.5px; font-weight: 600">{{r.label}}</span>
+              <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted)"><span style="width: 7px; height: 7px; border-radius: 2px; background: {{r.color}}"></span>{{r.project}} · {{r.meta}}</span>
+            </span>
+            <span style="{{r.valueStyle}}">{{r.value}}</span>
+          </div>
+        </sc-for>
+      </sc-for>
+      <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 0; padding: 40px 0; text-align: center; font-size: 15px; color: var(--muted)">Aucun flux ne correspond à ces filtres.</p>
+      </sc-if>
+    </section>
+
+    <p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; padding: 14px 16px; border-radius: 12px; background: var(--primary-soft); font-size: 13.5px; line-height: 1.5">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex: none; margin-top: 2px; color: var(--primary-text)"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 018 0v4"></path></svg>
+      <span>Rien n'est jamais effacé. Corriger un flux ajoute une nouvelle ligne et l'original reste visible, pour que vos analyses portent toujours sur l'historique complet.</span>
+    </p>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1320}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { proj: "all", type: "all" };
+  }
+  renderVals() {
+    const ACTIVE = "Historique";
+    const ICON = {
+      over: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z",
+      ana: "M3 3v18h18M8 17V11M13 17V7M18 17v-4",
+      poche: "M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01",
+      hist: "M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+      task: "M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2h9",
+      gear: "M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"
+    };
+    const itemStyle = (on) => "display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; " + (on ? "background: var(--primary-soft); color: var(--primary-text); font-weight: 600;" : "color: var(--text2);");
+    const navA = [["Vue d'ensemble", "Main.dc.html", "over"], ["Analyse", "Web-Analyse.dc.html", "ana"], ["Ma poche", "Web-Poche.dc.html", "poche"], ["Historique", "Web-Historique.dc.html", "hist"], ["Tâches", "Web-Taches.dc.html", "task"], ["Paramètres", "Web-Parametres.dc.html", "gear"]].map(([label, href, icon]) => ({ label, href, icon: ICON[icon], current: label === ACTIVE ? "page" : "false", style: itemStyle(label === ACTIVE) }));
+    const projNav = [["Poulets de chair", "Web-Projet-Elevage.dc.html", "var(--b1)", "73 %", "var(--pos)"], ["Revente en ligne", "Web-Projet-Revente.dc.html", "var(--b3)", "84 %", "var(--warn)"], ["Œufs (pondeuses)", "Web-Projet-Effectif.dc.html", "var(--b2)", "0 %", "var(--primary-text)"]].map(([name, href, c, m, mc]) => ({
+      name, href, m, current: name === ACTIVE ? "page" : "false", style: itemStyle(name === ACTIVE),
+      dot: "flex: none; width: 9px; height: 9px; border-radius: 3px; background: " + c,
+      mStyle: "font-family: 'Geist Mono', monospace; font-size: 12px; color: " + mc
+    }));
+    const dark = this.state.dark ?? (this.props.theme === "dark");
+
+    const P = { pc: ["Poulets de chair", "var(--b1)"], oe: ["Œufs (pondeuses)", "var(--b2)"], re: ["Revente en ligne", "var(--b3)"] };
+    const T = {
+      vente: ["Vente", "var(--pos-soft)", "var(--pos)"],
+      depense: ["Dépense", "var(--neg-soft)", "var(--neg)"],
+      mouv: ["Effectif", "var(--slate-soft)", "var(--slate-text)"],
+      poche: ["Poche", "var(--primary-soft)", "var(--primary-text)"],
+      note: ["Note", "var(--warn-soft)", "var(--warn)"],
+      jalon: ["Jalon", "var(--primary-soft)", "var(--primary-text)"],
+      temps: ["Temps", "var(--slate-soft)", "var(--slate-text)"]
+    };
+    const data = [
+      ["Aujourd'hui · samedi 10 octobre", [
+        ["09:40", "mouv", "pc", "Perte : 1 poulet", "Bande 4 · effectif 77", -1, "poulet"],
+        ["08:15", "vente", "oe", "36 œufs vendus", "voisinage · espèces", 18000],
+        ["07:30", "mouv", "oe", "Ponte du jour : 19 œufs", "taux de ponte 63 %", 19, "œufs"],
+        ["07:00", "vente", "re", "2 coques iPhone 13", "Facebook · mobile money", 24000]
+      ]],
+      ["Vendredi 9 octobre", [
+        ["18:20", "depense", "re", "Réassort de 10 coques", "fournisseur · espèces", -45000],
+        ["16:00", "depense", "pc", "Aliment croissance, 2 sacs", "Bande 4", -64000],
+        ["14:00", "note", "pc", "3 sujets un peu faibles, surveiller l'eau", "Bande 4 · J20", null],
+        ["07:30", "mouv", "oe", "Ponte du jour : 18 œufs", "taux de ponte 60 %", 18, "œufs"]
+      ]],
+      ["Jeudi 8 octobre", [
+        ["19:10", "vente", "re", "Chargeur rapide", "client fidèle · espèces", 15000],
+        ["10:00", "depense", "oe", "Aliment pondeuses, 1 sac", "espèces", -40000],
+        ["08:00", "temps", "pc", "Nettoyage du poulailler", "saisi au chrono", "1 h 30"]
+      ]],
+      ["Mardi 30 septembre", [
+        ["18:00", "poche", "re", "Retrait vers ma poche", "récupération du capital", -150000]
+      ]],
+      ["Samedi 20 septembre", [
+        ["10:00", "jalon", "pc", "Bande de 80 au lieu de 60", "test de la capacité du poulailler", null],
+        ["09:30", "depense", "pc", "Achat de 80 poussins", "Bande 4 · couvoir", -200000]
+      ]]
+    ];
+    const s = this.state;
+    const fmt = (n) => Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    let cIn = 0, cOut = 0, count = 0;
+    const groups = data.map(([day, rows]) => {
+      const kept = rows.filter((r) => (s.proj === "all" || r[2] === s.proj) && (s.type === "all" || r[1] === s.type || (s.type === "notes" && (r[1] === "note" || r[1] === "jalon"))));
+      const out = kept.map(([time, t, p, label, meta, val, unit]) => {
+        count++;
+        let value = "", color = "var(--text2)";
+        if (typeof val === "number" && unit) { value = (val > 0 ? "+" : "−") + Math.abs(val) + " " + unit; }
+        else if (typeof val === "number") {
+          value = (val > 0 ? "+ " : "− ") + fmt(val) + " Ar";
+          if (t === "vente") { cIn += val; color = "var(--pos)"; }
+          else if (t === "depense") { cOut += -val; color = "var(--neg)"; }
+          else color = "var(--primary-text)";
+        } else if (typeof val === "string") value = val;
+        return {
+          time, label, meta, value, project: P[p][0], color: P[p][1], type: T[t][0],
+          typeStyle: "flex: none; width: 70px; text-align: center; font-size: 11.5px; font-weight: 600; padding: 3px 0; border-radius: 6px; background: " + T[t][1] + "; color: " + T[t][2],
+          valueStyle: "flex: none; min-width: 110px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; white-space: nowrap; color: " + color
+        };
+      });
+      return { day, rows: out, n: out.length + (out.length > 1 ? " flux" : " flux") };
+    }).filter((g) => g.rows.length > 0);
+    const chip = (on) => "all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; font-size: 13px; " + (on ? "background: var(--primary-soft); color: var(--primary-text); font-weight: 600; border: 1px solid transparent;" : "color: var(--text2); border: 1px solid var(--border);");
+    return {
+      navA, projNav,
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      projF: [["all", "Tous", ""], ["pc", "Poulets de chair", "var(--b1)"], ["oe", "Œufs", "var(--b2)"], ["re", "Revente en ligne", "var(--b3)"]].map(([k, label, c]) => ({
+        label, on: s.proj === k ? "true" : "false", style: chip(s.proj === k), pick: () => this.setState({ proj: k }),
+        dot: k === "all" ? "display: none" : "width: 8px; height: 8px; border-radius: 2px; background: " + c
+      })),
+      typeF: [["all", "Tout"], ["vente", "Ventes"], ["depense", "Dépenses"], ["mouv", "Effectifs et stock"], ["poche", "Poche"], ["notes", "Notes et jalons"], ["temps", "Temps"]].map(([k, label]) => ({
+        label, on: s.type === k ? "true" : "false", style: chip(s.type === k), pick: () => this.setState({ type: k })
+      })),
+      groups,
+      empty: groups.length === 0,
+      sum: { count: String(count), in: fmt(cIn) + " Ar", out: fmt(cOut) + " Ar", net: (cIn - cOut >= 0 ? "+ " : "− ") + fmt(cIn - cOut) + " Ar" }
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz — Ressources, Poulets de chair</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--chart:#2563EB;--heat:37,99,235;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--c1:#64748B;--c2:#94A3B8;--c3:#CBD5E1;--grid:rgba(15,23,42,0.07);--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--chart:#60A5FA;--heat:96,165,250;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--c1:#94A3B8;--c2:#64748B;--c3:#334155;--grid:rgba(148,163,184,0.09);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+.mb input,.mb select{color:var(--text)}
+.mb select{background:var(--surface)}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="display: flex; flex-wrap: wrap; min-height: 1560px; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif">
+
+<nav aria-label="Navigation principale" style="flex: 1 1 240px; box-sizing: border-box; padding: 22px 14px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 22px">
+  <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 0 10px; text-decoration: none; color: var(--text)">
+    <span style="width: 32px; height: 32px; border-radius: 9px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500">mb</span>
+    <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em">MultiBiz</span>
+  </a>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <span style="padding: 0 12px 6px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// piloter</span>
+    <sc-for list="{{navA}}" as="n" hint-placeholder-count="6">
+      <a href="{{n.href}}" aria-current="{{n.current}}" style="{{n.style}}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{n.icon}}"></path></svg>{{n.label}}</a>
+    </sc-for>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 12px 6px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// mes projets</span>
+      <a href="Web-Nouveau-Projet.dc.html" aria-label="Nouveau projet" style="box-sizing: border-box; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border)"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></a>
+    </div>
+    <sc-for list="{{projNav}}" as="p" hint-placeholder-count="3">
+      <a href="{{p.href}}" aria-current="{{p.current}}" style="{{p.style}}"><span style="{{p.dot}}"></span><span style="flex: 1; min-width: 0">{{p.name}}</span><span style="{{p.mStyle}}">{{p.m}}</span></a>
+    </sc-for>
+    <span style="padding: 6px 12px 0; font-size: 12px; color: var(--muted)">% du capital récupéré</span>
+  </div>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg)">
+    <span style="display: flex; align-items: center; gap: 7px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--neg)"></span>// chrono en cours</span>
+    <span style="font-size: 14px; font-weight: 600">Poulets de chair</span>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">00:42:10</span>
+      <button type="button" style="all: unset; cursor: pointer; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600">Arrêter</button>
+    </div>
+  </div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 36px; background: var(--surface); border-bottom: 1px solid var(--border)">
+    <div style="flex: 1 1 280px; max-width: 480px; display: flex; align-items: center; gap: 10px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--muted)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <label for="cmdk" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rechercher ou noter</label>
+      <input id="cmdk" type="search" placeholder="Rechercher ou noter : « 2 sacs provende 32000 »…" style="flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 14px; outline: none">
+      <kbd style="font-family: 'Geist Mono', monospace; font-size: 11px; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--border); color: var(--muted)">⌘K</kbd>
+    </div>
+    <span style="margin-left: auto; display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 12.5px; font-weight: 500"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--pos)"></span>Synchronisé · il y a 2 min</span>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+    <a href="Web-Formulaires.dc.html" style="box-sizing: border-box; height: 40px; padding: 0 16px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; text-decoration: none"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Noter un flux</a>
+  </header>
+
+  <div style="flex: 1; box-sizing: border-box; padding: 24px 36px 48px; display: flex; flex-direction: column; gap: 20px; background-image: radial-gradient(var(--grid) 1px, transparent 1px); background-size: 22px 22px">
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <a href="Main.dc.html" style="font-family: 'Geist Mono', monospace; font-size: 12.5px; text-decoration: none">← // mes projets</a>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div aria-hidden="true" style="width: 56px; height: 56px; border-radius: 14px; background: var(--b1); color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">pc</div>
+          <div style="display: flex; flex-direction: column; gap: 7px">
+            <h1 style="margin: 0; font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.03em">Poulets de chair</h1>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--muted)">
+              <span style="font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--pos-soft); color: var(--pos)">Rentable</span>
+              <span style="font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--text2)">Élevage par lots</span>
+              <span>stock propre au projet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div aria-label="Sections du projet" style="display: flex; gap: 4px; border-bottom: 1px solid var(--border); overflow-x: auto">
+        <a href="Web-Projet-Elevage.dc.html" style="padding: 11px 14px; font-size: 14.5px; color: var(--text2); text-decoration: none; white-space: nowrap">Vue d'ensemble</a>
+        <a href="Web-Projet-Elevage.dc.html" style="padding: 11px 14px; font-size: 14.5px; color: var(--text2); text-decoration: none; white-space: nowrap">Lots</a>
+        <a href="Web-Projet-Ressources.dc.html" aria-current="page" style="padding: 11px 14px; font-size: 14.5px; font-weight: 600; color: var(--primary-text); text-decoration: none; border-bottom: 2px solid #2563EB; white-space: nowrap">Ressources</a>
+        <a href="Web-Projet-Plan.dc.html" style="padding: 11px 14px; font-size: 14.5px; color: var(--text2); text-decoration: none; white-space: nowrap">Planifier</a>
+        <a href="Web-Historique.dc.html" style="padding: 11px 14px; font-size: 14.5px; color: var(--text2); text-decoration: none; white-space: nowrap">Historique</a>
+        <a href="Web-Projet-Reglages.dc.html" style="padding: 11px 14px; font-size: 14.5px; color: var(--text2); text-decoration: none; white-space: nowrap">Réglages</a>
+      </div>
+    </div>
+
+    <section aria-label="Indicateurs" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px">
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Valeur du stock restant</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">{{k.stock}}</span><span style="font-size: 12px; color: var(--muted)">au prix d'achat moyen</span></div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Acheté en octobre</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">{{k.oct}}</span><span style="font-size: 12px; color: var(--muted)">compté en dépense le jour de l'achat</span></div>
+      <div style="background: #2563EB; color: #FFFFFF; border-radius: 14px; padding: 15px 16px; display: flex; flex-direction: column; gap: 5px"><span style="font-size: 12.5px; color: #EFF6FF">Consommé par la bande 4</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">{{k.used}}</span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: #EFF6FF">{{k.perBird}} par poulet</span></div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 15px 16px; display: flex; flex-direction: column; gap: 5px; box-shadow: var(--shadow)"><span style="font-size: 12.5px; color: var(--muted)">Alertes</span><span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500; color: var(--warn)">{{k.alerts}}</span><span style="font-size: 12px; color: var(--muted)">à racheter ou à prévoir</span></div>
+    </section>
+
+    <section aria-labelledby="buy-title" style="background: var(--surface); border: 1.5px solid #2563EB; border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px">
+        <h2 id="buy-title" style="margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.02em">Noter un achat</h2>
+        <span style="font-size: 13px; color: var(--muted)">Le stock augmente, et une dépense est ajoutée à l'historique.</span>
+      </div>
+      <form onSubmit="{{buy}}" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end">
+        <label style="flex: 2 1 220px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text2)">Ressource
+          <select value="{{form.res}}" onChange="{{onRes}}" style="height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); font: inherit; font-size: 14px; font-weight: 400">
+            <sc-for list="{{options}}" as="o" hint-placeholder-count="9"><option value="{{o.id}}">{{o.label}}</option></sc-for>
+          </select>
+        </label>
+        <label style="flex: 1 1 100px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text2)">Quantité
+          <input type="number" min="0" value="{{form.qty}}" onChange="{{onQty}}" style="box-sizing: border-box; height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
+        </label>
+        <span aria-hidden="true" style="padding-bottom: 11px; font-family: 'Geist Mono', monospace; color: var(--muted)">×</span>
+        <label style="flex: 1 1 140px; display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text2)">Prix unitaire (Ar)
+          <input type="number" min="0" step="500" value="{{form.price}}" onChange="{{onPrice}}" style="box-sizing: border-box; height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
+        </label>
+        <span aria-hidden="true" style="padding-bottom: 11px; font-family: 'Geist Mono', monospace; color: var(--muted)">=</span>
+        <div style="flex: 1 1 150px; display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 12.5px; font-weight: 600; color: var(--text2)">Total</span>
+          <span style="height: 42px; display: flex; align-items: center; padding: 0 12px; border-radius: 10px; background: var(--primary-soft); color: var(--primary-text); font-family: 'Geist Mono', monospace; font-size: 15px; font-weight: 500">{{form.total}}</span>
+        </div>
+        <button type="submit" style="all: unset; cursor: pointer; box-sizing: border-box; height: 42px; padding: 0 18px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 14px; font-weight: 600">Enregistrer l'achat</button>
+      </form>
+      <span style="font-size: 12.5px; color: var(--muted)">{{form.hint}}</span>
+    </section>
+
+    <section aria-labelledby="stock-title" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px 12px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px">
+        <h2 id="stock-title" style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Stock du projet</h2>
+        <span style="font-size: 13px; color: var(--muted)">« Utiliser » retire 1 unité du stock et ajoute son coût à la bande 4.</span>
+      </div>
+      <div style="overflow-x: auto">
+        <div style="min-width: 900px">
+          <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 0.9fr 0.9fr 1.4fr 0.7fr 1.2fr 0.8fr; gap: 12px; padding: 10px 0; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted); border-bottom: 1px solid var(--border)">
+            <span>ressource</span><span>catégorie</span><span style="text-align: right">acheté</span><span style="text-align: right">prix moyen</span><span>reste</span><span style="text-align: right">tient</span><span>statut</span><span></span>
+          </div>
+          <sc-for list="{{items}}" as="i" hint-placeholder-count="9">
+            <div style="display: grid; grid-template-columns: 1.8fr 0.8fr 0.9fr 0.9fr 1.4fr 0.7fr 1.2fr 0.8fr; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 14px">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">{{i.name}}</span><span style="font-size: 12px; color: var(--muted)">{{i.unit}}</span></span>
+              <span><span style="font-size: 12px; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--border); color: var(--text2)">{{i.cat}}</span></span>
+              <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px">{{i.bought}}</span>
+              <span style="{{i.priceStyle}}">{{i.price}}</span>
+              <span style="display: flex; align-items: center; gap: 8px"><span style="flex: 1; height: 7px; border-radius: 999px; background: var(--surface2)"><span style="{{i.bar}}"></span></span><span style="width: 52px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 12.5px">{{i.left}}</span></span>
+              <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px">{{i.days}}</span>
+              <span><span style="{{i.badgeStyle}}">{{i.status}}</span></span>
+              <span style="text-align: right">
+                <button type="button" onClick="{{i.use}}" disabled="{{i.cannotUse}}" style="{{i.useStyle}}">Utiliser</button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start">
+      <section aria-labelledby="cost-title" style="flex: 1 1 420px; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow)">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h2 id="cost-title" style="margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.02em">Ce que la bande 4 a coûté, par poste</h2>
+          <span style="font-size: 13px; line-height: 1.5; color: var(--muted)">Calculé à partir des ressources utilisées, pas des achats : c'est le vrai coût du lot.</span>
+        </div>
+        <div style="display: flex; gap: 2px; height: 16px">
+          <sc-for list="{{posts}}" as="p" hint-placeholder-count="4"><span title="{{p.title}}" style="{{p.seg}}"></span></sc-for>
+        </div>
+        <sc-for list="{{posts}}" as="p" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+            <span style="{{p.dot}}"></span>
+            <span style="flex: 1">{{p.name}}</span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: var(--muted)">{{p.pct}}</span>
+            <span style="width: 100px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px">{{p.value}}</span>
+          </div>
+        </sc-for>
+      </section>
+
+      <section aria-labelledby="jr-title" style="flex: 1 1 420px; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 2px; box-shadow: var(--shadow)">
+        <h2 id="jr-title" style="margin: 0 0 8px; font-size: 16px; font-weight: 700; letter-spacing: -0.02em">Journal des ressources</h2>
+        <sc-for list="{{journal}}" as="j" hint-placeholder-count="5">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--border)">
+            <span style="flex: none; width: 72px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">{{j.date}}</span>
+            <span style="{{j.typeStyle}}">{{j.type}}</span>
+            <span style="flex: 1; min-width: 0; font-size: 13.5px">{{j.text}}</span>
+            <span style="{{j.amountStyle}}">{{j.amount}}</span>
+          </div>
+        </sc-for>
+      </section>
+    </div>
+
+    <section aria-labelledby="eq-title" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px">
+        <h2 id="eq-title" style="margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.02em">Équipement</h2>
+        <span style="font-size: 13px; color: var(--muted)">Compté dans le capital du projet, pas dans le coût des lots</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+        <sc-for list="{{equip}}" as="e" hint-placeholder-count="4">
+          <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border)">
+            <span style="font-size: 14px; font-weight: 600">{{e.name}}</span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 13px">{{e.value}}</span>
+            <span style="font-size: 12px; color: var(--muted)">{{e.state}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light"},"$preview":{"width":1440,"height":1560}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [
+        { id: "dem", name: "Provende démarrage", unit: "sac de 50 kg", cat: "Aliment", bought: 3, used: 3, cost: 108000, last: 36000, perDay: 0, plan: "" },
+        { id: "cro", name: "Provende croissance", unit: "sac de 50 kg", cat: "Aliment", bought: 2, used: 1, cost: 64000, last: 32000, perDay: 0.2, plan: "" },
+        { id: "fin", name: "Provende finition", unit: "sac de 50 kg", cat: "Aliment", bought: 0, used: 0, cost: 0, last: 33000, perDay: 0, plan: "3 sacs avant le 24 oct." },
+        { id: "pou", name: "Poussins chair", unit: "poussin d'un jour", cat: "Animaux", bought: 80, used: 80, cost: 200000, last: 2500, perDay: 0, plan: "" },
+        { id: "new", name: "Vaccin Newcastle", unit: "flacon de 100 doses", cat: "Soins", bought: 2, used: 1, cost: 6000, last: 3000, perDay: 0, plan: "" },
+        { id: "gum", name: "Vaccin Gumboro", unit: "flacon de 100 doses", cat: "Soins", bought: 1, used: 0, cost: 6000, last: 6000, perDay: 0, plan: "" },
+        { id: "vit", name: "Vitamines", unit: "sachet de 100 g", cat: "Soins", bought: 4, used: 3, cost: 8000, last: 2000, perDay: 0.33, plan: "" },
+        { id: "ant", name: "Antibiotique préventif", unit: "flacon", cat: "Soins", bought: 1, used: 1, cost: 11000, last: 11000, perDay: 0, plan: "" },
+        { id: "lit", name: "Litière (copeaux)", unit: "sac", cat: "Litière", bought: 2, used: 2, cost: 10000, last: 5000, perDay: 0, plan: "" }
+      ],
+      octBought: 70000,
+      form: { res: "fin", qty: "3", price: "33000" },
+      journal: [
+        { date: "auj. 07:00", kind: "usage", text: "1 sac de provende croissance → bande 4", amount: 32000 },
+        { date: "hier 16:00", kind: "achat", text: "2 sacs de provende croissance × 32 000", amount: 64000 },
+        { date: "8 oct.", kind: "achat", text: "1 flacon de vaccin Gumboro × 6 000", amount: 6000 },
+        { date: "7 oct.", kind: "usage", text: "1 sachet de vitamines → bande 4", amount: 2000 },
+        { date: "4 oct.", kind: "usage", text: "1 flacon d'antibiotique → bande 4", amount: 11000 }
+      ]
+    };
+  }
+  renderVals() {
+    const ACTIVE = "Poulets de chair";
+    const ICON = {
+      over: "M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z",
+      ana: "M3 3v18h18M8 17V11M13 17V7M18 17v-4",
+      poche: "M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01",
+      hist: "M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+      task: "M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2h9",
+      gear: "M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"
+    };
+    const itemStyle = (on) => "display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; " + (on ? "background: var(--primary-soft); color: var(--primary-text); font-weight: 600;" : "color: var(--text2);");
+    const navA = [["Vue d'ensemble", "Main.dc.html", "over"], ["Analyse", "Web-Analyse.dc.html", "ana"], ["Ma poche", "Web-Poche.dc.html", "poche"], ["Historique", "Web-Historique.dc.html", "hist"], ["Tâches", "Web-Taches.dc.html", "task"], ["Paramètres", "Web-Parametres.dc.html", "gear"]].map(([label, href, icon]) => ({ label, href, icon: ICON[icon], current: label === ACTIVE ? "page" : "false", style: itemStyle(label === ACTIVE) }));
+    const projNav = [["Poulets de chair", "Web-Projet-Elevage.dc.html", "var(--b1)", "73 %", "var(--pos)"], ["Revente en ligne", "Web-Projet-Revente.dc.html", "var(--b3)", "84 %", "var(--warn)"], ["Œufs (pondeuses)", "Web-Projet-Effectif.dc.html", "var(--b2)", "0 %", "var(--primary-text)"]].map(([name, href, c, m, mc]) => ({
+      name, href, m, current: name === ACTIVE ? "page" : "false", style: itemStyle(name === ACTIVE),
+      dot: "flex: none; width: 9px; height: 9px; border-radius: 3px; background: " + c,
+      mStyle: "font-family: 'Geist Mono', monospace; font-size: 12px; color: " + mc
+    }));
+    const s = this.state;
+    const dark = s.dark ?? (this.props.theme === "dark");
+
+    const fmt = (n) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const avg = (i) => i.bought ? i.cost / i.bought : i.last;
+    const shortUnit = (u) => u.split(" ")[0];
+    const low = (n) => n.charAt(0).toLowerCase() + n.slice(1);
+    let stockValue = 0, usedValue = 0, alerts = 0;
+    const byCat = {};
+    const items = s.items.map((i) => {
+      const left = i.bought - i.used;
+      const a = avg(i);
+      stockValue += left * a;
+      usedValue += i.used * a;
+      byCat[i.cat] = (byCat[i.cat] || 0) + i.used * a;
+      const days = i.perDay && left > 0 ? Math.floor(left / i.perDay) : null;
+      let st;
+      if (i.bought === 0 && i.plan) st = ["À prévoir · " + i.plan, "var(--primary-soft)", "var(--primary-text)", true];
+      else if (left === 0) st = ["Épuisé", "var(--slate-soft)", "var(--slate-text)", false];
+      else if (days !== null && days < 7) st = ["Bientôt vide", "var(--warn-soft)", "var(--warn)", true];
+      else st = ["En stock", "var(--pos-soft)", "var(--pos)", false];
+      if (st[3]) alerts++;
+      const up = i.bought > 0 && i.last > a + 1;
+      return {
+        name: i.name, unit: i.unit, cat: i.cat,
+        bought: i.bought + " " + shortUnit(i.unit) + (i.bought > 1 ? "s" : ""),
+        price: fmt(a) + (up ? " ↑" : ""),
+        priceStyle: "text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px; color: " + (up ? "var(--neg)" : "var(--text)"),
+        left: left + " / " + i.bought,
+        bar: "display: block; height: 100%; border-radius: 999px; background: " + st[2] + "; width: " + (i.bought ? (left / i.bought * 100).toFixed(1) : 0) + "%",
+        days: days === null ? "—" : days + " j",
+        status: st[0],
+        badgeStyle: "font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; background: " + st[1] + "; color: " + st[2],
+        cannotUse: left <= 0,
+        useStyle: "all: unset; cursor: " + (left > 0 ? "pointer" : "not-allowed") + "; padding: 6px 11px; border-radius: 8px; font-size: 12.5px; font-weight: 600; " + (left > 0 ? "background: var(--primary-soft); color: var(--primary-text);" : "color: var(--muted); opacity: 0.5;"),
+        use: () => {
+          if (left <= 0) return;
+          this.setState((st2) => ({
+            items: st2.items.map((x) => x.id === i.id ? { ...x, used: x.used + 1 } : x),
+            journal: [{ date: "à l'instant", kind: "usage", text: "1 " + shortUnit(i.unit) + " de " + low(i.name) + " → bande 4", amount: a }, ...st2.journal].slice(0, 7)
+          }));
+        }
+      };
+    });
+    const CAT_COLOR = { "Animaux": "var(--c1)", "Aliment": "var(--chart)", "Soins": "var(--c2)", "Litière": "var(--c3)" };
+    const catOrder = ["Animaux", "Aliment", "Soins", "Litière"];
+    const posts = catOrder.map((c, idx) => {
+      const v = byCat[c] || 0;
+      const pct = usedValue ? v / usedValue * 100 : 0;
+      return {
+        name: c, value: fmt(v) + " Ar", pct: Math.round(pct) + " %",
+        title: c + " : " + fmt(v) + " Ar",
+        dot: "width: 10px; height: 10px; border-radius: 3px; background: " + CAT_COLOR[c],
+        seg: "display: block; height: 100%; width: " + pct.toFixed(1) + "%; background: " + CAT_COLOR[c] + "; border-radius: " + (idx === 0 ? "4px 0 0 4px" : idx === catOrder.length - 1 ? "0 4px 4px 0" : "0")
+      };
+    });
+    const f = s.form;
+    const sel = s.items.find((x) => x.id === f.res);
+    const q = parseFloat(f.qty) || 0, p = parseFloat(f.price) || 0;
+    const buy = (e) => {
+      if (e && e.preventDefault) e.preventDefault();
+      if (q <= 0 || p <= 0) return;
+      this.setState((st2) => ({
+        items: st2.items.map((x) => x.id === f.res ? { ...x, bought: x.bought + q, cost: x.cost + q * p, last: p, plan: "" } : x),
+        octBought: st2.octBought + q * p,
+        journal: [{ date: "à l'instant", kind: "achat", text: q + " " + (sel ? shortUnit(sel.unit) : "") + (q > 1 ? "s" : "") + " de " + (sel ? low(sel.name) : "") + " × " + fmt(p), amount: q * p }, ...st2.journal].slice(0, 7),
+        form: { ...st2.form, qty: "1" }
+      }));
+    };
+    const priceDiff = sel && sel.bought ? (p - avg(sel)) / avg(sel) * 100 : 0;
+    const T = { achat: ["Achat", "var(--neg-soft)", "var(--neg)"], usage: ["Utilisé", "var(--primary-soft)", "var(--primary-text)"] };
+    return {
+      navA, projNav,
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      k: { stock: fmt(stockValue) + " Ar", oct: fmt(s.octBought) + " Ar", used: fmt(usedValue) + " Ar", perBird: fmt(usedValue / 77) + " Ar", alerts: String(alerts) },
+      options: s.items.map((x) => ({ id: x.id, label: x.name + " · " + x.unit })),
+      form: {
+        res: f.res, qty: f.qty, price: f.price,
+        total: fmt(q * p) + " Ar",
+        hint: sel && sel.bought && Math.abs(priceDiff) >= 1 ? "Prix " + (priceDiff > 0 ? "supérieur" : "inférieur") + " de " + Math.abs(Math.round(priceDiff)) + " % à votre prix moyen (" + fmt(avg(sel)) + " Ar)." : "Dernier prix payé : " + (sel ? fmt(sel.last) : "—") + " Ar."
+      },
+      onRes: (e) => { const it = this.state.items.find((x) => x.id === e.target.value); this.setState({ form: { ...this.state.form, res: e.target.value, price: it ? String(it.last) : this.state.form.price } }); },
+      onQty: (e) => this.setState({ form: { ...this.state.form, qty: e.target.value } }),
+      onPrice: (e) => this.setState({ form: { ...this.state.form, price: e.target.value } }),
+      buy,
+      items, posts,
+      journal: s.journal.map((j) => ({
+        date: j.date, text: j.text, type: T[j.kind][0],
+        typeStyle: "flex: none; width: 62px; text-align: center; font-size: 11.5px; font-weight: 600; padding: 3px 0; border-radius: 6px; background: " + T[j.kind][1] + "; color: " + T[j.kind][2],
+        amount: (j.kind === "achat" ? "− " : "") + fmt(j.amount) + " Ar",
+        amountStyle: "flex: none; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; white-space: nowrap; color: " + (j.kind === "achat" ? "var(--neg)" : "var(--text2)")
+      })),
+      equip: [
+        { name: "Poulailler", value: "450 000 Ar", state: "construit en mars · bon état" },
+        { name: "Mangeoires × 6", value: "60 000 Ar", state: "1 à remplacer d'ici décembre" },
+        { name: "Abreuvoirs × 6", value: "48 000 Ar", state: "bon état" },
+        { name: "Éclairage et chauffage", value: "92 000 Ar", state: "ampoule changée le 2 sept." }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

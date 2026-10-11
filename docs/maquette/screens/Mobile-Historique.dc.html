@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>MultiBiz mobile — Historique</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</helmet>
+<div class="mb {{themeClass}}" style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="padding: 18px 20px 0; display: flex; align-items: center; gap: 8px">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)">// tout ce qui a été noté</span>
+      <h1 style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.03em">Historique</h1>
+    </div>
+    <span style="{{chip.style}}">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="{{chip.icon}}"></path></svg>
+      {{chip.label}}
+    </span>
+    <button type="button" aria-label="{{themeLabel}}" onClick="{{toggleTheme}}" style="all: unset; cursor: pointer; box-sizing: border-box; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); display: grid; place-items: center; color: var(--text2)">
+      <sc-if value="{{isDark}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+      <sc-if value="{{isLight}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg></sc-if>
+    </button>
+  </header>
+
+  <div style="margin: 12px 20px 0; display: flex; align-items: center; gap: 10px; height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface)">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--muted)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+    <label for="mh-q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rechercher</label>
+    <input id="mh-q" type="search" placeholder="œufs, provende, coques…" style="flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 15px; outline: none">
+  </div>
+
+  <div role="group" aria-label="Filtrer par type" style="margin: 10px 0 0; padding: 0 20px; display: flex; gap: 6px; overflow-x: auto">
+    <sc-for list="{{filters}}" as="f" hint-placeholder-count="5"><button type="button" aria-pressed="{{f.on}}" onClick="{{f.pick}}" style="{{f.style}}">{{f.label}}</button></sc-for>
+  </div>
+
+  <div style="{{banner.style}}">
+    <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13.5px; font-weight: 600">{{banner.title}}</span><span style="font-size: 12px; color: var(--muted)">{{banner.sub}}</span></span>
+    <sc-if value="{{banner.canRetry}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{retry}}" style="all: unset; cursor: pointer; box-sizing: border-box; height: 36px; padding: 0 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); font-size: 13px; font-weight: 600">Réessayer</button></sc-if>
+  </div>
+
+  <div style="flex: 1; min-height: 0; overflow-y: auto; padding: 4px 20px 12px">
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+      <div style="display: flex; flex-direction: column">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0 6px">
+          <span style="font-size: 13px; font-weight: 700">{{g.day}}</span>
+          <span style="{{g.totalStyle}}">{{g.total}}</span>
+        </div>
+        <sc-for list="{{g.items}}" as="i" hint-placeholder-count="5">
+          <div style="display: flex; align-items: flex-start; gap: 11px; padding: 10px 0; border-top: 1px solid var(--border)">
+            <span style="{{i.typeStyle}}">{{i.type}}</span>
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 14px; font-weight: 500">{{i.text}}</span>
+              <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted)">
+                <span style="width: 7px; height: 7px; border-radius: 2px; background: {{i.color}}"></span>{{i.meta}}
+                <sc-if value="{{i.pending}}" hint-placeholder-val="{{ false }}"><span style="display: flex; align-items: center; gap: 4px; color: var(--warn); font-weight: 600"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5"></path></svg>en attente</span></sc-if>
+              </span>
+            </span>
+            <span style="{{i.amountStyle}}">{{i.amount}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-for>
+    <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; padding: 24px 0; text-align: center; font-size: 14px; color: var(--muted)">Rien de ce type sur ces 3 jours.</p></sc-if>
+  </div>
+
+  <nav aria-label="Navigation" style="background: var(--surface); border-top: 1px solid var(--border); padding: 8px 12px 22px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: center">
+    <a href="Mobile-Accueil.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path></svg>
+      Aujourd'hui
+    </a>
+    <a href="Mobile-Projets.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"></path></svg>
+      Projets
+    </a>
+    <div style="display: flex; justify-content: center">
+      <a href="Mobile-Saisie.dc.html" aria-label="Noter un flux" style="width: 54px; height: 54px; border-radius: 16px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; margin-top: -24px; box-shadow: 0 8px 20px rgba(37,99,235,0.35)">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </a>
+    </div>
+    <a href="Mobile-Historique.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--primary-text); text-decoration: none; font-size: 11px; font-weight: 600">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      Historique
+    </a>
+    <a href="Web-Poche.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: var(--muted); text-decoration: none; font-size: 11px">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01"></path></svg>
+      Poche
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"dark"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: "all", synced: false };
+  }
+  renderVals() {
+    const s = this.state;
+    const dark = s.dark ?? ((this.props.theme ?? "dark") === "dark");
+    const fmt = (n) => Math.round(Math.abs(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const P = { pc: ["Poulets", "var(--b1)"], rv: ["Revente", "var(--b3)"], oe: ["Œufs", "var(--b2)"] };
+    const T = {
+      vente: ["Vente", "var(--pos-soft)", "var(--pos)", "ventes"],
+      depense: ["Dépense", "var(--neg-soft)", "var(--neg)", "depenses"],
+      usage: ["Utilisé", "var(--primary-soft)", "var(--primary-text)", "depenses"],
+      ponte: ["Ponte", "var(--slate-soft)", "var(--slate-text)", "eff"],
+      effectif: ["Effectif", "var(--warn-soft)", "var(--warn)", "eff"],
+      note: ["Note", "var(--slate-soft)", "var(--slate-text)", "notes"]
+    };
+    const DAYS = [
+      ["Aujourd'hui · sam. 10 oct.", [
+        ["17:10", "ponte", "oe", "19 œufs ramassés", "19 œufs", true],
+        ["16:40", "vente", "oe", "36 œufs à l'épicerie", 18000, true],
+        ["16:20", "note", "pc", "31 °C l'après-midi, 3e abreuvoir ajouté", "", true],
+        ["07:20", "effectif", "pc", "1 poulet mort, bande 4", "− 1", false, "noté par Hery"],
+        ["07:05", "vente", "rv", "2 coques iPhone 13", 24000, false],
+        ["07:00", "usage", "pc", "1 sac de provende croissance → bande 4", -32000, false]
+      ]],
+      ["Hier · ven. 9 oct.", [
+        ["17:05", "ponte", "oe", "18 œufs ramassés", "18 œufs", false],
+        ["15:30", "vente", "oe", "6 œufs aux voisins", 3000, false],
+        ["10:15", "depense", "pc", "2 sacs de provende croissance, mis en stock", -64000, false],
+        ["09:40", "depense", "rv", "Livraison d'un colis", -4000, false]
+      ]],
+      ["jeu. 8 oct.", [
+        ["17:00", "ponte", "oe", "17 œufs ramassés", "17 œufs", false],
+        ["11:20", "vente", "oe", "12 œufs au marché", 6000, false],
+        ["08:10", "depense", "oe", "10 plateaux à œufs", -5000, false]
+      ]]
+    ];
+    const FILTERS = [["all", "Tout"], ["ventes", "Ventes"], ["depenses", "Dépenses"], ["eff", "Ponte et effectif"], ["notes", "Notes"]];
+    const filters = FILTERS.map(([id, label]) => ({
+      label, on: s.filter === id ? "true" : "false",
+      pick: () => this.setState({ filter: id }),
+      style: "all: unset; cursor: pointer; flex: none; box-sizing: border-box; height: 34px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; " + (s.filter === id ? "background: var(--primary-soft); color: var(--primary-text); box-shadow: inset 0 0 0 1.5px #2563EB;" : "border: 1px solid var(--border); color: var(--text2); background: var(--surface);")
+    }));
+    const groups = DAYS.map(([day, rows]) => {
+      const items = rows.filter((r) => s.filter === "all" || T[r[1]][3] === s.filter).map(([time, kind, p, text, a, pend, who]) => {
+        const num = typeof a === "number";
+        return {
+          type: T[kind][0], text, color: P[p][1],
+          meta: P[p][0] + " · " + time + (who ? " · " + who : ""),
+          pending: pend && !s.synced,
+          typeStyle: "flex: none; width: 60px; margin-top: 1px; text-align: center; font-size: 11px; font-weight: 600; padding: 3px 0; border-radius: 6px; background: " + T[kind][1] + "; color: " + T[kind][2],
+          amount: num ? (a > 0 ? "+ " : "− ") + fmt(a) : a,
+          amountStyle: "flex: none; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; white-space: nowrap; color: " + (num && a > 0 ? "var(--pos)" : kind === "effectif" ? "var(--neg)" : "var(--text2)")
+        };
+      });
+      const net = rows.filter((r) => typeof r[4] === "number" && r[1] !== "usage").reduce((t, r) => t + r[4], 0);
+      return {
+        day, items, n: items.length,
+        total: "caisse " + (net >= 0 ? "+ " : "− ") + fmt(net),
+        totalStyle: "font-family: 'Geist Mono', monospace; font-size: 12px; color: " + (net >= 0 ? "var(--pos)" : "var(--muted)")
+      };
+    }).filter((g) => g.n > 0);
+    return {
+      themeClass: dark ? "dark" : "light",
+      isDark: dark, isLight: !dark,
+      themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
+      toggleTheme: () => this.setState({ dark: !dark }),
+      filters, groups, empty: groups.length === 0,
+      retry: () => this.setState({ synced: true }),
+      chip: s.synced
+        ? { label: "À jour", icon: "M5 12l5 5L20 7", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 13px; font-weight: 600" }
+        : { label: "3 en attente", icon: "M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--neg-soft); color: var(--neg); font-size: 13px; font-weight: 600" },
+      banner: s.synced
+        ? { title: "Tout est synchronisé", sub: "Les 3 flux sont partis. Visibles sur l'ordinateur et par Hery.", canRetry: false, style: "margin: 12px 20px 0; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: var(--pos-soft); border: 1px solid var(--border)" }
+        : { title: "Hors ligne depuis 16:10", sub: "3 flux gardés sur le téléphone. Ils partiront seuls dès que le réseau revient.", canRetry: true, style: "margin: 12px 20px 0; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: var(--warn-soft); border: 1px solid var(--border)" }
+    };
+  }
+}
+</script>
+</body>
+</html>
