@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Identity\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -47,4 +48,9 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function apiToken(User $user): string
+{
+    return $user->createToken('test')->plainTextToken;
 }

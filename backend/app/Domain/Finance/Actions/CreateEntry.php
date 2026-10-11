@@ -11,9 +11,23 @@ use Illuminate\Support\Carbon;
 
 class CreateEntry
 {
-    public function handle(Project $project, EntryData $data, ?User $actor = null, ?string $deviceId = null): Entry
+    /**
+     * $id lets a client (the mobile sync API) generate the entry's UUID itself and
+     * replay the same request safely: posting the same id twice returns the entry
+     * created the first time instead of creating a duplicate — see rule 4 of
+     * docs/audit-architecture.md ("écriture idempotente").
+     */
+    public function handle(Project $project, EntryData $data, ?User $actor = null, ?string $deviceId = null, ?string $id = null): Entry
     {
-        return Entry::create([
+        if ($id !== null) {
+            $existing = Entry::find($id);
+
+            if ($existing !== null) {
+                return $existing;
+            }
+        }
+
+        $entry = new Entry([
             'organization_id' => $project->organization_id,
             'project_id' => $project->id,
             'batch_id' => $data->batch_id,
@@ -32,6 +46,14 @@ class CreateEntry
             'created_by' => $actor?->id,
             'device_id' => $deviceId,
         ]);
+
+        if ($id !== null) {
+            $entry->id = $id;
+        }
+
+        $entry->save();
+
+        return $entry;
     }
 
     /**
