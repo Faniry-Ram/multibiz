@@ -18,7 +18,7 @@ import { useCurrentUrl } from '@/hooks/use-current-url';
 import { toUrl } from '@/lib/utils';
 import { analysis, dashboard, history, pocket, tasks } from '@/routes';
 import { edit as editProfile } from '@/routes/profile';
-import { index as projectsIndex } from '@/routes/projects';
+import { create as createProject } from '@/routes/projects';
 import type { BreadcrumbItem } from '@/types';
 
 const SYNC_LABELS: Record<string, string> = {
@@ -125,7 +125,7 @@ export default function AppLayout({
         <div className="flex min-h-screen bg-bg text-text">
             <NavSidebar
                 navItems={navItems}
-                newProjectHref={toUrl(projectsIndex())}
+                newProjectHref={toUrl(createProject())}
                 projects={sidebarProjects.map((project) => ({
                     name: project.name,
                     href: project.href,

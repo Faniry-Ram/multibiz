@@ -38,7 +38,9 @@ test('an owner can create a project for their organization', function () {
         'color' => '#D97706',
     ]);
 
-    $response->assertRedirect(route('projects.index'));
+    $project = Project::where('organization_id', $organization->id)->where('name', 'Poulets de chair')->firstOrFail();
+
+    $response->assertRedirect(route('projects.show', $project));
 
     $this->assertDatabaseHas('projects', [
         'organization_id' => $organization->id,

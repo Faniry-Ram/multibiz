@@ -19,6 +19,7 @@ final readonly class Money implements JsonSerializable
      */
     private const MINOR_UNIT_EXPONENTS = [
         'MGA' => 0,
+        'XOF' => 0,
         'EUR' => 2,
         'USD' => 2,
     ];

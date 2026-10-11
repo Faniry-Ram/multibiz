@@ -6,10 +6,11 @@ use App\Domain\Analytics\Services\BatchStats;
 use App\Domain\Finance\Models\Category;
 use App\Domain\Finance\Models\Entry;
 use App\Domain\Project\Actions\ArchiveProject;
-use App\Domain\Project\Actions\CreateProject;
+use App\Domain\Project\Actions\CreateProjectFromWizard;
 use App\Domain\Project\Actions\UnarchiveProject;
 use App\Domain\Project\Actions\UpdateProject;
 use App\Domain\Project\Data\ProjectData;
+use App\Domain\Project\Enums\ProjectModel;
 use App\Domain\Project\Models\Batch;
 use App\Domain\Project\Models\Project;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ use App\Http\Web\Requests\StoreProjectRequest;
 use App\Http\Web\Requests\UpdateProjectRequest;
 use App\Support\Money;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -119,19 +121,44 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function store(StoreProjectRequest $request, CreateProject $action): RedirectResponse
+    public function create(): Response
     {
         Gate::authorize('create', Project::class);
 
-        $action->handle(
+        $usedColors = Project::query()
+            ->where('organization_id', auth()->user()->organization()->id)
+            ->whereNotNull('color')
+            ->pluck('color');
+
+        return Inertia::render('projects/create', [
+            'usedColors' => $usedColors,
+        ]);
+    }
+
+    public function store(StoreProjectRequest $request, CreateProjectFromWizard $action): RedirectResponse
+    {
+        Gate::authorize('create', Project::class);
+
+        $data = $request->validated();
+
+        $project = $action->handle(
             $request->user()->organization(),
-            ProjectData::from($request->validated()),
-            $request->user(),
+            new ProjectData(
+                name: $data['name'],
+                model: ProjectModel::from($data['model']),
+                color: $data['color'] ?? null,
+                started_on: isset($data['started_on']) ? Carbon::parse($data['started_on']) : null,
+                description: $data['description'] ?? null,
+            ),
+            unit: $data['unit'] ?? null,
+            capital: isset($data['capital']) ? (float) $data['capital'] : null,
+            note: $data['note'] ?? null,
+            actor: $request->user(),
         );
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Projet créé.')]);
 
-        return to_route('projects.index');
+        return to_route('projects.show', $project);
     }
 
     public function update(UpdateProjectRequest $request, Project $project, UpdateProject $action): RedirectResponse

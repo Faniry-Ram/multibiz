@@ -94,4 +94,12 @@ class Project extends Model
     {
         return $this->hasMany(Batch::class);
     }
+
+    /**
+     * @return HasMany<Milestone, $this>
+     */
+    public function milestones(): HasMany
+    {
+        return $this->hasMany(Milestone::class);
+    }
 }

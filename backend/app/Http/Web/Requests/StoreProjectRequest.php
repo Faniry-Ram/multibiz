@@ -19,6 +19,9 @@ class StoreProjectRequest extends FormRequest
             'color' => ['nullable', 'string', 'max:7'],
             'started_on' => ['nullable', 'date'],
             'description' => ['nullable', 'string', 'max:2000'],
+            'unit' => ['nullable', 'string', 'max:50'],
+            'capital' => ['nullable', 'numeric', 'min:0'],
+            'note' => ['nullable', 'string', 'max:2000'],
         ];
     }
 }
