@@ -37,6 +37,21 @@ test('creates an entry for a project', function () {
         ->and($entry->version)->toBeGreaterThan(0);
 });
 
+test('a sale entry\'s amount is always computed as quantity times unit price', function () {
+    $project = Project::factory()->create();
+    $category = Category::factory()->create(['project_id' => $project->id, 'kind' => CategoryKind::Income]);
+
+    $entry = app(CreateEntry::class)->handle($project, new EntryData(
+        type: EntryType::Sale,
+        occurred_at: Carbon::parse('2026-01-15'),
+        category_id: $category->id,
+        quantity: 41,
+        unit_price: 13_000,
+    ));
+
+    expect($entry->amount)->toBe(41 * 13_000);
+});
+
 test('an entry can never be updated', function () {
     $entry = Entry::factory()->create(['amount' => 1_000]);
 

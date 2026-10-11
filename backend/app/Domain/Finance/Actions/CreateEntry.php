@@ -3,6 +3,7 @@
 namespace App\Domain\Finance\Actions;
 
 use App\Domain\Finance\Data\EntryData;
+use App\Domain\Finance\Enums\EntryType;
 use App\Domain\Finance\Models\Entry;
 use App\Domain\Identity\Models\User;
 use App\Domain\Project\Models\Project;
@@ -18,7 +19,7 @@ class CreateEntry
             'batch_id' => $data->batch_id,
             'category_id' => $data->category_id,
             'type' => $data->type,
-            'amount' => $data->amount,
+            'amount' => $this->resolveAmount($data),
             'quantity' => $data->quantity,
             'unit_price' => $data->unit_price,
             'unit' => $data->unit,
@@ -31,5 +32,19 @@ class CreateEntry
             'created_by' => $actor?->id,
             'device_id' => $deviceId,
         ]);
+    }
+
+    /**
+     * A sale's amount is always quantity × unit price — callers never compute it
+     * themselves, so the rule can't drift between the web controller, the seeder, and
+     * the future sync API.
+     */
+    private function resolveAmount(EntryData $data): ?int
+    {
+        if ($data->type === EntryType::Sale && $data->quantity !== null && $data->unit_price !== null) {
+            return (int) round($data->quantity * $data->unit_price);
+        }
+
+        return $data->amount;
     }
 }

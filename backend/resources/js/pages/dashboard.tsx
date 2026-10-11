@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { dashboard } from '@/routes';
 import { index as projectsIndex, show } from '@/routes/projects';
 
+type Verdict = 'starting' | 'profitable' | 'watch' | 'loss';
+
 type ProjectSummary = {
     id: string;
     name: string;
@@ -14,6 +16,9 @@ type ProjectSummary = {
     expense_formatted: string;
     balance_formatted: string;
     balance_is_positive: boolean;
+    verdict: Verdict;
+    cumulative_result_formatted: string;
+    capital_recovered_percent: number;
 };
 
 type RecentEntry = {
@@ -23,6 +28,27 @@ type RecentEntry = {
     type: string;
     amount_formatted: string | null;
     occurred_at: string;
+};
+
+type Pocket = {
+    out_formatted: string;
+    in_formatted: string;
+    still_committed_formatted: string;
+    available_formatted: string;
+};
+
+const VERDICT_LABELS: Record<Verdict, string> = {
+    starting: 'En démarrage',
+    profitable: 'Profitable',
+    watch: 'À surveiller',
+    loss: 'En perte',
+};
+
+const VERDICT_VARIANTS: Record<Verdict, 'secondary' | 'outline'> = {
+    starting: 'outline',
+    profitable: 'secondary',
+    watch: 'outline',
+    loss: 'outline',
 };
 
 function formatPeriod(isoDate: string): string {
@@ -44,10 +70,12 @@ export default function Dashboard({
     period_start,
     projects,
     recentEntries,
+    pocket,
 }: {
     period_start: string;
     projects: ProjectSummary[];
     recentEntries: RecentEntry[];
+    pocket: Pocket;
 }) {
     return (
         <>
@@ -81,7 +109,7 @@ export default function Dashboard({
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {projects.map((project) => (
                             <Card key={project.id}>
-                                <CardHeader>
+                                <CardHeader className="flex flex-row items-start justify-between gap-2">
                                     <CardTitle>
                                         <Link
                                             href={show(project.id)}
@@ -99,6 +127,13 @@ export default function Dashboard({
                                             {project.name}
                                         </Link>
                                     </CardTitle>
+                                    <Badge
+                                        variant={
+                                            VERDICT_VARIANTS[project.verdict]
+                                        }
+                                    >
+                                        {VERDICT_LABELS[project.verdict]}
+                                    </Badge>
                                 </CardHeader>
                                 <CardContent className="space-y-1.5">
                                     <div className="flex items-center justify-between text-sm">
@@ -119,7 +154,7 @@ export default function Dashboard({
                                     </div>
                                     <div className="flex items-center justify-between border-t pt-1.5 text-sm">
                                         <span className="text-muted-foreground">
-                                            Résultat
+                                            Solde du mois
                                         </span>
                                         <span
                                             className={
@@ -131,10 +166,54 @@ export default function Dashboard({
                                             {project.balance_formatted}
                                         </span>
                                     </div>
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                            Résultat cumulé
+                                        </span>
+                                        <span className="font-medium">
+                                            {
+                                                project.cumulative_result_formatted
+                                            }
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span className="text-muted-foreground">
+                                            Capital récupéré
+                                        </span>
+                                        <span className="font-medium">
+                                            {project.capital_recovered_percent}%
+                                        </span>
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}
                     </div>
+                )}
+
+                {projects.length > 0 && (
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Ma poche</CardTitle>
+                        </CardHeader>
+                        <CardContent className="grid gap-4 sm:grid-cols-4">
+                            <PocketStat
+                                label="Sorti de ma poche"
+                                value={pocket.out_formatted}
+                            />
+                            <PocketStat
+                                label="Revenu dans ma poche"
+                                value={pocket.in_formatted}
+                            />
+                            <PocketStat
+                                label="Encore engagé"
+                                value={pocket.still_committed_formatted}
+                            />
+                            <PocketStat
+                                label="Disponible dans les projets"
+                                value={pocket.available_formatted}
+                            />
+                        </CardContent>
+                    </Card>
                 )}
 
                 {projects.length > 0 && (
@@ -191,10 +270,19 @@ export default function Dashboard({
     );
 }
 
+function PocketStat({ label, value }: { label: string; value: string }) {
+    return (
+        <div className="space-y-1">
+            <p className="text-sm text-muted-foreground">{label}</p>
+            <p className="text-lg font-semibold">{value}</p>
+        </div>
+    );
+}
+
 Dashboard.layout = {
     breadcrumbs: [
         {
-            title: 'Tableau de bord',
+            title: "Vue d'ensemble",
             href: dashboard(),
         },
     ],

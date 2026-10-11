@@ -29,14 +29,7 @@ class EntryController extends Controller
 
         $quantity = isset($data['quantity']) ? (float) $data['quantity'] : null;
         $unitPrice = isset($data['unit_price']) ? Money::fromMajorUnits((float) $data['unit_price'], $currency)->amount : null;
-
-        $amount = match ($type) {
-            EntryType::Sale => $quantity !== null && $unitPrice !== null ? (int) round($quantity * $unitPrice) : null,
-            EntryType::Expense, EntryType::Investment, EntryType::OwnerIn, EntryType::OwnerOut => isset($data['amount'])
-                ? Money::fromMajorUnits((float) $data['amount'], $currency)->amount
-                : null,
-            default => null,
-        };
+        $amount = isset($data['amount']) ? Money::fromMajorUnits((float) $data['amount'], $currency)->amount : null;
 
         $action->handle($project, new EntryData(
             type: $type,
