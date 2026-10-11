@@ -1,13 +1,15 @@
 import { Form, Head, Link, setLayoutProps } from '@inertiajs/react';
-import { ArrowLeft, MoreHorizontal, Plus } from 'lucide-react';
+import { ArrowLeft, Lock, MoreHorizontal, Plus } from 'lucide-react';
 import { useState } from 'react';
-import EntryController from '@/actions/App/Http/Web/Controllers/EntryController';
+import BatchController from '@/actions/App/Http/Web/Controllers/BatchController';
+import CategoryController from '@/actions/App/Http/Web/Controllers/CategoryController';
+import { BatchFormDialog } from '@/components/batch-form-dialog';
 import {
     CategoryFormDialog,
     type Category,
 } from '@/components/category-form-dialog';
-import CategoryController from '@/actions/App/Http/Web/Controllers/CategoryController';
 import { EntryFormDialog, type Entry } from '@/components/entry-form-dialog';
+import { EntryRow } from '@/components/entry-row';
 import Heading from '@/components/heading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -46,15 +48,22 @@ type Project = {
     currency: string;
 };
 
-const TYPE_LABELS: Record<Entry['type'], string> = {
-    sale: 'Vente',
-    expense: 'Dépense',
-    investment: 'Investissement',
-    owner_in: 'Apport',
-    owner_out: 'Retrait',
-    headcount: 'Effectif',
-    production: 'Production',
-    note: 'Note',
+type Batch = {
+    id: string;
+    number: number;
+    name: string | null;
+    started_on: string;
+    planned_end_on: string | null;
+    closed_on: string | null;
+    initial_headcount: number;
+    alive: number;
+    deaths: number;
+    sold: number;
+    loss_rate: number;
+    cost_formatted: string;
+    sales_formatted: string;
+    margin_formatted: string;
+    cost_per_sold_formatted: string | null;
 };
 
 function formatDate(isoDate: string): string {
@@ -67,10 +76,12 @@ export default function ProjectShow({
     project,
     categories,
     entries,
+    batches,
 }: {
     project: Project;
     categories: Category[];
     entries: Paginated<Entry>;
+    batches: Batch[];
 }) {
     setLayoutProps({
         breadcrumbs: [
@@ -81,12 +92,15 @@ export default function ProjectShow({
 
     const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
     const [createEntryOpen, setCreateEntryOpen] = useState(false);
+    const [openBatchOpen, setOpenBatchOpen] = useState(false);
 
     const incomeCategories = categories.filter((c) => c.kind === 'income');
     const expenseCategories = categories.filter((c) => c.kind === 'expense');
     const investmentCategories = categories.filter(
         (c) => c.kind === 'investment',
     );
+
+    const openBatches = batches.filter((b) => b.closed_on === null);
 
     return (
         <>
@@ -108,6 +122,33 @@ export default function ProjectShow({
                         />
                     </div>
                 </div>
+
+                {project.model === 'lots' && (
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <CardTitle>Lots</CardTitle>
+                            <Button
+                                size="sm"
+                                onClick={() => setOpenBatchOpen(true)}
+                                disabled={openBatches.length > 0}
+                            >
+                                <Plus />
+                                Ouvrir une bande
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="space-y-2">
+                            {batches.length === 0 ? (
+                                <p className="text-sm text-muted-foreground">
+                                    Aucune bande pour l'instant.
+                                </p>
+                            ) : (
+                                batches.map((batch) => (
+                                    <BatchRow key={batch.id} batch={batch} />
+                                ))
+                            )}
+                        </CardContent>
+                    </Card>
+                )}
 
                 <Card>
                     <CardHeader className="flex flex-row items-center justify-between">
@@ -239,6 +280,15 @@ export default function ProjectShow({
                 onOpenChange={setCreateEntryOpen}
                 project={project}
                 categories={categories}
+                batches={openBatches.map((b) => ({
+                    id: b.id,
+                    label: `Bande ${b.number}${b.name ? ` — ${b.name}` : ''}`,
+                }))}
+            />
+            <BatchFormDialog
+                open={openBatchOpen}
+                onOpenChange={setOpenBatchOpen}
+                project={project}
             />
         </>
     );
@@ -340,73 +390,60 @@ function CategoryRow({
     );
 }
 
-function EntryRow({ entry }: { entry: Entry }) {
-    const [reverseOpen, setReverseOpen] = useState(false);
-    const isReversal = !!entry.reverses_entry_id;
+function BatchRow({ batch }: { batch: Batch }) {
+    const [closeOpen, setCloseOpen] = useState(false);
+    const isClosed = batch.closed_on !== null;
 
     return (
-        <div className="flex items-center justify-between gap-2 rounded-md border px-3 py-2">
-            <div className="flex flex-1 flex-wrap items-center gap-3">
-                <span className="w-24 shrink-0 text-sm text-muted-foreground">
-                    {formatDate(entry.occurred_at)}
-                </span>
-                <Badge variant="secondary">{TYPE_LABELS[entry.type]}</Badge>
-                {entry.category_name && (
-                    <Badge variant="outline">{entry.category_name}</Badge>
-                )}
-                {isReversal && <Badge variant="outline">Correction</Badge>}
-                {entry.note && (
-                    <span className="truncate text-sm text-muted-foreground">
-                        {entry.note}
-                    </span>
-                )}
-            </div>
-
-            <div className="flex items-center gap-3">
-                {entry.amount_formatted && (
+        <div className="flex flex-col gap-2 rounded-md border p-3">
+            <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">
-                        {entry.amount_formatted}
+                        Bande {batch.number}
+                        {batch.name ? ` — ${batch.name}` : ''}
                     </span>
-                )}
-                {entry.quantity !== null && (
-                    <span className="text-sm text-muted-foreground">
-                        {entry.quantity} {entry.unit}
-                    </span>
-                )}
-
-                {!isReversal && (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="size-7"
-                            >
-                                <MoreHorizontal className="size-4" />
-                                <span className="sr-only">Actions</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                                onClick={() => setReverseOpen(true)}
-                            >
-                                Corriger (flux inverse)
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Badge variant={isClosed ? 'outline' : 'secondary'}>
+                        {isClosed
+                            ? `Clôturée le ${formatDate(batch.closed_on!)}`
+                            : `Ouverte le ${formatDate(batch.started_on)}`}
+                    </Badge>
+                </div>
+                {!isClosed && (
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setCloseOpen(true)}
+                    >
+                        <Lock />
+                        Clôturer
+                    </Button>
                 )}
             </div>
 
-            <Dialog open={reverseOpen} onOpenChange={setReverseOpen}>
+            <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4 lg:grid-cols-7">
+                <Stat label="Départ" value={String(batch.initial_headcount)} />
+                <Stat label="En vie" value={String(batch.alive)} />
+                <Stat
+                    label="Morts"
+                    value={`${batch.deaths} (${batch.loss_rate}%)`}
+                />
+                <Stat label="Vendus" value={String(batch.sold)} />
+                <Stat label="Coût" value={batch.cost_formatted} />
+                <Stat label="Ventes" value={batch.sales_formatted} />
+                <Stat label="Marge" value={batch.margin_formatted} />
+            </div>
+
+            <Dialog open={closeOpen} onOpenChange={setCloseOpen}>
                 <DialogContent>
-                    <DialogTitle>Corriger ce flux ?</DialogTitle>
+                    <DialogTitle>
+                        Clôturer la bande {batch.number} ?
+                    </DialogTitle>
                     <DialogDescription>
-                        Un flux inverse sera enregistré pour annuler son effet.
-                        Le flux original reste dans l'historique : rien n'est
-                        modifié ni supprimé.
+                        Son historique reste visible. Vous pourrez toujours
+                        corriger un flux par flux inverse ensuite.
                     </DialogDescription>
                     <Form
-                        {...EntryController.reverse.form(entry.id)}
+                        {...BatchController.close.form(batch.id)}
                         options={{ preserveScroll: true }}
                     >
                         {({ processing }) => (
@@ -415,13 +452,22 @@ function EntryRow({ entry }: { entry: Entry }) {
                                     <Button variant="secondary">Annuler</Button>
                                 </DialogClose>
                                 <Button type="submit" disabled={processing}>
-                                    Confirmer
+                                    Clôturer
                                 </Button>
                             </DialogFooter>
                         )}
                     </Form>
                 </DialogContent>
             </Dialog>
+        </div>
+    );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+    return (
+        <div>
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="font-medium">{value}</p>
         </div>
     );
 }

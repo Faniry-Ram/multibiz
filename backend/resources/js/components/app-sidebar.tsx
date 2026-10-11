@@ -1,5 +1,12 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, Layers, LayoutGrid, Wallet } from 'lucide-react';
+import {
+    BookOpen,
+    FolderGit2,
+    History,
+    Layers,
+    LayoutGrid,
+    Wallet,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -13,7 +20,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, pocket } from '@/routes';
+import { dashboard, history, pocket } from '@/routes';
 import { index as projectsIndex } from '@/routes/projects';
 import type { NavItem } from '@/types';
 
@@ -32,6 +39,11 @@ const mainNavItems: NavItem[] = [
         title: 'Ma poche',
         href: pocket(),
         icon: Wallet,
+    },
+    {
+        title: 'Historique',
+        href: history(),
+        icon: History,
     },
 ];
 

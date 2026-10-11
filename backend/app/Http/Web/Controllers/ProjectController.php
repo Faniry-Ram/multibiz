@@ -2,6 +2,7 @@
 
 namespace App\Http\Web\Controllers;
 
+use App\Domain\Analytics\Services\BatchStats;
 use App\Domain\Finance\Models\Category;
 use App\Domain\Finance\Models\Entry;
 use App\Domain\Project\Actions\ArchiveProject;
@@ -9,6 +10,7 @@ use App\Domain\Project\Actions\CreateProject;
 use App\Domain\Project\Actions\UnarchiveProject;
 use App\Domain\Project\Actions\UpdateProject;
 use App\Domain\Project\Data\ProjectData;
+use App\Domain\Project\Models\Batch;
 use App\Domain\Project\Models\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Web\Requests\StoreProjectRequest;
@@ -42,7 +44,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function show(Project $project): Response
+    public function show(Project $project, BatchStats $batchStats): Response
     {
         Gate::authorize('view', $project);
 
@@ -77,6 +79,31 @@ class ProjectController extends Controller
                 'reverses_entry_id' => $entry->reverses_entry_id,
             ]);
 
+        $batches = $project->batches()
+            ->orderByDesc('number')
+            ->get()
+            ->map(function (Batch $batch) use ($batchStats, $currency) {
+                $stats = $batchStats->forBatch($batch);
+
+                return [
+                    'id' => $batch->id,
+                    'number' => $batch->number,
+                    'name' => $batch->name,
+                    'started_on' => $batch->started_on->toDateString(),
+                    'planned_end_on' => $batch->planned_end_on?->toDateString(),
+                    'closed_on' => $batch->closed_on?->toDateString(),
+                    'initial_headcount' => $batch->initial_headcount,
+                    'alive' => $stats['alive'],
+                    'deaths' => $stats['deaths'],
+                    'sold' => $stats['sold'],
+                    'loss_rate' => round($stats['loss_rate']),
+                    'cost_formatted' => (new Money($stats['cost'], $currency))->format(),
+                    'sales_formatted' => (new Money($stats['sales'], $currency))->format(),
+                    'margin_formatted' => (new Money($stats['margin'], $currency))->format(),
+                    'cost_per_sold_formatted' => $stats['cost_per_sold'] !== null ? (new Money($stats['cost_per_sold'], $currency))->format() : null,
+                ];
+            });
+
         return Inertia::render('projects/show', [
             'project' => [
                 'id' => $project->id,
@@ -88,6 +115,7 @@ class ProjectController extends Controller
             ],
             'categories' => $categories,
             'entries' => $entries,
+            'batches' => $batches,
         ]);
     }
 
