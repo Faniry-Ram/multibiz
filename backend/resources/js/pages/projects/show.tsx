@@ -283,6 +283,7 @@ export default function ProjectShow({
                 batches={openBatches.map((b) => ({
                     id: b.id,
                     label: `Bande ${b.number}${b.name ? ` — ${b.name}` : ''}`,
+                    alive: b.alive,
                 }))}
             />
             <BatchFormDialog

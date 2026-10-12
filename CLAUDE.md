@@ -126,5 +126,11 @@ forward into Phase 3, since the schema change made it unavoidable; the UI for it
 "Organization name" field on `/register`) is bare-bones English for now — full French copy is
 still Phase 4 work.
 
-No web UI exists yet for businesses/categories/transactions/dashboard (Phase 4), and the
-dashboard page is still the starter kit's placeholder.
+Phase 4's web UI for businesses, categories, transactions, and the dashboard is built:
+`App\Http\Web\Controllers\{Business,Category,Transaction,Dashboard}Controller`, routes in
+`routes/{businesses,finance}.php`, pages under `resources/js/pages/{businesses,dashboard.tsx}`.
+Categories and transactions have no index/show routes of their own — they're managed inline on
+the business `show` page. The dashboard aggregates the current month's income/expense/balance per
+business via `App\Domain\Finance\Queries\DashboardStats`, plus a recent-transactions list; it has
+no period picker yet (always "this month") and no charts. The "Organization name" field on
+`/register` is still bare-bones English — full French copy there remains open.
