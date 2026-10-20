@@ -12,4 +12,18 @@ enum ProjectModel: string
     case Herd = 'herd';
     case Resale = 'resale';
     case Simple = 'simple';
+
+    /**
+     * French display label, per the model choice cards in
+     * resources/js/pages/projects/create.tsx (`MODELS`) — keep the two in sync.
+     */
+    public function label(): string
+    {
+        return match ($this) {
+            self::Lots => 'Élevage par lots',
+            self::Herd => 'Élevage par effectif',
+            self::Resale => 'Revente avec stock',
+            self::Simple => 'Projet simple',
+        };
+    }
 }

@@ -87,7 +87,7 @@ export default function Register({ passwordRules }: Props) {
                                 passwordrules={passwordRules}
                             />
                             <span className="text-xs text-muted">
-                                8 caractères minimum.
+                                8 caractères minimum, dont un chiffre.
                             </span>
                             <InputError message={errors.password} />
                         </div>

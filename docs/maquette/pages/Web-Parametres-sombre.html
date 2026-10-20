@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MultiBiz — Paramètres (sombre)</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--chart:#2563EB;--heat:37,99,235;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--c1:#64748B;--c2:#94A3B8;--c3:#CBD5E1;--grid:rgba(15,23,42,0.07);--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--chart:#60A5FA;--heat:96,165,250;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--c1:#94A3B8;--c2:#64748B;--c3:#334155;--grid:rgba(148,163,184,0.09);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+.mb input,.mb select{color:var(--text)}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="mb dark" style="display: flex; flex-wrap: wrap; min-height: 1250px; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif">
+
+<nav aria-label="Navigation principale" style="flex: 1 1 240px; box-sizing: border-box; padding: 22px 14px; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 22px">
+  <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 0 10px; text-decoration: none; color: var(--text)">
+    <span style="width: 32px; height: 32px; border-radius: 9px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500">mb</span>
+    <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em">MultiBiz</span>
+  </a>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <span style="padding: 0 12px 6px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// piloter</span>
+    
+      <a href="Main.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"></path></svg><span data-dyn="">Vue d'ensemble</span></a>
+    
+      <a href="Web-Analyse.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M8 17V11M13 17V7M18 17v-4"></path></svg><span data-dyn="">Analyse</span></a>
+    
+      <a href="Web-Poche.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4M3 7v10a2 2 0 002 2h16V9H5a2 2 0 01-2-2zM16 14h.01"></path></svg><span data-dyn="">Ma poche</span></a>
+    
+      <a href="Web-Historique.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg><span data-dyn="">Historique</span></a>
+    
+      <a href="Web-Taches.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2h9"></path></svg><span data-dyn="">Tâches</span></a>
+    
+      <a href="Web-Parametres.dc.html" aria-current="page" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; background: var(--primary-soft); color: var(--primary-text); font-weight: 600;"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"></path></svg><span data-dyn="">Paramètres</span></a>
+    
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 12px 6px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// mes projets</span>
+      <a href="Web-Nouveau-Projet.dc.html" aria-label="Nouveau projet" style="box-sizing: border-box; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border)"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></a>
+    </div>
+    
+      <a href="Web-Projet-Elevage.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><span style="flex: none; width: 9px; height: 9px; border-radius: 3px; background: var(--b1)"></span><span style="flex: 1; min-width: 0"><span data-dyn="">Poulets de chair</span></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--pos)"><span data-dyn="">73 %</span></span></a>
+    
+      <a href="Web-Projet-Revente.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><span style="flex: none; width: 9px; height: 9px; border-radius: 3px; background: var(--b3)"></span><span style="flex: 1; min-width: 0"><span data-dyn="">Revente en ligne</span></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--warn)"><span data-dyn="">84 %</span></span></a>
+    
+      <a href="Web-Projet-Effectif.dc.html" aria-current="false" style="display: flex; align-items: center; gap: 11px; padding: 9px 12px; border-radius: 9px; text-decoration: none; font-size: 14.5px; color: var(--text2);"><span style="flex: none; width: 9px; height: 9px; border-radius: 3px; background: var(--b2)"></span><span style="flex: 1; min-width: 0"><span data-dyn="">Œufs (pondeuses)</span></span><span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)"><span data-dyn="">0 %</span></span></a>
+    
+    <span style="padding: 6px 12px 0; font-size: 12px; color: var(--muted)">% du capital récupéré</span>
+  </div>
+  <div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg)">
+    <span style="display: flex; align-items: center; gap: 7px; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--neg)"></span>// chrono en cours</span>
+    <span style="font-size: 14px; font-weight: 600">Poulets de chair</span>
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 20px; font-weight: 500">00:42:10</span>
+      <button type="button" style="all: unset; cursor: pointer; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600">Arrêter</button>
+    </div>
+  </div>
+</nav>
+
+<main style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+  <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 14px 36px; background: var(--surface); border-bottom: 1px solid var(--border)">
+    <div style="flex: 1 1 280px; max-width: 480px; display: flex; align-items: center; gap: 10px; height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--muted)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+      <label for="cmdk" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rechercher un réglage</label>
+      <input id="cmdk" type="search" placeholder="Rechercher un réglage…" style="flex: 1; min-width: 0; border: none; background: transparent; font: inherit; font-size: 14px; outline: none">
+      <kbd style="font-family: 'Geist Mono', monospace; font-size: 11px; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--border); color: var(--muted)">⌘K</kbd>
+    </div>
+    <span style="margin-left: auto; display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 12.5px; font-weight: 500"><span style="width: 7px; height: 7px; border-radius: 999px; background: var(--pos)"></span>Synchronisé · il y a 2 min</span>
+    <button type="button" aria-label="Passer en mode clair" style="all: unset; cursor: pointer; box-sizing: border-box; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      
+    </button>
+    <a href="Web-Formulaires.dc.html" style="box-sizing: border-box; height: 40px; padding: 0 16px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; text-decoration: none"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Noter un flux</a>
+  </header>
+
+  <div style="flex: 1; box-sizing: border-box; padding: 28px 36px 48px; display: flex; flex-direction: column; gap: 22px; background-image: radial-gradient(var(--grid) 1px, transparent 1px); background-size: 22px 22px">
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--primary-text)">// paramètres du compte</span>
+      <h1 style="margin: 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -0.03em">Paramètres</h1>
+      <span style="font-size: 14.5px; color: var(--muted)">Ce qui vaut pour tous vos projets. Les réglages propres à un projet sont dans son onglet « Réglages ».</span>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+      <nav aria-label="Sections des paramètres" style="flex: 0 1 200px; display: flex; flex-direction: column; gap: 2px">
+        <a href="#profil" aria-current="true" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; background: var(--primary-soft); color: var(--primary-text); font-weight: 600;"><span data-dyn="">Profil</span></a><a href="#affichage" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--text2);"><span data-dyn="">Affichage et unités</span></a><a href="#synchro" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--text2);"><span data-dyn="">Synchronisation</span></a><a href="#acces" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--text2);"><span data-dyn="">Personnes</span></a><a href="#notifs" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--text2);"><span data-dyn="">Notifications</span></a><a href="#donnees" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--text2);"><span data-dyn="">Mes données</span></a><a href="#sensible" aria-current="false" style="padding: 8px 12px; border-radius: 9px; font-size: 14px; text-decoration: none; color: var(--neg);"><span data-dyn="">Zone sensible</span></a>
+      </nav>
+
+      <div style="flex: 1 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+
+        <section id="profil" aria-labelledby="s-profil" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: var(--shadow)">
+          <h2 id="s-profil" style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Profil</h2>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+            <span aria-hidden="true" style="width: 60px; height: 60px; border-radius: 999px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px">fa</span>
+            <div style="flex: 1 1 200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="p-name" style="font-size: 13px; font-weight: 600">Nom affiché</label><input id="p-name" type="text" value="Faniry" style="box-sizing: border-box; height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14.5px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="p-mail" style="font-size: 13px; font-weight: 600">E-mail</label><input id="p-mail" type="email" value="faniry@exemple.mg" style="box-sizing: border-box; height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14.5px"></div>
+              <div style="display: flex; flex-direction: column; gap: 6px"><label for="p-tel" style="font-size: 13px; font-weight: 600">Téléphone</label><input id="p-tel" type="tel" value="+261 34 00 000 00" style="box-sizing: border-box; height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 14px"></div>
+            </div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+            <a href="#" style="font-size: 13.5px; font-weight: 600; text-decoration: none">Changer le mot de passe</a>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 40px; padding: 0 16px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 14px; font-weight: 600">Enregistrer</button>
+          </div>
+        </section>
+
+        <section id="affichage" aria-labelledby="s-aff" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)">
+          <h2 id="s-aff" style="margin: 0 0 8px; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Affichage et unités</h2>
+          
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border)">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Thème</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">« Système » suit le réglage du téléphone ou de l'ordinateur.</span></span></span>
+              <div role="radiogroup" aria-label="Thème" style="display: flex; gap: 3px; padding: 3px; border-radius: 10px; background: var(--surface2)">
+                <button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Clair</span></button><button type="button" role="radio" aria-checked="true" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--text); box-shadow: var(--shadow);"><span data-dyn="">Sombre</span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Système</span></button>
+              </div>
+            </div>
+          
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border)">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Langue</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Le malgache est en cours de traduction.</span></span></span>
+              <div role="radiogroup" aria-label="Langue" style="display: flex; gap: 3px; padding: 3px; border-radius: 10px; background: var(--surface2)">
+                <button type="button" role="radio" aria-checked="true" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--text); box-shadow: var(--shadow);"><span data-dyn="">Français</span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Malagasy</span></button>
+              </div>
+            </div>
+          
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border)">
+              <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Écriture des montants</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Exemple : résultat cumulé + 1 250 000 Ar</span></span></span>
+              <div role="radiogroup" aria-label="Écriture des montants" style="display: flex; gap: 3px; padding: 3px; border-radius: 10px; background: var(--surface2)">
+                <button type="button" role="radio" aria-checked="true" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--text); box-shadow: var(--shadow);"><span data-dyn="">1 250 000</span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 32px; padding: 0 13px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">1,25 M</span></button>
+              </div>
+            </div>
+          
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border)">
+            <span style="display: flex; flex-direction: column; gap: 2px"><label for="p-cur" style="font-size: 14px; font-weight: 600">Devise</label><span style="font-size: 12.5px; color: var(--muted)">Une seule devise pour tous les projets, pour pouvoir les comparer.</span></span>
+            <select id="p-cur" style="height: 38px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option>Ariary (Ar)</option><option>Euro (€)</option><option>Franc CFA (FCFA)</option></select>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0 0; border-top: 1px solid var(--border)">
+            <span style="display: flex; flex-direction: column; gap: 2px"><label for="p-week" style="font-size: 14px; font-weight: 600">La semaine commence le</label><span style="font-size: 12.5px; color: var(--muted)">Pour les graphiques par semaine et le point du dimanche.</span></span>
+            <select id="p-week" style="height: 38px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option>Lundi</option><option>Dimanche</option></select>
+          </div>
+        </section>
+
+        <section id="synchro" aria-labelledby="s-sync" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; box-shadow: var(--shadow)">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+            <h2 id="s-sync" style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Synchronisation et appareils</h2>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 36px; padding: 0 13px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600"><span data-dyn="">Synchroniser maintenant</span></button>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border)">
+                <span aria-hidden="true" style="flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--surface2); display: grid; place-items: center; color: var(--text2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H4zM2 19h20"></path></svg></span>
+                <span style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-size: 14px; font-weight: 600"><span data-dyn="">Ce navigateur · Firefox sur Linux</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">connecté maintenant · Antananarivo</span></span>
+                </span>
+                <span style="flex: none; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)"><span data-dyn="">cet appareil</span></span>
+                
+              </div>
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border)">
+                <span aria-hidden="true" style="flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--surface2); display: grid; place-items: center; color: var(--text2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zM11 18h2"></path></svg></span>
+                <span style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-size: 14px; font-weight: 600"><span data-dyn="">Téléphone de Faniry · Android</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">dernière synchro il y a 2 min · 312 jours d'historique gardés hors ligne</span></span>
+                </span>
+                <span style="flex: none; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--pos-soft); color: var(--pos)"><span data-dyn="">à jour</span></span>
+                <button type="button" style="all: unset; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--neg)">Déconnecter</button>
+              </div>
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border)">
+                <span aria-hidden="true" style="flex: none; width: 38px; height: 38px; border-radius: 10px; background: var(--surface2); display: grid; place-items: center; color: var(--text2)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8a2 2 0 012 2v16a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2zM11 18h2"></path></svg></span>
+                <span style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+                  <span style="font-size: 14px; font-weight: 600"><span data-dyn="">Téléphone de Hery · Android</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">hors ligne depuis 6 h · Poulets de chair seulement</span></span>
+                </span>
+                <span style="flex: none; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--warn-soft); color: var(--warn)"><span data-dyn="">3 flux en attente</span></span>
+                <button type="button" style="all: unset; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--neg)">Déconnecter</button>
+              </div>
+            
+          </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Synchroniser seulement en Wi-Fi</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Sinon, la synchro utilise aussi les données mobiles (quelques Ko par jour).</span></span></span>
+              <button type="button" role="switch" aria-checked="false" aria-label="Synchroniser seulement en Wi-Fi" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: var(--c3); justify-content: flex-start"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Envoyer les photos de reçus en Wi-Fi uniquement</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Les photos attendent sur le téléphone, les montants partent tout de suite.</span></span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Envoyer les photos de reçus en Wi-Fi uniquement" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Garder tout l'historique sur le téléphone</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Pour consulter et comparer même sans réseau.</span></span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Garder tout l'historique sur le téléphone" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+          <p style="margin: 0; display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-size: 13px; line-height: 1.5; color: var(--text2)">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex: none; margin-top: 2px; color: var(--primary-text)"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg>
+            <span>Si deux téléphones notent la même chose hors ligne, les deux flux sont gardés et signalés « doublon possible » dans l'historique. Rien n'est écrasé : c'est vous qui choisissez lequel annuler.</span>
+          </p>
+        </section>
+
+        <section id="acces" aria-labelledby="s-acc" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 8px">
+            <h2 id="s-acc" style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Personnes qui ont accès</h2>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 36px; padding: 0 13px; border-radius: 10px; background: #2563EB; color: #FFFFFF; font-size: 13.5px; font-weight: 600">+ Inviter</button>
+          </div>
+          
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border)">
+              <span aria-hidden="true" style="flex: none; width: 38px; height: 38px; border-radius: 999px; display: grid; place-items: center; color: #FFFFFF; font-family: 'Geist Mono', monospace; font-size: 13px; background: #2563EB"><span data-dyn="">fa</span></span>
+              <span style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Faniry (vous)</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">tous les projets · depuis mars 2026</span></span></span>
+              <label for="pp1" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rôle de <span data-dyn="">Faniry (vous)</span></label>
+              <select id="pp1" style="height: 36px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13px"><option value="Propriétaire" selected="">Propriétaire</option><option value="Gestion">Gestion</option><option value="Saisie">Saisie</option><option value="Lecture">Lecture</option></select>
+            </div>
+          
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border)">
+              <span aria-hidden="true" style="flex: none; width: 38px; height: 38px; border-radius: 999px; display: grid; place-items: center; color: #FFFFFF; font-family: 'Geist Mono', monospace; font-size: 13px; background: #D97706"><span data-dyn="">he</span></span>
+              <span style="flex: 1 1 200px; min-width: 0; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Hery</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Poulets de chair · aide au poulailler · 46 flux notés</span></span></span>
+              <label for="pp2" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Rôle de <span data-dyn="">Hery</span></label>
+              <select id="pp2" style="height: 36px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13px"><option value="Propriétaire">Propriétaire</option><option value="Gestion">Gestion</option><option value="Saisie" selected="">Saisie</option><option value="Lecture">Lecture</option></select>
+            </div>
+          
+          <span style="padding-top: 8px; font-size: 12.5px; line-height: 1.5; color: var(--muted)">« Saisie » : peut noter des flux et cocher des tâches, sans voir la poche ni l'analyse. Chaque flux garde le nom de qui l'a noté.</span>
+        </section>
+
+        <section id="notifs" aria-labelledby="s-not" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px; box-shadow: var(--shadow)">
+          <h2 id="s-not" style="margin: 0 0 8px; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Notifications</h2>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Tâches du jour</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Vaccins, ponte, expéditions : un récapitulatif chaque matin.</span></span></span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span data-dyn="">push · 7:00</span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Tâches du jour" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Stock bientôt vide</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Quand une ressource tient moins de 7 jours au rythme actuel.</span></span></span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span data-dyn="">push</span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Stock bientôt vide" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Objectif en retard</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Quand le rythme ne suffit plus pour tenir l'échéance.</span></span></span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span data-dyn="">push</span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Objectif en retard" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Effet d'un jalon calculé</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Dès que la période « après » est complète.</span></span></span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span data-dyn="">push</span></span>
+              <button type="button" role="switch" aria-checked="true" aria-label="Effet d'un jalon calculé" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+            <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+              <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Résumé de la semaine</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Ce qui a marché, ce qui a coûté, projet par projet.</span></span></span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)"><span data-dyn="">e-mail · dim. 19:00</span></span>
+              <button type="button" role="switch" aria-checked="false" aria-label="Résumé de la semaine" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: var(--c3); justify-content: flex-start"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+            </div>
+          
+        </section>
+
+        <section id="donnees" aria-labelledby="s-data" style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow)">
+          <h2 id="s-data" style="margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.02em">Mes données</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px">
+            <div style="padding: 12px 14px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12.5px; color: var(--muted)">Flux enregistrés</span><span style="font-family: 'Geist Mono', monospace; font-size: 18px; font-weight: 500">1 284</span></div>
+            <div style="padding: 12px 14px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12.5px; color: var(--muted)">Photos de reçus</span><span style="font-family: 'Geist Mono', monospace; font-size: 18px; font-weight: 500">212 · 64 Mo</span></div>
+            <div style="padding: 12px 14px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 3px"><span style="font-size: 12.5px; color: var(--muted)">Dernière sauvegarde</span><span style="font-family: 'Geist Mono', monospace; font-size: 18px; font-weight: 500">cette nuit, 02:00</span></div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600">Exporter tout l'historique (Excel)</button>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600">Exporter en CSV</button>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600">Importer depuis un tableur</button>
+          </div>
+          <span style="font-size: 12.5px; color: var(--muted)">Sauvegarde automatique chaque nuit ; les 30 dernières sont gardées. L'export contient chaque flux avec sa date, son auteur et ses corrections.</span>
+        </section>
+
+        <section id="sensible" aria-labelledby="s-danger" style="background: var(--surface); border: 1px solid var(--neg); border-radius: 16px; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px">
+          <h2 id="s-danger" style="margin: 0 0 8px; font-size: 17px; font-weight: 700; letter-spacing: -0.02em; color: var(--neg)">Zone sensible</h2>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--border)">
+            <span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Archiver un projet terminé</span><span style="font-size: 12.5px; color: var(--muted)">Le projet disparaît des écrans, son historique reste consultable et compte dans « Ma poche ».</span></span>
+            <label for="p-arch" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Projet à archiver</label>
+            <select id="p-arch" style="height: 38px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option>Choisir un projet…</option><option>Poulets de chair</option><option>Revente en ligne</option><option>Œufs (pondeuses)</option></select>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600">Archiver</button>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 0 0; border-top: 1px solid var(--border)">
+            <span style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Supprimer mon compte</span><span style="font-size: 12.5px; color: var(--muted)">Tout est effacé 30 jours après la demande. Un export complet vous est envoyé avant.</span></span>
+            <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--neg); color: var(--neg); font-size: 13.5px; font-weight: 600">Supprimer le compte</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+</body>
+</html>

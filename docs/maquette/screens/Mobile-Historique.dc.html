@@ -20,7 +20,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
 
   <header style="padding: 18px 20px 0; display: flex; align-items: center; gap: 8px">
     <div style="display: flex; flex-direction: column; gap: 2px">
-      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)">// tout ce qui a été noté</span>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)">// 3 derniers jours</span>
       <h1 style="margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.03em">Historique</h1>
     </div>
     <span style="{{chip.style}}">
@@ -122,7 +122,7 @@ class Component extends DCLogic {
         ["17:10", "ponte", "oe", "19 œufs ramassés", "19 œufs", true],
         ["16:40", "vente", "oe", "36 œufs à l'épicerie", 18000, true],
         ["16:20", "note", "pc", "31 °C l'après-midi, 3e abreuvoir ajouté", "", true],
-        ["07:20", "effectif", "pc", "1 poulet mort, bande 4", "− 1", false, "noté par Hery"],
+        ["09:40", "effectif", "pc", "1 poulet mort, bande 4", "− 1", false, "noté par Hery"],
         ["07:05", "vente", "rv", "2 coques iPhone 13", 24000, false],
         ["07:00", "usage", "pc", "1 sac de provende croissance → bande 4", -32000, false]
       ]],
@@ -171,8 +171,8 @@ class Component extends DCLogic {
       filters, groups, empty: groups.length === 0,
       retry: () => this.setState({ synced: true }),
       chip: s.synced
-        ? { label: "À jour", icon: "M5 12l5 5L20 7", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 13px; font-weight: 600" }
-        : { label: "3 en attente", icon: "M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; border-radius: 999px; background: var(--neg-soft); color: var(--neg); font-size: 13px; font-weight: 600" },
+        ? { label: "À jour", icon: "M5 12l5 5L20 7", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; white-space: nowrap; border-radius: 999px; background: var(--pos-soft); color: var(--pos); font-size: 13px; font-weight: 600" }
+        : { label: "3 en attente", icon: "M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5", style: "box-sizing: border-box; margin-left: auto; display: flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px; white-space: nowrap; border-radius: 999px; background: var(--neg-soft); color: var(--neg); font-size: 13px; font-weight: 600" },
       banner: s.synced
         ? { title: "Tout est synchronisé", sub: "Les 3 flux sont partis. Visibles sur l'ordinateur et par Hery.", canRetry: false, style: "margin: 12px 20px 0; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: var(--pos-soft); border: 1px solid var(--border)" }
         : { title: "Hors ligne depuis 16:10", sub: "3 flux gardés sur le téléphone. Ils partiront seuls dès que le réseau revient.", canRetry: true, style: "margin: 12px 20px 0; display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: var(--warn-soft); border: 1px solid var(--border)" }

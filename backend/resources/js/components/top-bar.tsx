@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import type { ReactNode, Ref } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -52,9 +52,7 @@ function TopBar({
             <ThemeToggle />
 
             <Button onClick={onNoteEntry}>
-                <span aria-hidden="true" className="text-base leading-none">
-                    +
-                </span>
+                <Plus aria-hidden="true" className="size-4" strokeWidth={2.4} />
                 Noter un flux
             </Button>
 

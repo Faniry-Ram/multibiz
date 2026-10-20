@@ -1,11 +1,11 @@
 import { Head, router, setLayoutProps } from '@inertiajs/react';
 import {
+    ArrowLeftRight,
     ArrowRight,
-    Bird,
-    Boxes,
     Check,
-    Repeat2,
-    ShoppingBag,
+    Egg,
+    Layers,
+    Package,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ type ModelDef = {
     title: string;
     desc: string;
     ex: string;
-    icon: typeof Boxes;
+    icon: typeof Layers;
     track: string[];
     unitQ: string;
     units: string[];
@@ -40,7 +40,7 @@ const MODELS: Record<ProjectModel, ModelDef> = {
         title: 'Élevage par lots',
         desc: 'Chaque bande a un début, une fin et un coût par tête. Idéal pour comparer les bandes entre elles.',
         ex: "poulets de chair, cailles, porcs d'engraissement",
-        icon: Boxes,
+        icon: Layers,
         track: [
             'Coût et marge de chaque bande',
             'Pertes et pesées',
@@ -61,7 +61,7 @@ const MODELS: Record<ProjectModel, ModelDef> = {
         title: 'Élevage par effectif',
         desc: "Un troupeau qui vit en continu. On suit l'effectif et ce qu'il produit chaque jour.",
         ex: 'pondeuses, lapins, vaches laitières',
-        icon: Bird,
+        icon: Egg,
         track: [
             'Effectif : entrées, pertes, réformes',
             'Production par jour et taux',
@@ -76,7 +76,7 @@ const MODELS: Record<ProjectModel, ModelDef> = {
         title: 'Revente avec stock',
         desc: 'Acheter, stocker, revendre. On suit la marge de chaque produit et ce qui dort en stock.',
         ex: 'téléphones, écouteurs, vêtements',
-        icon: ShoppingBag,
+        icon: Package,
         track: [
             'Marge par produit',
             'Stock qui dort et ruptures',
@@ -91,7 +91,7 @@ const MODELS: Record<ProjectModel, ModelDef> = {
         title: 'Projet simple',
         desc: "Juste des entrées et des sorties d'argent, sans stock ni animaux. Des modules s'ajoutent plus tard si besoin.",
         ex: 'service, petites missions, location',
-        icon: Repeat2,
+        icon: ArrowLeftRight,
         track: [
             'Recettes et dépenses',
             'Résultat par mois',
@@ -214,10 +214,12 @@ function loadDraft(): Draft {
     }
 }
 
+type UsedColor = { hex: string; project_name: string };
+
 export default function ProjectsCreate({
     usedColors = [],
 }: {
-    usedColors?: string[];
+    usedColors?: UsedColor[];
 }) {
     const [step, setStep] = useState(1);
     const [draft, setDraft] = useState<Draft>(() => loadDraft());
@@ -425,8 +427,8 @@ export default function ProjectsCreate({
                                     className="flex flex-wrap gap-2.5"
                                 >
                                     {COLORS.map((c, i) => {
-                                        const taken = usedColors.includes(
-                                            c.hex,
+                                        const takenBy = usedColors.find(
+                                            (used) => used.hex === c.hex,
                                         );
                                         const selected = draft.color === i;
 
@@ -436,8 +438,12 @@ export default function ProjectsCreate({
                                                 type="button"
                                                 role="radio"
                                                 aria-checked={selected}
-                                                aria-label={c.label}
-                                                disabled={taken}
+                                                aria-label={
+                                                    takenBy
+                                                        ? `${c.label}, déjà prise par ${takenBy.project_name}`
+                                                        : c.label
+                                                }
+                                                disabled={!!takenBy}
                                                 onClick={() =>
                                                     setDraft((d) => ({
                                                         ...d,
@@ -458,8 +464,8 @@ export default function ProjectsCreate({
                                                     }}
                                                 />
                                                 <span className="text-xs text-muted">
-                                                    {taken
-                                                        ? 'déjà prise'
+                                                    {takenBy
+                                                        ? takenBy.project_name
                                                         : c.label}
                                                 </span>
                                             </button>

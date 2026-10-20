@@ -113,7 +113,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
               <span style="display: flex; align-items: center; gap: 8px; font-size: 12.5px"><span style="{{r.dot}}"></span><span style="flex: 1">{{r.name}}</span><span style="font-family: 'Geist Mono', monospace">{{r.v}}</span></span>
             </sc-for>
           </div>
-          <div style="position: absolute; inset: 0; display: flex">
+          <div onMouseLeave="{{clearHover}}" style="position: absolute; inset: 0; display: flex">
             <sc-for list="{{monthsHit}}" as="m" hint-placeholder-count="8">
               <button type="button" aria-label="{{m.aria}}" onMouseEnter="{{m.hover}}" onFocus="{{m.hover}}" style="all: unset; flex: 1; height: 100%; cursor: crosshair"></button>
             </sc-for>
@@ -206,7 +206,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { m: 7 };
+    this.state = { m: null };
   }
   renderVals() {
     const ACTIVE = "Analyse";
@@ -246,10 +246,11 @@ class Component extends DCLogic {
       labelStyle: "position: absolute; right: 0; top: calc(" + yp(v).toFixed(2) + "% - 8px); font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--muted)",
       lineStyle: "position: absolute; left: 0; right: 0; top: " + yp(v).toFixed(2) + "%; border-top: 1px " + (v === 0 ? "dashed var(--c2)" : "solid var(--border)")
     }));
-    const m = this.state.m;
+    const has = this.state.m !== null && this.state.m !== undefined;
+    const m = has ? this.state.m : 7;
     const xPct = (m / 7) * 100;
     const fmtk = (k) => (k >= 0 ? "+ " : "− ") + Math.abs(k).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " 000 Ar";
-    const dots = series.filter((s) => s.v[m] !== null).map((s) => ({
+    const dots = !has ? [] : series.filter((s) => s.v[m] !== null).map((s) => ({
       style: "position: absolute; left: calc(" + xPct + "% - 6px); top: calc(" + yp(s.v[m]).toFixed(2) + "% - 6px); width: 12px; height: 12px; border-radius: 999px; background: " + s.color + "; box-shadow: 0 0 0 2px var(--surface)"
     }));
     const endLabels = series.map((s) => ({
@@ -296,8 +297,9 @@ class Component extends DCLogic {
       themeLabel: dark ? "Passer en mode clair" : "Passer en mode sombre",
       toggleTheme: () => this.setState({ dark: !dark }),
       l1: lines[0].pts, l2: lines[1].pts, l3: lines[2].pts, yTicks, dots, endLabels, monthsHit,
-      hoverLine: "position: absolute; top: 0; bottom: 0; left: " + xPct + "%; width: 1px; background: var(--c2)",
-      tipStyle: "position: absolute; top: 4px; left: " + tipLeft + "%; transform: translateX(-50%); min-width: 230px; display: flex; flex-direction: column; gap: 5px; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); pointer-events: none",
+      hoverLine: has ? "position: absolute; top: 0; bottom: 0; left: " + xPct + "%; width: 1px; background: var(--c2)" : "display: none",
+      clearHover: () => this.setState({ m: null }),
+      tipStyle: "position: absolute; top: 4px; " + (xPct > 50 ? "right: calc(" + (100 - xPct).toFixed(2) + "% + 14px)" : "left: calc(" + xPct.toFixed(2) + "% + 14px)") + "; min-width: 230px; display: flex; flex-direction: column; gap: 5px; padding: 10px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); pointer-events: none" + (has ? "" : "; display: none"),
       tip: {
         month: "// fin " + MONTHS[m],
         rows: series.map((s) => ({ name: s.name, v: s.v[m] === null ? "—" : fmtk(s.v[m]), dot: "width: 8px; height: 8px; border-radius: 2px; background: " + s.color }))

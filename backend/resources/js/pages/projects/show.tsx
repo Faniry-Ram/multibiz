@@ -28,7 +28,17 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { ProjectAvatar } from '@/components/ui/project-avatar';
 import { index as projectsIndex, show } from '@/routes/projects';
+import { PageHeader } from '@/components/page-header';
+import { ProjectHeader } from '@/components/project-header';
+import { StatTile } from '@/components/ui/stat-tile';
+import Section from '@/components/section';
+import { InfoNote } from '@/components/ui/info-note';
+import { GoalCard } from '@/components/ui/goal-card';
+import { IconButton } from '@/components/ui/icon-button';
+import { TrajectoryChart, TrajectoryXAxis } from '@/components/charts/trajectory-chart';
+import { trajectoryDomain, trajectoryMilestones, trajectoryProjection, trajectoryReal, trajectorySaleTags, trajectoryXTicks, trajectoryYTicks } from '../dev/ui-demo-data';
 
 type Paginated<T> = {
     data: T[];
@@ -93,6 +103,7 @@ export default function ProjectShow({
     const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
     const [createEntryOpen, setCreateEntryOpen] = useState(false);
     const [openBatchOpen, setOpenBatchOpen] = useState(false);
+    const [milestoneSel, setMilestoneSel] = useState(3);
 
     const incomeCategories = categories.filter((c) => c.kind === 'income');
     const expenseCategories = categories.filter((c) => c.kind === 'expense');
@@ -106,168 +117,150 @@ export default function ProjectShow({
         <>
             <Head title={project.name} />
 
-            <div className="flex flex-1 flex-col gap-6 p-4">
-                <div>
-                    <Link
-                        href={projectsIndex()}
-                        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-                    >
-                        <ArrowLeft className="size-4" />
-                        Projets
-                    </Link>
-                    <div className="mt-2 flex items-start justify-between gap-4">
-                        <Heading
-                            title={project.name}
-                            description={project.currency}
+            <div className="flex flex-col gap-6 p-6">
+                <PageHeader
+                    eyebrow="samedi 10 octobre · 3 projets actifs"
+                    title="Vos projets en un coup d'œil"
+                    actions={
+                        <Button variant="outline">
+                            Exporter CSV
+                        </Button>
+                    }
+                />
+                <ProjectHeader
+                    backHref="#"
+                    backLabel="// mes projets"
+                    name="Poulets de chair"
+                    color="var(--b1)"
+                    verdictLabel="Rentable"
+                    verdictTone="pos"
+                    modelLabel="Élevage par lots"
+                    meta="depuis le 2 mars 2026 · 4 bandes"
+                    actions={
+                        <Button>
+                            Planifier la bande 5
+                        </Button>
+                    }
+                    tabs={[
+                        {
+                            label: "Vue d'ensemble",
+                            href: '#',
+                            current: true,
+                        },
+                        {
+                            label: 'Lots',
+                            href: '#',
+                            current: false,
+                        },
+                        {
+                            label: 'Historique',
+                            href: '#',
+                            current: false,
+                        },
+                    ]}
+                />
+
+                <Section>
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                        <StatTile
+                            label="Résultat"
+                            value="+ 476 000"
+                            sub="3 bandes vendues"
+                            valueColor="var(--pos)"
+                        />
+                        <StatTile
+                            label="Capital récupéré"
+                            value="73 %"
+                            variant="featured"
+                        />
+                        <StatTile
+                            label="Œufs pas encore vendus"
+                            value="59"
+                            sub="29 500 Ar qui attendent"
+                            variant="alert"
+                        />
+                        <StatTile
+                            label="Temps passé"
+                            value="124 h"
+                            sub="3 840 Ar / heure"
                         />
                     </div>
-                </div>
-
-                {project.model === 'lots' && (
+                    <InfoNote>
+                        Rien n'est jamais effacé. Corriger un flux ajoute
+                        une nouvelle ligne et l'original reste visible.
+                    </InfoNote>
+                </Section>
+                <Section>
                     <Card>
-                        <CardHeader className="flex flex-row items-center justify-between">
-                            <CardTitle>Lots</CardTitle>
-                            <Button
-                                size="sm"
-                                onClick={() => setOpenBatchOpen(true)}
-                                disabled={openBatches.length > 0}
-                            >
-                                <Plus />
-                                Ouvrir une bande
-                            </Button>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            {batches.length === 0 ? (
-                                <p className="text-sm text-muted-foreground">
-                                    Aucune bande pour l'instant.
-                                </p>
-                            ) : (
-                                batches.map((batch) => (
-                                    <BatchRow key={batch.id} batch={batch} />
-                                ))
-                            )}
+                        <CardContent className="flex flex-col gap-3">
+                            <div className="flex justify-between">
+                                <h2 className="font-bold">Objectifs</h2>
+                                <Link
+                                    href="#"
+                                    className="inline-flex items-center justify-center gap-1 font-semibold text-sm text-primary-text no-underline hover:underline"
+                                    //className="text-primary-text no-underline hover:underline"
+                                >
+                                    <Plus  aria-hidden="true" className="inline-block mr-1 size-4" strokeWidth={2.4} /> 
+                                    Objectif
+                                </Link>
+                            </div>
+                            <div className="grid gap-3 md:grid-cols-2">
+                                <GoalCard
+                                    title="Récupérer tout le capital (650 000 Ar)"
+                                    badgeLabel="En avance"
+                                    badgeTone="pos"
+                                    progress={73}
+                                    left="73 % · avant le 31 déc. (J−82)"
+                                    right="prévu le 3 nov."
+                                />
+                                <GoalCard
+                                    title="Écouler les 8 écouteurs"
+                                    badgeLabel="En retard"
+                                    badgeTone="neg"
+                                    progress={2}
+                                    progressColor="var(--neg)"
+                                    left="0 / 8 · avant le 31 oct. (J−21)"
+                                />
+                            </div>
                         </CardContent>
                     </Card>
-                )}
-
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle>Catégories</CardTitle>
-                        <Button
-                            size="sm"
-                            onClick={() => setCreateCategoryOpen(true)}
-                        >
-                            <Plus />
-                            Nouvelle catégorie
-                        </Button>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="grid gap-6 md:grid-cols-3">
-                            <CategoryColumn
-                                title="Revenus"
-                                categories={incomeCategories}
-                                project={project}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-sm">
+                                Trajectoire (avec jalons)
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col gap-2">
+                            <TrajectoryChart
+                                ariaLabel="Trajectoire : de −900 000 Ar en mars à −174 000 Ar aujourd'hui, projection à +774 000 Ar"
+                                domain={trajectoryDomain}
+                                realPoints={trajectoryReal}
+                                projectionPoints={trajectoryProjection}
+                                yTicks={trajectoryYTicks}
+                                saleTags={trajectorySaleTags}
+                                markers={trajectoryMilestones.map(
+                                    (m) => ({
+                                        ...m,
+                                        color: 'var(--b1)',
+                                        selected:
+                                            milestoneSel ===
+                                            Number(m.id),
+                                        ariaLabel: `Jalon ${m.id} : ${m.title}`,
+                                        onSelect: () =>
+                                            setMilestoneSel(
+                                                Number(m.id),
+                                            ),
+                                    }),
+                                )}
                             />
-                            <CategoryColumn
-                                title="Dépenses"
-                                categories={expenseCategories}
-                                project={project}
+                            <TrajectoryXAxis
+                                domain={trajectoryDomain}
+                                xTicks={trajectoryXTicks}
                             />
-                            <CategoryColumn
-                                title="Investissements"
-                                categories={investmentCategories}
-                                project={project}
-                            />
-                        </div>
-                    </CardContent>
-                </Card>
+                        </CardContent>
+                    </Card>
+                </Section>
 
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle>Historique</CardTitle>
-                        <Button
-                            size="sm"
-                            onClick={() => setCreateEntryOpen(true)}
-                            disabled={categories.length === 0}
-                        >
-                            <Plus />
-                            Noter un flux
-                        </Button>
-                    </CardHeader>
-                    <CardContent className="space-y-1">
-                        {categories.length === 0 && (
-                            <p className="text-sm text-muted-foreground">
-                                Créez d'abord une catégorie pour pouvoir noter
-                                des flux.
-                            </p>
-                        )}
-
-                        {categories.length > 0 && entries.data.length === 0 && (
-                            <p className="text-sm text-muted-foreground">
-                                Aucun flux pour l'instant.
-                            </p>
-                        )}
-
-                        {entries.data.map((entry) => (
-                            <EntryRow key={entry.id} entry={entry} />
-                        ))}
-
-                        {entries.last_page > 1 && (
-                            <div className="flex items-center justify-between pt-4">
-                                <p className="text-sm text-muted-foreground">
-                                    Page {entries.current_page} /{' '}
-                                    {entries.last_page}
-                                </p>
-                                <div className="flex gap-2">
-                                    {entries.prev_page_url ? (
-                                        <Button
-                                            asChild
-                                            variant="outline"
-                                            size="sm"
-                                        >
-                                            <Link
-                                                href={entries.prev_page_url}
-                                                preserveScroll
-                                            >
-                                                Précédent
-                                            </Link>
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            disabled
-                                        >
-                                            Précédent
-                                        </Button>
-                                    )}
-                                    {entries.next_page_url ? (
-                                        <Button
-                                            asChild
-                                            variant="outline"
-                                            size="sm"
-                                        >
-                                            <Link
-                                                href={entries.next_page_url}
-                                                preserveScroll
-                                            >
-                                                Suivant
-                                            </Link>
-                                        </Button>
-                                    ) : (
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            disabled
-                                        >
-                                            Suivant
-                                        </Button>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </CardContent>
-                </Card>
             </div>
 
             <CategoryFormDialog

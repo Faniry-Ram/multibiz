@@ -269,14 +269,14 @@ class Component extends DCLogic {
       byCat[i.cat] = (byCat[i.cat] || 0) + i.used * a;
       const days = i.perDay && left > 0 ? Math.floor(left / i.perDay) : null;
       let st;
-      if (i.bought === 0 && i.plan) st = ["À prévoir · " + i.plan, "var(--primary-soft)", "var(--primary-text)", true];
+      if (i.bought === 0 && i.plan) st = ["À prévoir", "var(--primary-soft)", "var(--primary-text)", true];
       else if (left === 0) st = ["Épuisé", "var(--slate-soft)", "var(--slate-text)", false];
       else if (days !== null && days < 7) st = ["Bientôt vide", "var(--warn-soft)", "var(--warn)", true];
       else st = ["En stock", "var(--pos-soft)", "var(--pos)", false];
       if (st[3]) alerts++;
       const up = i.bought > 0 && i.last > a + 1;
       return {
-        name: i.name, unit: i.unit, cat: i.cat,
+        name: i.name, unit: i.unit + (i.bought === 0 && i.plan ? " · " + i.plan : ""), cat: i.cat,
         bought: i.bought + " " + shortUnit(i.unit) + (i.bought > 1 ? "s" : ""),
         price: fmt(a) + (up ? " ↑" : ""),
         priceStyle: "text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px; color: " + (up ? "var(--neg)" : "var(--text)"),

@@ -5,6 +5,8 @@ interface SparklineProps {
     color: string;
     ariaLabel: string;
     className?: string;
+    /** Show the "trajectoire" / "point mort" (break-even) text labels, per the maquette's dashboard project cards. */
+    showLabels?: boolean;
 }
 
 export function Sparkline({
@@ -12,6 +14,7 @@ export function Sparkline({
     color,
     ariaLabel,
     className,
+    showLabels = false,
 }: SparklineProps) {
     const xs = points.map(([x]) => x);
     const ys = points.map(([, y]) => y);
@@ -70,6 +73,23 @@ export function Sparkline({
                     strokeLinejoin="round"
                 />
             </svg>
+            {showLabels && (
+                <span
+                    aria-hidden
+                    className="num absolute top-1.5 left-2 text-[10.5px] text-muted"
+                >
+                    trajectoire
+                </span>
+            )}
+            {showLabels && showZero && (
+                <span
+                    aria-hidden
+                    className="num absolute right-2 text-[10px] text-muted"
+                    style={{ top: `calc(${zeroPct}% - 15px)` }}
+                >
+                    point mort
+                </span>
+            )}
         </div>
     );
 }

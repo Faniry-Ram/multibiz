@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MultiBiz — Nouveau projet (clair)</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--chart:#2563EB;--heat:37,99,235;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--warn:#A16207;--warn-soft:#FEF9C3;--slate-soft:#F1F5F9;--slate-text:#334155;--c1:#64748B;--c2:#94A3B8;--c3:#CBD5E1;--grid:rgba(15,23,42,0.07);--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--chart:#60A5FA;--heat:96,165,250;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--warn:#FACC15;--warn-soft:rgba(250,204,21,0.12);--slate-soft:rgba(148,163,184,0.14);--slate-text:#CBD5E1;--c1:#94A3B8;--c2:#64748B;--c3:#334155;--grid:rgba(148,163,184,0.09);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+.mb input,.mb select,.mb textarea{color:var(--text)}
+.mb input[type=date]{color-scheme:light}.mb.dark input[type=date]{color-scheme:dark}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="mb light" style="min-height: 1100px; display: flex; flex-direction: column; background: var(--bg); color: var(--text); font-family: 'Geist', system-ui, sans-serif">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 14px 36px; background: var(--surface); border-bottom: 1px solid var(--border)">
+  <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text)">
+    <span style="width: 32px; height: 32px; border-radius: 9px; background: #2563EB; color: #FFFFFF; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500">mb</span>
+    <span style="font-size: 18px; font-weight: 700; letter-spacing: -0.02em">MultiBiz</span>
+  </a>
+  <span aria-hidden="true" style="width: 1px; height: 22px; background: var(--border)"></span>
+  <span style="font-size: 14.5px; font-weight: 600; color: var(--text2)">Nouveau projet</span>
+  <span style="margin-left: auto; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">brouillon enregistré</span>
+  <button type="button" aria-label="Passer en mode sombre" style="all: unset; cursor: pointer; box-sizing: border-box; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+    
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"></path></svg>
+  </button>
+  <a href="Main.dc.html" style="box-sizing: border-box; height: 40px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--border); color: var(--text); font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center">Annuler</a>
+</header>
+
+<div style="flex: 1; box-sizing: border-box; padding: 32px 36px 56px; background-image: radial-gradient(var(--grid) 1px, transparent 1px); background-size: 22px 22px">
+  <div style="max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; gap: 26px">
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--primary-text)">// nouveau projet · étape <span data-dyn="">3</span> sur 3</span>
+        <h1 style="margin: 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -0.03em"><span data-dyn="">Qu'est-ce qui dira que ça marche ?</span></h1>
+        <span style="font-size: 14.5px; color: var(--muted); max-width: 620px; line-height: 1.5"><span data-dyn="">Un objectif daté, et les modules à activer. Tout reste modifiable ensuite.</span></span>
+      </div>
+      <ol aria-label="Étapes" style="margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 8px">
+        
+          <li style="display: flex; align-items: center; gap: 8px">
+            <button type="button" aria-current="false" style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface)">
+              <span style="width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 12.5px; font-weight: 500; background: var(--pos-soft); color: var(--pos);"><span data-dyn="">✓</span></span>
+              <span style="font-size: 13.5px; font-weight: 600; color: var(--muted)"><span data-dyn="">Modèle</span></span>
+            </button>
+          </li>
+        
+          <li style="display: flex; align-items: center; gap: 8px">
+            <button type="button" aria-current="false" style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface)">
+              <span style="width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 12.5px; font-weight: 500; background: var(--pos-soft); color: var(--pos);"><span data-dyn="">✓</span></span>
+              <span style="font-size: 13.5px; font-weight: 600; color: var(--muted)"><span data-dyn="">Identité</span></span>
+            </button>
+          </li>
+        
+          <li style="display: flex; align-items: center; gap: 8px">
+            <button type="button" aria-current="step" style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface)">
+              <span style="width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 12.5px; font-weight: 500; background: #2563EB; color: #FFFFFF;"><span data-dyn="">3</span></span>
+              <span style="font-size: 13.5px; font-weight: 600; color: var(--text)"><span data-dyn="">Objectif</span></span>
+            </button>
+          </li>
+        
+      </ol>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+      <section aria-label="Qu'est-ce qui dira que ça marche ?" style="flex: 2 1 600px; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 26px; display: flex; flex-direction: column; gap: 22px; box-shadow: var(--shadow)">
+
+        
+
+        
+
+        
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <span id="np-goal" style="font-size: 13.5px; font-weight: 600">Objectif principal</span>
+            <div role="radiogroup" aria-labelledby="np-goal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px">
+              <button type="button" role="radio" aria-checked="true" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); box-shadow: inset 0 0 0 2px #2563EB;"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Récupérer mon capital</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">rendre ce que j'ai mis</span></span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--border);"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Atteindre une marge</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">par bande</span></span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--border);"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Vendre une quantité</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">avant l'échéance</span></span></button><button type="button" role="radio" aria-checked="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--border);"><span style="font-size: 14px; font-weight: 600"><span data-dyn="">Limiter les pertes</span></span><span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">ou les invendus</span></span></button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px">
+              <div style="display: flex; flex-direction: column; gap: 7px">
+                <label for="np-target" style="font-size: 13.5px; font-weight: 600">Cible (<span data-dyn="">Ar</span>)</label>
+                <input id="np-target" type="number" min="0" value="300000" style="box-sizing: border-box; height: 46px; padding: 0 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 7px">
+                <label for="np-dl" style="font-size: 13.5px; font-weight: 600">Échéance</label>
+                <input id="np-dl" type="date" value="2027-03-31" style="box-sizing: border-box; height: 46px; padding: 0 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px">
+              </div>
+            </div>
+            <span style="font-size: 13px; color: var(--muted)">Sur la vue d'ensemble, l'objectif affichera « En avance », « En bonne voie » ou « En retard » selon le rythme réel.</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 4px">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-bottom: 6px">
+              <span style="font-size: 13.5px; font-weight: 600">Modules activés</span>
+              <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)"><span data-dyn="">5 sur 7</span></span>
+            </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Lots / bandes</span><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">conseillé</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Début, fin, effectif et marge de chaque cycle</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="true" aria-label="Lots / bandes" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Effectif et production</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Entrées, pertes, réformes et production du jour</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="false" aria-label="Effectif et production" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: var(--c3); justify-content: flex-start"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Ressources et stock</span><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">conseillé</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Achats mis en stock, coût ajouté à chaque utilisation</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="true" aria-label="Ressources et stock" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Recette type et simulateur</span><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">conseillé</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Ce qu'il faut pour une bande, et ce qu'elle rapporterait</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="true" aria-label="Recette type et simulateur" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Produits et marge</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Prix d'achat, prix de vente et marge par produit</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="false" aria-label="Produits et marge" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: var(--c3); justify-content: flex-start"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Rappels de soins</span><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">conseillé</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Vaccins, vitamines, nettoyage : créés à partir du calendrier</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="true" aria-label="Rappels de soins" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+              <div style="display: flex; align-items: center; gap: 14px; padding: 11px 0; border-top: 1px solid var(--border)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+                  <span style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span data-dyn="">Temps passé</span><span style="font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">conseillé</span></span>
+                  <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Chrono sur le téléphone, Ar gagnés par heure</span></span>
+                </span>
+                <button type="button" role="switch" aria-checked="true" aria-label="Temps passé" style="all: unset; cursor: pointer; flex: none; box-sizing: border-box; width: 42px; height: 24px; border-radius: 999px; padding: 3px; display: flex; background: #2563EB; justify-content: flex-end"><span style="width: 18px; height: 18px; border-radius: 999px; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,0.25)"></span></button>
+              </div>
+            
+          </div>
+        
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid var(--border)">
+          <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 44px; padding: 0 16px; border-radius: 11px; border: 1px solid var(--border); font-size: 14.5px; font-weight: 600; ">← Retour</button>
+          
+          
+            <a href="Web-Projet-Elevage.dc.html" style="box-sizing: border-box; height: 44px; padding: 0 20px; border-radius: 11px; background: #2563EB; color: #FFFFFF; font-size: 14.5px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px">Créer « <span data-dyn="">Cailles</span> »<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+          
+        </div>
+      </section>
+
+      <aside aria-label="Aperçu du projet" style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">// aperçu sur la vue d'ensemble</span>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 14px; box-shadow: var(--shadow)">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <span style="flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #FFFFFF; font-family: 'Geist Mono', monospace; font-size: 16px; font-weight: 500; background: #7C3AED"><span data-dyn="">ca</span></span>
+            <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+              <span style="font-size: 16px; font-weight: 700; letter-spacing: -0.02em"><span data-dyn="">Cailles</span></span>
+              <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Élevage par lots</span> · dès le <span data-dyn="">12 oct. 2026</span></span>
+            </span>
+            <span style="flex: none; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text)">En démarrage</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted)"><span>Capital récupéré</span><span style="font-family: 'Geist Mono', monospace">0 / <span data-dyn="">300 000 Ar</span></span></div>
+            <div style="height: 7px; border-radius: 999px; background: var(--surface2)"><div style="width: 2%; height: 100%; border-radius: 999px; background: var(--pos)"></div></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--bg); border: 1px solid var(--border)">
+            <span style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 13.5px; font-weight: 600"><span data-dyn="">Récupérer 300 000 Ar</span></span><span style="flex: none; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--slate-soft); color: var(--slate-text)">À venir</span></span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)"><span data-dyn="">avant le 31 mars 2027 · J−172</span></span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px">
+            <span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Vue d'ensemble</span></span><span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Lots</span></span><span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Ressources</span></span><span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Planifier</span></span><span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Historique</span></span><span style="font-size: 12px; padding: 4px 9px; border-radius: 8px; border: 1px solid var(--border); color: var(--text2)"><span data-dyn="">Réglages</span></span>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 14px; background: var(--primary-soft)">
+          <span style="font-size: 13.5px; font-weight: 700; color: var(--primary-text)">Ce qui se passe à la création</span>
+          <span style="display: flex; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--text2)"><span style="flex: none; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)"><span data-dyn="">01</span></span><span data-dyn="">Un apport de 300 000 Ar est noté dans « Ma poche », daté du 12 oct. 2026.</span></span><span style="display: flex; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--text2)"><span style="flex: none; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)"><span data-dyn="">02</span></span><span data-dyn="">Vous pourrez ouvrir la première bande et sa recette type (provende, poussins, vaccins).</span></span><span style="display: flex; gap: 9px; font-size: 13px; line-height: 1.45; color: var(--text2)"><span style="flex: none; font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--primary-text)"><span data-dyn="">03</span></span><span data-dyn="">Le projet apparaît sur le téléphone à la prochaine synchronisation, même hors ligne ensuite.</span></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+</html>

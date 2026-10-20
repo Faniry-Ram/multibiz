@@ -29,7 +29,9 @@ export default function Login({ status, canResetPassword }: Props) {
                 {({ processing, errors }) => (
                     <>
                         <div className="flex flex-col gap-1.5">
-                            <Label htmlFor="email">Adresse e-mail</Label>
+                            <Label htmlFor="email">
+                                E-mail ou numéro de téléphone
+                            </Label>
                             <Input
                                 id="email"
                                 type="email"

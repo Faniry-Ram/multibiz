@@ -69,11 +69,11 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-proj" style="font-size: 12.5px; font-weight: 600">Projet</label>
-            <select id="d1-proj" value="{{d1.proj}}" onChange="{{d1.onProj}}" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
+            <select id="d1-proj" value="{{d1.proj}}" onChange="{{d1.onProj}}" style="width: 100%; min-width: 0; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-lot" style="font-size: 12.5px; font-weight: 600">{{d1.lotLabel}}</label>
-            <select id="d1-lot" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><sc-for list="{{d1.lots}}" as="l" hint-placeholder-count="2"><option>{{l}}</option></sc-for></select>
+            <select id="d1-lot" style="width: 100%; min-width: 0; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><sc-for list="{{d1.lots}}" as="l" hint-placeholder-count="2"><option>{{l}}</option></sc-for></select>
           </div>
         </div>
 
@@ -84,14 +84,14 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         </sc-if>
 
         <sc-if value="{{d1.isQtyPrice}}" hint-placeholder-val="{{ true }}">
-          <div style="display: grid; grid-template-columns: 1fr 1.3fr 1.3fr; gap: 10px; align-items: end">
+          <div style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr) minmax(0, 1.3fr); gap: 10px; align-items: end">
             <div style="display: flex; flex-direction: column; gap: 6px">
               <label for="d1-q" style="font-size: 12.5px; font-weight: 600">Quantité</label>
-              <input id="d1-q" type="number" min="0" value="{{d1.qty}}" onChange="{{d1.onQty}}" style="box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
+              <input id="d1-q" type="number" min="0" value="{{d1.qty}}" onChange="{{d1.onQty}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
             </div>
             <div style="display: flex; flex-direction: column; gap: 6px">
               <label for="d1-p" style="font-size: 12.5px; font-weight: 600">Prix unitaire</label>
-              <input id="d1-p" type="number" min="0" step="500" value="{{d1.price}}" onChange="{{d1.onPrice}}" style="box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
+              <input id="d1-p" type="number" min="0" step="500" value="{{d1.price}}" onChange="{{d1.onPrice}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 15px">
             </div>
             <span style="{{d1.totalStyle}}">{{d1.total}}</span>
           </div>
@@ -99,7 +99,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         <sc-if value="{{d1.isAmount}}" hint-placeholder-val="{{ false }}">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-a" style="font-size: 12.5px; font-weight: 600">Montant (Ar)</label>
-            <input id="d1-a" type="number" min="0" step="10000" value="{{d1.amount}}" onChange="{{d1.onAmount}}" style="box-sizing: border-box; height: 52px; padding: 0 14px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 22px; font-weight: 500">
+            <input id="d1-a" type="number" min="0" step="10000" value="{{d1.amount}}" onChange="{{d1.onAmount}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 52px; padding: 0 14px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 22px; font-weight: 500">
           </div>
         </sc-if>
         <sc-if value="{{d1.isCount}}" hint-placeholder-val="{{ false }}">
@@ -116,7 +116,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         <sc-if value="{{d1.isNote}}" hint-placeholder-val="{{ false }}">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-obs" style="font-size: 12.5px; font-weight: 600">Observation</label>
-            <textarea id="d1-obs" rows="4" style="box-sizing: border-box; padding: 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14px; resize: vertical">Les poulets boivent beaucoup plus depuis 3 jours, il fait 31 °C l'après-midi. Ajouté un abreuvoir.</textarea>
+            <textarea id="d1-obs" rows="4" value="{{d1.obs}}" onChange="{{d1.onObs}}" style="box-sizing: border-box; width: 100%; padding: 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14px; resize: vertical"></textarea>
           </div>
         </sc-if>
 
@@ -144,11 +144,11 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-date" style="font-size: 12.5px; font-weight: 600">Date</label>
-            <input id="d1-date" type="date" value="2026-10-10" style="box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
+            <input id="d1-date" type="date" value="2026-10-10" style="width: 100%; min-width: 0; box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d1-note" style="font-size: 12.5px; font-weight: 600">Note <span style="font-weight: 400; color: var(--muted)">· facultatif</span></label>
-            <input id="d1-note" type="text" placeholder="{{d1.notePh}}" style="box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
+            <input id="d1-note" type="text" placeholder="{{d1.notePh}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
           </div>
         </div>
         <sc-if value="{{d1.hasReceipt}}" hint-placeholder-val="{{ true }}">
@@ -178,16 +178,16 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d2-proj" style="font-size: 12.5px; font-weight: 600">Projet</label>
-            <select id="d2-proj" value="{{d2.proj}}" onChange="{{d2.onProj}}" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
+            <select id="d2-proj" value="{{d2.proj}}" onChange="{{d2.onProj}}" style="width: 100%; min-width: 0; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d2-date" style="font-size: 12.5px; font-weight: 600">Date du changement</label>
-            <input id="d2-date" type="date" value="2026-10-10" style="box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
+            <input id="d2-date" type="date" value="2026-10-10" style="width: 100%; min-width: 0; box-sizing: border-box; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px">
           </div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 6px">
           <label for="d2-t" style="font-size: 12.5px; font-weight: 600">Titre</label>
-          <input id="d2-t" type="text" value="{{d2.title}}" onChange="{{d2.onTitle}}" style="box-sizing: border-box; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px; font-weight: 600">
+          <input id="d2-t" type="text" value="{{d2.title}}" onChange="{{d2.onTitle}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 15px; font-weight: 600">
         </div>
         <div style="display: flex; flex-direction: column; gap: 7px">
           <span style="font-size: 12.5px; font-weight: 600">Genre de changement</span>
@@ -195,7 +195,7 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         </div>
         <div style="display: flex; flex-direction: column; gap: 6px">
           <label for="d2-desc" style="font-size: 12.5px; font-weight: 600">Ce qui change, concrètement</label>
-          <textarea id="d2-desc" rows="3" style="box-sizing: border-box; padding: 11px 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 13.5px; line-height: 1.5; resize: vertical">{{d2.desc}}</textarea>
+          <textarea id="d2-desc" rows="3" value="{{d2.desc}}" onChange="{{d2.onDesc}}" style="box-sizing: border-box; width: 100%; padding: 11px 12px; border-radius: 11px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 13.5px; line-height: 1.5; resize: vertical"></textarea>
         </div>
         <div style="display: flex; flex-direction: column; gap: 7px">
           <span style="font-size: 12.5px; font-weight: 600">Indicateurs à comparer avant / après</span>
@@ -234,16 +234,16 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
         </div>
         <div style="display: flex; flex-direction: column; gap: 6px">
           <label for="d3-proj" style="font-size: 12.5px; font-weight: 600">Projet</label>
-          <select id="d3-proj" value="{{d3.proj}}" onChange="{{d3.onProj}}" style="height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
+          <select id="d3-proj" value="{{d3.proj}}" onChange="{{d3.onProj}}" style="width: 100%; min-width: 0; height: 40px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); font: inherit; font-size: 13.5px"><option value="pc">Poulets de chair</option><option value="rv">Revente en ligne</option><option value="oe">Œufs (pondeuses)</option></select>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d3-t" style="font-size: 12.5px; font-weight: 600">Cible ({{d3.unit}})</label>
-            <input id="d3-t" type="number" min="0" value="{{d3.target}}" onChange="{{d3.onTarget}}" style="box-sizing: border-box; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 16px">
+            <input id="d3-t" type="number" min="0" value="{{d3.target}}" onChange="{{d3.onTarget}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: 'Geist Mono', monospace; font-size: 16px">
           </div>
           <div style="display: flex; flex-direction: column; gap: 6px">
             <label for="d3-dl" style="font-size: 12.5px; font-weight: 600">Échéance</label>
-            <input id="d3-dl" type="date" value="{{d3.deadline}}" onChange="{{d3.onDl}}" style="box-sizing: border-box; height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14px">
+            <input id="d3-dl" type="date" value="{{d3.deadline}}" onChange="{{d3.onDl}}" style="width: 100%; min-width: 0; box-sizing: border-box; height: 44px; padding: 0 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font: inherit; font-size: 14px">
           </div>
         </div>
         <div style="display: flex; flex-direction: column; gap: 10px; padding: 15px; border-radius: 14px; border: 1px solid var(--border); background: var(--bg)">
@@ -346,6 +346,8 @@ class Component extends DCLogic {
       lots: LOTS[s.proj],
       hasSub: subs.length > 0, subLabel,
       subs: subs.map((label, i) => ({ label, checked: i === sub ? "true" : "false", pick: () => this.setState({ sub: i }), style: chip(i === sub) + " flex: 1; text-align: center;" })),
+      obs: s.obs ?? "Les poulets boivent beaucoup plus depuis 3 jours, il fait 31 °C l'après-midi. Ajouté un abreuvoir.",
+      onObs: (e) => this.setState({ obs: e.target.value }),
       isQtyPrice: isQP, isAmount: t === "invest" || t === "poche", isCount: t === "effectif", isNote: t === "note",
       qty: s.qty, price: s.price, amount: s.amount,
       onQty: (e) => this.setState({ qty: e.target.value }),
@@ -394,9 +396,10 @@ class Component extends DCLogic {
     };
     const d2 = {
       proj: s.jProj,
-      onProj: (e) => { const v = e.target.value; this.setState({ jProj: v, jTitle: JDEF[v][0], jInd: { 0: true, 1: true }, jPer: 0 }); },
+      onProj: (e) => { const v = e.target.value; this.setState({ jProj: v, jTitle: JDEF[v][0], jDesc: null, jInd: { 0: true, 1: true }, jPer: 0 }); },
       title: s.jTitle, onTitle: (e) => this.setState({ jTitle: e.target.value }),
-      desc: JDEF[s.jProj][1],
+      desc: s.jDesc ?? JDEF[s.jProj][1],
+      onDesc: (e) => this.setState({ jDesc: e.target.value }),
       kinds: KINDS.map((label, i) => ({ label, on: i === s.jKind ? "true" : "false", pick: () => this.setState({ jKind: i }), style: chip(i === s.jKind) })),
       inds: JIND[s.jProj].map((label, i) => { const on = !!s.jInd[i]; return { label, mark: on ? "✓" : "+", on: on ? "true" : "false", pick: () => this.setState({ jInd: { ...s.jInd, [i]: !on } }), style: chip(on) }; }),
       pers: pers.map((label, i) => ({ label, on: i === s.jPer ? "true" : "false", pick: () => this.setState({ jPer: i }), ...radio(i === s.jPer), style: "all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13.5px; " + (i === s.jPer ? "background: var(--primary-soft); font-weight: 600;" : "border: 1px solid var(--border); color: var(--text2);") })),

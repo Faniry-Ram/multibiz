@@ -21,7 +21,7 @@ test('authenticated users can visit the dashboard', function () {
     $response->assertOk();
 });
 
-test('the dashboard totals this month\'s sale and expense entries per project', function () {
+test('the dashboard reports each active project\'s all-time result by default', function () {
     $organization = Organization::factory()->create(['currency' => 'MGA']);
     $project = Project::factory()->create(['organization_id' => $organization->id]);
     $user = User::factory()->forOrganization($organization)->create();
@@ -57,13 +57,46 @@ test('the dashboard totals this month\'s sale and expense entries per project', 
 
     $response->assertOk()
         ->assertInertia(fn ($page) => $page->component('dashboard')
+            ->where('period', 'all')
             ->has('projects', 1)
             ->where('projects.0.id', $project->id)
-            ->where('projects.0.income_formatted', '500 000 Ar')
-            ->where('projects.0.expense_formatted', '200 000 Ar')
-            ->where('projects.0.balance_formatted', '300 000 Ar')
-            ->where('projects.0.balance_is_positive', true)
+            ->where('projects.0.result', 500_000 - 200_000 - 999_999)
+            ->where('balance.result', 500_000 - 200_000 - 999_999)
             ->has('recentEntries', 3)
+        );
+});
+
+test('the dashboard\'s period selector scopes each project\'s result but not the entry list', function () {
+    $organization = Organization::factory()->create(['currency' => 'MGA']);
+    $project = Project::factory()->create(['organization_id' => $organization->id]);
+    $user = User::factory()->forOrganization($organization)->create();
+    $income = Category::factory()->create(['project_id' => $project->id, 'kind' => CategoryKind::Income]);
+    $expense = Category::factory()->create(['project_id' => $project->id, 'kind' => CategoryKind::Expense]);
+
+    Entry::factory()->create([
+        'organization_id' => $project->organization_id,
+        'project_id' => $project->id,
+        'category_id' => $income->id,
+        'type' => EntryType::Sale,
+        'amount' => 500_000,
+        'occurred_at' => Carbon::now()->subDays(2),
+    ]);
+    Entry::factory()->create([
+        'organization_id' => $project->organization_id,
+        'project_id' => $project->id,
+        'category_id' => $expense->id,
+        'type' => EntryType::Expense,
+        'amount' => 999_999,
+        'occurred_at' => Carbon::now()->subMonths(2),
+    ]);
+
+    $response = $this->actingAs($user)->get(route('dashboard', ['period' => '30d']));
+
+    $response->assertOk()
+        ->assertInertia(fn ($page) => $page->component('dashboard')
+            ->where('period', '30d')
+            ->where('projects.0.result', 500_000)
+            ->has('recentEntries', 2)
         );
 });
 

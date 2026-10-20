@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Domain\Analytics\Enums\Verdict;
 use App\Domain\Analytics\Services\ProjectResult;
 use App\Domain\Analytics\Services\ProjectVerdict;
 use App\Domain\Finance\Models\Category;
@@ -13,13 +12,6 @@ use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
-    private const VERDICT_TONES = [
-        Verdict::Profitable->value => 'pos',
-        Verdict::Watch->value => 'warn',
-        Verdict::Starting->value => 'primary',
-        Verdict::Loss->value => 'neg',
-    ];
-
     public function __construct(
         private ProjectResult $projectResult,
         private ProjectVerdict $projectVerdict,
@@ -95,7 +87,7 @@ class HandleInertiaRequests extends Middleware
                     'model' => $project->model->value,
                     'capital_recovered_percent' => round($this->projectResult->capitalRecoveredPercent($project)),
                     'verdict' => $verdict->value,
-                    'verdict_tone' => self::VERDICT_TONES[$verdict->value],
+                    'verdict_tone' => $verdict->tone(),
                     'categories' => $project->categories()
                         ->whereNull('archived_at')
                         ->orderBy('kind')

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -62,6 +63,12 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+
+        // UI language is French (see CLAUDE.md) — dates are always rendered in French
+        // (e.g. "sam. 10 oct."), never per-request, so this is set once globally
+        // rather than via ->locale('fr') at each call site.
+        Carbon::setLocale('fr');
+        CarbonImmutable::setLocale('fr');
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),

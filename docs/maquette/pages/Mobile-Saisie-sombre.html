@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MultiBiz mobile — Noter un flux (sombre)</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.mb{--bg:#F8FAFC;--surface:#FFFFFF;--surface2:#F1F5F9;--border:#E2E8F0;--text:#0F172A;--text2:#334155;--muted:#64748B;--primary:#2563EB;--primary-soft:#EFF6FF;--primary-text:#1D4ED8;--pos:#047857;--pos-soft:#ECFDF5;--neg:#C2410C;--neg-soft:#FFF7ED;--shadow:0 1px 2px rgba(15,23,42,0.04),0 6px 20px rgba(15,23,42,0.05);--b1:#D97706;--b2:#DB2777;--b3:#0891B2}
+.mb.dark{--bg:#020617;--surface:#0F172A;--surface2:#1E293B;--border:#1E293B;--text:#F1F5F9;--text2:#CBD5E1;--muted:#94A3B8;--primary-soft:rgba(59,130,246,0.16);--primary-text:#93C5FD;--pos:#34D399;--pos-soft:rgba(52,211,153,0.13);--neg:#FB923C;--neg-soft:rgba(251,146,60,0.13);--shadow:0 1px 2px rgba(0,0,0,0.35);--b2:#E0569A;--b3:#0EA5C6}
+a{color:var(--primary-text)}a:hover{color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="mb dark" style="width: 390px; height: 844px; box-sizing: border-box; overflow: hidden; background: var(--surface); color: var(--text); font-family: 'Geist', system-ui, sans-serif; padding: 16px 20px 14px; display: flex; flex-direction: column; gap: 12px">
+
+  <header style="display: flex; align-items: center; gap: 10px">
+    <a href="Mobile-Accueil.dc.html" aria-label="Fermer" style="width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border); display: grid; place-items: center; box-sizing: border-box; color: var(--text)">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+    </a>
+    <span style="font-size: 16px; font-weight: 600">Noter un flux</span>
+    <button type="button" aria-label="Passer en mode clair" style="all: unset; cursor: pointer; box-sizing: border-box; margin-left: auto; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text2)">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+      
+    </button>
+  </header>
+
+  <div aria-label="Projet" style="display: flex; gap: 6px">
+    
+      <button type="button" aria-pressed="true" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; background: var(--primary-soft); color: var(--primary-text); font-weight: 600; border: 1px solid #2563EB;"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--b1)"></span><span data-dyn="">Poulets</span></button>
+    
+      <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--text2); border: 1px solid var(--border);"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--b2)"></span><span data-dyn="">Œufs</span></button>
+    
+      <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--text2); border: 1px solid var(--border);"><span style="width: 8px; height: 8px; border-radius: 2px; background: var(--b3)"></span><span data-dyn="">Revente</span></button>
+    
+  </div>
+
+  <div aria-label="Type de flux" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3px; padding: 3px; border-radius: 12px; background: var(--surface2)">
+    
+      <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; border-radius: 9px; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Vente</span></button>
+    
+      <button type="button" aria-pressed="true" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; border-radius: 9px; text-align: center; font-size: 13px; font-weight: 600; background: var(--surface); color: var(--text); box-shadow: var(--shadow);"><span data-dyn="">Dépense</span></button>
+    
+      <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; border-radius: 9px; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Invest.</span></button>
+    
+      <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; height: 38px; border-radius: 9px; text-align: center; font-size: 13px; font-weight: 600; color: var(--muted);"><span data-dyn="">Poche</span></button>
+    
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+    <div style="display: flex; align-items: baseline; gap: 8px">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 46px; font-weight: 500; letter-spacing: -0.04em; line-height: 1.05; color: var(--neg)"><span data-dyn="">64 000</span></span>
+      <span style="font-family: 'Geist Mono', monospace; font-size: 17px; color: var(--muted)">Ar</span>
+    </div>
+    <span style="font-size: 12.5px; color: var(--muted)"><span data-dyn="">Dépense courante : compte dans le résultat</span></span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 7px">
+    <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// catégorie</span>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px">
+      
+        <button type="button" aria-pressed="true" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; background: var(--primary-soft); color: var(--primary-text); font-weight: 600; border: 1px solid #2563EB;"><span data-dyn="">Aliment</span></button>
+      
+        <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--text2); border: 1px solid var(--border);"><span data-dyn="">Soins</span></button>
+      
+        <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--text2); border: 1px solid var(--border);"><span data-dyn="">Poussins</span></button>
+      
+        <button type="button" aria-pressed="false" style="all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--text2); border: 1px solid var(--border);"><span data-dyn="">Transport</span></button>
+      
+    </div>
+  </div>
+
+  
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text2)">
+      <span style="font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted)">// lié à</span>
+      <span style="display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: var(--primary-soft); color: var(--primary-text); font-weight: 600">Bande 4 · J21</span>
+      <span style="color: var(--muted)">aujourd'hui, 16:00</span>
+    </div>
+  
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-top: auto">
+    
+      <button type="button" aria-label="1" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">1</span></span>
+      </button>
+    
+      <button type="button" aria-label="2" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">2</span></span>
+      </button>
+    
+      <button type="button" aria-label="3" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">3</span></span>
+      </button>
+    
+      <button type="button" aria-label="4" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">4</span></span>
+      </button>
+    
+      <button type="button" aria-label="5" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">5</span></span>
+      </button>
+    
+      <button type="button" aria-label="6" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">6</span></span>
+      </button>
+    
+      <button type="button" aria-label="7" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">7</span></span>
+      </button>
+    
+      <button type="button" aria-label="8" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">8</span></span>
+      </button>
+    
+      <button type="button" aria-label="9" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">9</span></span>
+      </button>
+    
+      <button type="button" aria-label="000" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">000</span></span>
+      </button>
+    
+      <button type="button" aria-label="0" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+        <span><span data-dyn="">0</span></span>
+      </button>
+    
+      <button type="button" aria-label="Effacer" style="all: unset; cursor: pointer; box-sizing: border-box; height: 48px; border-radius: 12px; background: var(--surface2); display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 20px; color: var(--text)">
+        
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H9l-6 7 6 7h12zM18 9l-6 6M12 9l6 6"></path></svg>
+        
+        
+      </button>
+    
+  </div>
+
+  <button type="button" style="all: unset; cursor: pointer; box-sizing: border-box; height: 52px; border-radius: 14px; text-align: center; font-size: 15.5px; font-weight: 600; color: #FFFFFF; background: #2563EB">Enregistrer · <span style="font-family: 'Geist Mono', monospace"><span data-dyn="">64 000</span> Ar</span></button>
+
+  <p style="margin: 0; display: flex; gap: 8px; align-items: flex-start; font-size: 11.5px; line-height: 1.4; color: var(--muted)">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex: none; margin-top: 1px"><path d="M2 2l20 20M17.5 19H9a7 7 0 01-6.9-8.2M6.3 6.3A7 7 0 0115.7 9h1.8a4.5 4.5 0 013.3 7.5"></path></svg>
+    Hors ligne : gardé sur le téléphone, ajouté à l'historique dès le retour du réseau.
+  </p>
+</div>
+</body>
+</html>

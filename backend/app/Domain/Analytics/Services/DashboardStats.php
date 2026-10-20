@@ -2,9 +2,10 @@
 
 namespace App\Domain\Analytics\Services;
 
-use App\Domain\Finance\Enums\EntryType;
 use App\Domain\Finance\Models\Entry;
 use App\Domain\Organization\Models\Organization;
+use App\Domain\Project\Enums\ProjectStatus;
+use App\Domain\Project\Models\Milestone;
 use App\Domain\Project\Models\Project;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -17,31 +18,36 @@ use Illuminate\Support\Collection;
 class DashboardStats
 {
     /**
-     * @return Collection<int, array{project: Project, income: int, expense: int, balance: int}>
+     * Active projects for the "Vos projets en un coup d'œil" dashboard, per
+     * docs/maquette/README.md's `Main` screen — archived projects don't appear there.
+     *
+     * @return Collection<int, Project>
      */
-    public function projectTotals(Organization $organization, Carbon $periodStart, Carbon $periodEnd): Collection
+    public function activeProjects(Organization $organization): Collection
     {
         return $organization->projects()
+            ->where('status', ProjectStatus::Active)
             ->orderBy('name')
-            ->get()
-            ->map(function (Project $project) use ($periodStart, $periodEnd) {
-                $totals = $project->entries()
-                    ->whereBetween('occurred_at', [$periodStart, $periodEnd])
-                    ->whereIn('type', [EntryType::Sale->value, EntryType::Expense->value])
-                    ->selectRaw('type, SUM(amount) as total')
-                    ->groupBy('type')
-                    ->pluck('total', 'type');
+            ->get();
+    }
 
-                $income = (int) ($totals[EntryType::Sale->value] ?? 0);
-                $expense = (int) ($totals[EntryType::Expense->value] ?? 0);
+    /**
+     * The start of a dashboard period filter. Null means "Depuis le début" (no lower
+     * bound) — the default, and the only option that leaves invested-capital figures
+     * meaningful alongside the period-scoped result.
+     */
+    public function periodStart(string $period): ?Carbon
+    {
+        return match ($period) {
+            '6m' => Carbon::now()->subMonths(6),
+            '30d' => Carbon::now()->subDays(30),
+            default => null,
+        };
+    }
 
-                return [
-                    'project' => $project,
-                    'income' => $income,
-                    'expense' => $expense,
-                    'balance' => $income - $expense,
-                ];
-            });
+    public function latestMilestone(Project $project): ?Milestone
+    {
+        return $project->milestones()->latest('occurred_on')->first();
     }
 
     /**

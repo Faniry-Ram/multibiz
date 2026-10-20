@@ -49,7 +49,6 @@ class ProjectController extends Controller
     public function show(Project $project, BatchStats $batchStats): Response
     {
         Gate::authorize('view', $project);
-
         $currency = $project->organization->currency;
 
         $categories = $project->categories()
@@ -128,7 +127,11 @@ class ProjectController extends Controller
         $usedColors = Project::query()
             ->where('organization_id', auth()->user()->organization()->id)
             ->whereNotNull('color')
-            ->pluck('color');
+            ->get(['color', 'name'])
+            ->map(fn (Project $project) => [
+                'hex' => $project->color,
+                'project_name' => $project->name,
+            ]);
 
         return Inertia::render('projects/create', [
             'usedColors' => $usedColors,

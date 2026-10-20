@@ -184,14 +184,14 @@ a{color:var(--primary-text)}a:hover{color:var(--primary)}
           <span style="font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--muted)">30 derniers jours</span>
         </div>
         <div style="overflow-x: auto">
-          <div style="min-width: 800px">
-            <div style="display: grid; grid-template-columns: 1.4fr 1fr 0.7fr 1.3fr 0.7fr 0.7fr 0.9fr 1fr; gap: 12px; padding: 10px 0; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted); border-bottom: 1px solid var(--border)">
+          <div style="min-width: 640px">
+            <div style="display: grid; grid-template-columns: 1.3fr 1.1fr 0.6fr 1.2fr 0.6fr 0.6fr 0.8fr 1.1fr; gap: 12px; padding: 10px 0; font-family: 'Geist Mono', monospace; font-size: 11.5px; color: var(--muted); border-bottom: 1px solid var(--border)">
               <span>produit</span><span style="text-align: right">dernier achat</span><span style="text-align: right">vendus</span><span>part des ventes</span><span style="text-align: right">marge</span><span style="text-align: right">stock</span><span style="text-align: right">tient encore</span><span>statut</span>
             </div>
             <sc-for list="{{products}}" as="p" hint-placeholder-count="4">
-              <div style="display: grid; grid-template-columns: 1.4fr 1fr 0.7fr 1.3fr 0.7fr 0.7fr 0.9fr 1fr; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px">
+              <div style="display: grid; grid-template-columns: 1.3fr 1.1fr 0.6fr 1.2fr 0.6fr 0.6fr 0.8fr 1.1fr; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px">
                 <span style="font-weight: 600">{{p.name}}</span>
-                <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--text2)">{{p.buy}}</span>
+                <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 12.5px; color: var(--text2); white-space: nowrap">{{p.buy}}</span>
                 <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px">{{p.sold}}</span>
                 <span style="display: flex; align-items: center; gap: 8px"><span style="flex: 1; height: 7px; border-radius: 999px; background: var(--surface2)"><span style="{{p.bar}}"></span></span><span style="width: 36px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 12px">{{p.share}}</span></span>
                 <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px">{{p.margin}}</span>

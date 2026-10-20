@@ -43,7 +43,7 @@ function NavSidebar({
         <nav
             aria-label="Navigation principale"
             className={cn(
-                'flex w-60 shrink-0 flex-col gap-5.5 border-r border-border bg-surface p-3.5',
+                'flex w-60 shrink-0 flex-col gap-5.5 border-r border-border bg-surface px-3.5 py-[22px]',
                 className,
             )}
         >

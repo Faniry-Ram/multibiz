@@ -1,9 +1,14 @@
 # MultiBiz
 
-MultiBiz is an app for managing several small businesses under one organization. Phase 1 (in
-progress) covers finance only: businesses, categories, income/expense transactions, and a
-dashboard. Later phases add catalog, stock, sales, orders, purchasing, analytics, and team
-management — the architecture below is deliberately chosen to support those without rework.
+MultiBiz tracks the money and progress of several small projects/activities (livestock batches,
+a laying flock, buy-resell, or any simple activity) under one organization — an immutable history
+of flux (sales, expenses, investments, owner contributions, headcount, production) per project,
+with computed results: cumulative result, invested capital recovered, a verdict
+(starting/profitable/watch/loss), and "Ma poche" (the owner's money across all projects). See
+`docs/audit-architecture.md` for the rationale behind this model and `docs/maquette/` for the
+authoritative UI spec (read `docs/maquette/README.md` first — it's a precise screen-by-screen
+spec, not a rough guide). Later phases add resources/stock, planning, and a task list — the
+architecture below is deliberately chosen to support those without rework.
 
 A web app (Inertia + React, this repo) and a React Native mobile app with offline mode (future,
 in `/mobile`) share one Laravel backend. The mobile app talks to a versioned push/pull sync API;
@@ -13,12 +18,15 @@ the web app never does.
 
 ```
 multibiz/
-├── backend/            Laravel app (PHP, Inertia, React, Tailwind) — see below
-├── mobile/             React Native app (not started yet)
+├── backend/              Laravel app (PHP, Inertia, React, Tailwind) — see below
+│   └── docker-compose.yml   PostgreSQL + Redis for backend/ (see "Running the app")
+├── mobile/               React Native app (not started yet)
 ├── packages/
-│   └── shared-types/   TypeScript types generated from backend/app/Domain/*/Data DTOs
-├── docs/adr/           Architecture Decision Records — read these for the "why"
-└── docker-compose.yml  PostgreSQL + Redis for backend/ (see "Running the app")
+│   └── shared-types/     TypeScript types generated from backend/app/Domain/*/Data DTOs
+├── docs/adr/             Architecture Decision Records — read these for the "why"
+├── docs/audit-architecture.md   Rationale for the current domain model (projects/entries)
+└── docs/maquette/        Authoritative visual/UX spec for every web screen — read before
+                          building or changing a page
 ```
 
 Root-level `.gitignore` covers editor/AI-tool directories shared across the monorepo;
@@ -27,36 +35,55 @@ Root-level `.gitignore` covers editor/AI-tool directories shared across the mono
 ## Architecture rules (non-negotiable — read the ADRs in `docs/adr/` for rationale)
 
 1. **Domain-oriented structure.** Business logic lives under
-   `backend/app/Domain/{Identity,Organization,Business,Finance,Sync}`, each with `Models/`,
-   `Actions/`, `Data/`, `Policies/`, `Enums/`, `Queries/` as needed. Don't put business logic in
-   controllers, models, or framework-level `app/Http` code.
+   `backend/app/Domain/{Identity,Organization,Project,Finance,Analytics,Sync}`, each with
+   `Models/`, `Actions/`, `Data/`, `Policies/`, `Enums/`, `Services/` as needed. Don't put business
+   logic in controllers, models, or framework-level `app/Http` code.
 2. **Thin controllers, shared Actions.** `app/Http/Web/Controllers` (Inertia) and
-   `app/Http/Api/Controllers` (JSON, for the mobile sync API) both call the **same**
+   `app/Http/Api/Controllers/V1` (JSON, for the mobile app) both call the **same**
    `app/Domain/*/Actions` classes. A controller validates, calls one Action, returns a response —
    nothing else. See ADR 0001 and 0002.
 3. **Money is integer minor units, never float.** Use `App\Support\Money`, backed by `bigint`
    columns. See ADR 0005.
-4. **`occurred_at` vs `created_at`/`updated_at`.** `occurred_at` is the real-world date of a
-   business event (user-provided, editable). `created_at`/`updated_at` are purely technical and
-   never shown to users as "when this happened."
-5. **Every business-owned table carries `organization_id` or `business_id`, plus a nullable
-   `created_by`** (FK to `users`).
-6. **Authorization is always through Policies**, scoped to the acting user's organization. A user
-   must never be able to read or write another organization's data — this is a cross-cutting
-   concern covered heavily in tests, not something checked ad hoc in controllers.
+4. **Flux (`entries`) are append-only — never updated, never deleted.** Enforced at the model
+   layer by the `App\Domain\Sync\Concerns\AppendOnly` trait (throws on `updating`/`deleting`), not
+   just the Policy. A mistake is corrected by recording the arithmetic inverse via
+   `App\Domain\Finance\Actions\ReverseEntry` (`reverses_entry_id`), never by mutating the original
+   row. Corollary: nothing computed from `entries` (result, capital recovered, verdict, headcount,
+   lay rate, Ma poche) is ever stored — always recompute from the registry
+   (`app/Domain/Analytics/Services`).
+5. **`occurred_at` vs `recorded_at` vs `created_at`/`updated_at`.** `occurred_at` is the
+   real-world, user-editable date of the business event. `recorded_at` is when the device/user
+   actually captured it (relevant once offline mobile entry exists — the two can differ).
+   `created_at`/`updated_at` are purely technical and never shown to users as "when this
+   happened."
+6. **Every organization-owned table carries `organization_id` (directly, or via `project_id`),
+   plus a nullable `created_by`** (FK to `users`).
+7. **Authorization is always through Policies**, scoped to the acting user's organization *and*
+   their role in it (`owner`/`manager`/`entry`/`viewer` — see
+   `App\Domain\Organization\Enums\Role`). A user must never read or write another organization's
+   data — this is a cross-cutting concern covered heavily in tests, not something checked ad hoc
+   in controllers. `entry` can record flux but has no access to Ma poche/analytics; only
+   `owner`/`manager` can create or archive projects and categories.
 
 ## Sync foundations (mobile offline support)
 
-- Every synced model uses the `Syncable` trait (`app/Domain/Sync/Concerns`): UUID primary keys,
-  `SoftDeletes`, and a `version` bigint column populated from the global Postgres sequence
-  `sync_version_seq` on every save (see ADR 0003).
-- `SyncRegistry` maps entity names (`"categories"`, `"transactions"`, ...) to model class, the
-  fields a client may mutate, and the Action to call per operation type.
-- `POST /api/sync/push` applies a batch of `{op_id, entity, entity_id, type, fields, client_ts}`
-  operations, each in its own transaction, idempotent via `processed_operations`, with
-  field-level last-write-wins (ADR 0004) — never full-row overwrite.
-- `GET /api/sync/pull?since=<version>&limit=500` returns rows (including soft-deleted) with
-  `version > since` for the user's businesses, plus `max_version` and `has_more`.
+- Every synced, mutable model uses the `Syncable` trait (`app/Domain/Sync/Concerns`): UUID primary
+  keys, `SoftDeletes`, and a `version` bigint column populated from the global Postgres sequence
+  `sync_version_seq` on every save (see ADR 0003). `entries` use `AppendOnly` instead (same
+  UUID/`version` mechanism, but no `SoftDeletes` — see rule 4 above).
+- `SyncRegistry` (not built yet) will map entity names (`"projects"`, `"entries"`, ...) to model
+  class, the fields a client may mutate, and the Action to call per operation type.
+- `POST /api/sync/push` (not built yet) will apply a batch of
+  `{op_id, entity, entity_id, type, fields, client_ts}` operations, each in its own transaction,
+  idempotent via `processed_operations`, with field-level last-write-wins (ADR 0004) — never
+  full-row overwrite.
+- `GET /api/sync/pull?since=<version>&limit=500` (not built yet) will return rows (including
+  soft-deleted) with `version > since` for the user's organization, plus `max_version` and
+  `has_more`.
+- What *does* exist today: `app/Http/Api/Controllers/V1` + `routes/api.php` — a Sanctum
+  token-authenticated skeleton (`POST /api/v1/login`, `GET /api/v1/projects`,
+  `POST /api/v1/entries`, idempotent via `processed_operations`) that calls the same Actions as
+  the web controllers. This is a plain write endpoint, not the sync protocol above.
 
 ## Backend conventions
 
@@ -65,15 +92,19 @@ Root-level `.gitignore` covers editor/AI-tool directories shared across the mono
 - DTOs: `spatie/laravel-data`, also used as the source for generated TypeScript types
   (`spatie/laravel-typescript-transformer`) in `backend/resources/js/types/generated` and
   `packages/shared-types`.
-- UI language is French; default currency is Ariary (MGA), configurable per business. Format
-  amounts like `1 250 000 Ar`.
-- Inertia.js + React (TypeScript, strict) + Tailwind CSS, living in `backend/resources/js`, based
-  on the official Laravel React starter kit. Two-factor auth and WebAuthn passkeys that shipped
-  with the starter kit were intentionally removed for Phase 1 — login/register/logout only.
+- UI language is French; default currency is Ariary (MGA), set per organization
+  (`organizations.currency`, also `timezone` and `week_starts_on`). Format amounts like
+  `1 250 000 Ar` (thin space as thousands separator, real minus sign U+2212 for negatives — see
+  `docs/maquette/README.md` for the full number-formatting spec).
+- Inertia.js + React (TypeScript, strict) + Tailwind CSS, living in `backend/resources/js`,
+  originally based on the Laravel React starter kit but since redesigned per `docs/maquette/`
+  (Geist/Geist Mono fonts, custom tokens, custom SVG charts — no charting library). Two-factor
+  auth and WebAuthn passkeys that shipped with the starter kit were intentionally removed —
+  login/register/logout only.
 
 ## Running the app
 
-`docker-compose.yml` only runs the **data services** (Postgres, Redis) — PHP and Node run
+`backend/docker-compose.yml` only runs the **data services** (Postgres, Redis) — PHP and Node run
 directly on the host, not in a container:
 
 ```bash
@@ -113,24 +144,39 @@ All run from `backend/`:
 
 ## Current status
 
-Phases 2 and 3 are complete: monorepo/Docker/tooling, and the full data model — migrations,
-models, the `Syncable` trait + sequence, factories, the `DemoDataSeeder`, Policies, and the
-Business/Finance/Identity Actions, all covered by Pest tests (including cross-organization policy
-denial). The actual sync API (`SyncRegistry`, `/api/sync/push`, `/api/sync/pull`) is Phase 5 and
-**not implemented yet**.
+**Domain model** (`app/Domain/*`) is built and tested: `Organization` (UUID PK, `currency`/
+`timezone`/`week_starts_on`) with an `organization_user` pivot carrying a role
+(owner/manager/entry/viewer); `Project` (`model` enum lots/herd/resale/simple, `status`,
+`started_on`, `settings` JSON — per-project verdict thresholds live here), `Batch` ("bande" — a
+cohort for `lots` projects), `Milestone`; `Category` (income/expense/investment,
+archive/unarchive, no hard delete) and the append-only `Entry` registry (rule 4 above) with
+`ReverseEntry` for corrections; `Analytics\Services\{ProjectResult,ProjectVerdict,BatchStats,
+HerdStats,PocketSummary,DashboardStats}` computing everything on read, nothing stored. All of this
+is covered by Pest tests (`tests/Feature/{Organization,Project,Finance,Analytics}`), including
+cross-organization Policy denial and role-based access (e.g. `entry` role denied Ma poche/
+analytics).
 
-Registering now also creates an `Organization` (required, since `users.organization_id` is
-NOT NULL) — `App\Domain\Identity\Actions\RegisterOrganizationAndUser`, wired into Fortify's
-`CreateNewUser`. This pulled a small piece of Phase 4's "register creates an organization" scope
-forward into Phase 3, since the schema change made it unavoidable; the UI for it (an
-"Organization name" field on `/register`) is bare-bones English for now — full French copy is
-still Phase 4 work.
+**Not built yet / known gaps:**
+- `Attachment` (receipt photo on an entry): model + migration exist, but no controller, route, or
+  upload UI — not usable today.
+- No backend route for a dedicated batches list/detail page or a project-settings page (verdict
+  threshold editor) — `BatchController` only has `store`/`close`, no `index`/`show`.
+- The mobile sync protocol (`SyncRegistry`, `/api/sync/push`, `/api/sync/pull`) — see "Sync
+  foundations" above, Phase 5.
+- `DashboardStats` takes a period range as a parameter but the web controller/page don't yet
+  expose a period picker (Depuis le début/6 mois/30 jours) — always whatever the controller
+  hardcodes.
 
-Phase 4's web UI for businesses, categories, transactions, and the dashboard is built:
-`App\Http\Web\Controllers\{Business,Category,Transaction,Dashboard}Controller`, routes in
-`routes/{businesses,finance}.php`, pages under `resources/js/pages/{businesses,dashboard.tsx}`.
-Categories and transactions have no index/show routes of their own — they're managed inline on
-the business `show` page. The dashboard aggregates the current month's income/expense/balance per
-business via `App\Domain\Finance\Queries\DashboardStats`, plus a recent-transactions list; it has
-no period picker yet (always "this month") and no charts. The "Organization name" field on
-`/register` is still bare-bones English — full French copy there remains open.
+**Frontend** (`backend/resources/js`) is mid-rebuild against `docs/maquette/`: the design system
+(tokens, Geist fonts, component library — `stat-tile`, `segmented-control`, `verdict-badge`,
+custom SVG charts, etc. — see `docs/maquette/README.md` §3) is in place, with a local-only
+`/_dev/ui` page demoing every component in light/dark. Pages built: login/register,
+`/projects/create` (3-step wizard), `/dashboard`, `/history` (filterable), `/pocket`,
+`/projects/{project}` (model-aware, but not yet the full tabbed layout the maquette specifies).
+`docs/maquette/README.md` §4 (the screens → routes table) is the authoritative checklist for what
+Phase-1 screens remain — currently missing: project settings, a dedicated batches page, and the
+dashboard's period picker/per-project trajectory sparkline. `/analysis` and `/tasks` are
+deliberate `coming-soon` placeholders (Phase 3, per the maquette).
+
+Registering creates an `Organization` + membership in one step —
+`App\Domain\Identity\Actions\RegisterOrganizationAndUser`, wired into Fortify's `CreateNewUser`.

@@ -1,15 +1,30 @@
 # Maquette MultiBiz — référence pour le front web
 
-Ce dossier est la **référence visuelle** de l'interface. Avant de coder une page, ouvre l'écran correspondant dans `screens/` et reproduis-le : mêmes espacements, tailles, couleurs, textes et interactions.
+Ce dossier est la **référence visuelle** de l'interface : 21 écrans (16 web, 5 mobile), chacun en clair et en sombre.
 
-- `screens/*.dc.html` : les 21 écrans de la maquette (16 web, 5 mobile).
-- `tokens.css` : les couleurs, polices et ombres, en clair et en sombre, prêtes à coller dans `resources/css/app.css`.
+| Dossier | Contenu | À utiliser pour |
+|---|---|---|
+| `images/` | Captures exactes du canevas : `<Écran>-clair.png` et `<Écran>-sombre.png`, plus quelques états utiles (`-inscription`, `-etape-2`, `-etape-3`, `-vente`, `-effectif`, `-bande-3`, `-survol`) | Voir à quoi la page doit ressembler |
+| `pages/` | Chaque écran en **page HTML statique**, rendu identique au canevas (vérifié pixel par pixel). S'ouvre dans n'importe quel navigateur | Lire les tailles, couleurs, espacements et textes exacts |
+| `screens/` | Les sources `.dc.html` du canevas, avec la logique : calculs, interactions, données de démo | Comprendre les interactions et le calcul des graphiques |
+| `tokens.css` | Couleurs, polices et ombres, en clair et en sombre | À coller dans `resources/css/app.css` |
+
+**Ordre de lecture pour coder une page :**
+1. L'image, pour le résultat attendu.
+2. La page HTML statique, pour les valeurs exactes (styles en ligne, structure).
+3. Le `.dc.html`, pour les interactions (clics, états) et la logique des graphiques.
+
+À savoir :
+- Les fichiers de `screens/` **ne s'affichent pas correctement s'ils sont ouverts directement** dans un navigateur : ils ont besoin du moteur du canevas. On y voit alors des `{{…}}` et des listes vides. C'est normal : pour voir l'écran, ouvre la page correspondante dans `pages/`.
+- Dans `pages/`, les textes entourés de `<span data-dyn>` viennent des **données** ; tout le reste est du texte fixe de l'interface.
+- Les pages statiques n'ont pas d'interactions (onglets, cases, survols). Les états importants sont capturés à part dans `images/` et `pages/`.
+- Les pages chargent les polices Geist depuis Google Fonts : sans internet, le navigateur affiche une police de remplacement et les tailles bougent un peu.
 
 ---
 
 ## 1. Comment lire un fichier `.dc.html`
 
-Ce ne sont pas des pages à ouvrir dans un navigateur : c'est un format de maquette. Le moteur qui les affiche n'est pas fourni. Il suffit de les lire comme du JSX simplifié.
+C'est le format du canevas, pas une page à ouvrir telle quelle (voir `pages/` pour ça). Il se lit comme du JSX simplifié.
 
 | Dans le fichier | Équivalent React |
 |---|---|

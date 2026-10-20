@@ -4,6 +4,7 @@ namespace App\Domain\Analytics\Services;
 
 use App\Domain\Finance\Enums\EntryType;
 use App\Domain\Project\Models\Project;
+use Illuminate\Support\Carbon;
 
 /**
  * Result, invested capital and capital-recovered ratio — always computed from the
@@ -16,8 +17,29 @@ class ProjectResult
      */
     public function cumulativeResult(Project $project): int
     {
-        $totals = $project->entries()
-            ->whereIn('type', [EntryType::Sale->value, EntryType::Expense->value])
+        return $this->resultBetween($project, null, null);
+    }
+
+    /**
+     * Résultat (ventes − dépenses courantes) over a window — $since null means since
+     * the project started. Used for the dashboard's period selector (Depuis le
+     * début/6 mois/30 jours), which only scopes this flow, not the invested-capital
+     * figures below (those are a running position, not reset per period).
+     */
+    public function resultBetween(Project $project, ?Carbon $since, ?Carbon $until): int
+    {
+        $query = $project->entries()
+            ->whereIn('type', [EntryType::Sale->value, EntryType::Expense->value]);
+
+        if ($since !== null) {
+            $query->where('occurred_at', '>=', $since);
+        }
+
+        if ($until !== null) {
+            $query->where('occurred_at', '<=', $until);
+        }
+
+        $totals = $query
             ->selectRaw('type, SUM(amount) as total')
             ->groupBy('type')
             ->pluck('total', 'type');
