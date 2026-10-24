@@ -1,4 +1,73 @@
 services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        ports:
+            - '${APP_PORT:-8000}:8000'
+        environment:
+            DB_HOST: pgsql
+            DB_PORT: 5432
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+        volumes:
+            - '.:/var/www/html'
+            - 'multibiz-vendor:/var/www/html/vendor'
+        # --no-reload: artisan serve otherwise strips any env var not on its
+        # passthrough allowlist from the forked request-handling process, so
+        # our DB_HOST/REDIS_HOST overrides below would be silently dropped
+        # and it would fall back to backend/.env's host-oriented values.
+        command: ['php', 'artisan', 'serve', '--host=0.0.0.0', '--port=8000', '--no-reload']
+        depends_on:
+            pgsql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - multibiz
+    queue:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        environment:
+            DB_HOST: pgsql
+            DB_PORT: 5432
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+        volumes:
+            - '.:/var/www/html'
+            - 'multibiz-vendor:/var/www/html/vendor'
+        command: ['php', 'artisan', 'queue:listen', '--tries=1', '--timeout=0']
+        depends_on:
+            pgsql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - multibiz
+    vite:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        ports:
+            - '5173:5173'
+        environment:
+            DB_HOST: pgsql
+            DB_PORT: 5432
+            REDIS_HOST: redis
+            REDIS_PORT: 6379
+        volumes:
+            - '.:/var/www/html'
+            - 'multibiz-vendor:/var/www/html/vendor'
+            - 'multibiz-node-modules:/var/www/html/node_modules'
+        command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+        depends_on:
+            pgsql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
+        networks:
+            - multibiz
     pgsql:
         image: 'postgres:17'
         ports:
@@ -46,4 +115,8 @@ volumes:
     multibiz-pgsql:
         driver: local
     multibiz-redis:
+        driver: local
+    multibiz-vendor:
+        driver: local
+    multibiz-node-modules:
         driver: local

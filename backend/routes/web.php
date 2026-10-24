@@ -1,26 +1,17 @@
 <?php
 
-use App\Http\Web\Controllers\DashboardController;
-use App\Http\Web\Controllers\HistoryController;
-use App\Http\Web\Controllers\PocketController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
-Route::inertia('/', 'welcome')->name('home');
+Route::get('/', fn () => redirect()->to(auth()->check() ? route('dashboard') : route('login')))
+    ->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('pocket', [PocketController::class, 'index'])->name('pocket');
-    Route::get('historique', [HistoryController::class, 'index'])->name('history');
-
-    // Phase 3 — the nav already links here (per the maquette) ahead of the real pages.
-    Route::inertia('analyse', 'coming-soon', ['title' => 'Analyse'])->name('analysis');
-    Route::inertia('taches', 'coming-soon', ['title' => 'Tâches'])->name('tasks');
-});
+// Placeholder landing page for authenticated users — replaced by the real
+// dashboard once the Project/Finance/Analytics domains are rebuilt.
+Route::middleware(['auth', 'verified'])
+    ->get('dashboard', fn () => Inertia::render('coming-soon', ['title' => 'Tableau de bord']))
+    ->name('dashboard');
 
 if (app()->environment('local')) {
     Route::inertia('_dev/ui', 'dev/ui')->name('dev.ui');
 }
-
-require __DIR__.'/settings.php';
-require __DIR__.'/projects.php';
-require __DIR__.'/finance.php';

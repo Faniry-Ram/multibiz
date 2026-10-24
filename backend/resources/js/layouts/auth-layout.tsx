@@ -154,7 +154,7 @@ export default function AuthLayout({
                             aria-selected={!isRegister}
                             className={
                                 !isRegister
-                                    ? 'h-10 rounded-[9px] bg-surface text-center text-sm font-semibold text-text shadow-[var(--shadow)]'
+                                    ? 'flex items-center justify-center h-10 rounded-[9px] bg-surface text-center text-sm font-semibold text-text shadow-[var(--shadow)]'
                                     : 'flex h-10 items-center justify-center rounded-[9px] text-center text-sm text-muted no-underline'
                             }
                         >

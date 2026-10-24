@@ -1,0 +1,17 @@
+<?php
+
+use App\Domain\Identity\Models\User;
+
+test('guests are redirected to the login page', function () {
+    $response = $this->get(route('dashboard'));
+
+    $response->assertRedirect(route('login'));
+});
+
+test('an authenticated, verified user can reach the dashboard placeholder', function () {
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)->get(route('dashboard'));
+
+    $response->assertOk()->assertInertia(fn ($page) => $page->component('coming-soon'));
+});

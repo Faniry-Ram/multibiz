@@ -104,28 +104,38 @@ Root-level `.gitignore` covers editor/AI-tool directories shared across the mono
 
 ## Running the app
 
-`backend/docker-compose.yml` only runs the **data services** (Postgres, Redis) — PHP and Node run
-directly on the host, not in a container:
+`backend/docker-compose.yml` runs the whole stack in containers: `pgsql`, `redis`, `app` (PHP,
+`php artisan serve`), `queue` (`php artisan queue:listen`), and `vite` (the dev server, with HMR
+on port 5173). PHP and Node no longer need to be installed on the host:
 
 ```bash
 cd backend
 cp .env.example .env               # first time only
-docker compose up -d               # Postgres + Redis
-php artisan migrate --seed
-composer run dev                   # serves the app + queue listener + Vite
+docker compose up -d               # builds the app/queue images on first run
 ```
 
-The app is served at the URL in `APP_URL` (`http://localhost:8000` by default). `backend/.env`
-points `DB_HOST`/`REDIS_HOST` at `127.0.0.1` using `FORWARD_DB_PORT` (`54320`) and
-`FORWARD_REDIS_PORT` (`63790`) instead of Postgres/Redis's usual 5432/6379, because this machine
-already runs unrelated containers on those default ports — check `backend/.env` before assuming
-the defaults elsewhere.
+The `app`/`queue` images are built from `docker/php/Dockerfile`; `docker/php/entrypoint.sh` runs
+`composer install` (into the `multibiz-vendor` volume), generates `APP_KEY` if missing, and runs
+migrations on every boot. The `vite` service runs `npm install` (into the `multibiz-node-modules`
+volume) then `npm run dev` on container start — no separate seed/migrate/`composer run dev` step
+needed. Run `docker compose exec app php artisan db:seed` once if you want demo data.
 
-`vendor/bin/pest` needs the `pgsql` container running too: the sync version sequence (ADR 0003)
-is Postgres-only DDL, so tests run against a real Postgres database — a separate `testing`
-database on the same container (auto-created by `docker/postgres/create-testing-database.sql` on
-first boot; already-running containers got it created manually once, see git history). Tests
-don't touch your seeded dev data: `testing` is a distinct database from `laravel`.
+The app is served at the URL in `APP_URL` (`http://localhost:8000` by default). Inside the
+containers, `DB_HOST`/`REDIS_HOST` are overridden in `docker-compose.yml` to the service names
+(`pgsql`/`redis`) on the Docker network — `backend/.env` itself still points `DB_HOST`/
+`REDIS_HOST` at `127.0.0.1` via `FORWARD_DB_PORT` (`54320`) and `FORWARD_REDIS_PORT` (`63790`),
+which is what host-run tooling (`vendor/bin/pest`, `artisan tinker` run outside the containers)
+still uses to reach Postgres/Redis — because this machine already runs unrelated containers on
+the default 5432/6379 ports. Check `backend/.env` and `backend/docker-compose.yml` together
+before assuming either set of ports elsewhere.
+
+`vendor/bin/pest` (run from the host) needs the `pgsql` container running too: the sync version
+sequence (ADR 0003) is Postgres-only DDL, so tests run against a real Postgres database — a
+separate `testing` database on the same container (auto-created by
+`docker/postgres/create-testing-database.sql` on first boot; already-running containers got it
+created manually once, see git history). Tests don't touch your seeded dev data: `testing` is a
+distinct database from `laravel`. (Running pest via `docker compose exec app vendor/bin/pest` also
+works, and uses the container's `DB_HOST=pgsql` override instead.)
 
 ## Commands
 

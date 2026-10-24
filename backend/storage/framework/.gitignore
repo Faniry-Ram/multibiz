@@ -1,5 +1,6 @@
 compiled.php
 config.php
+docker-setup.lock
 down
 events.scanned.php
 lsp-*.php

@@ -6,13 +6,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { InfoNote } from '@/components/ui/info-note';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/register';
 
@@ -32,21 +25,6 @@ export default function Register({ passwordRules }: Props) {
             >
                 {({ processing, errors }) => (
                     <>
-                        <div className="flex flex-col gap-1.5">
-                            <Label htmlFor="organization_name">
-                                Nom de mon organisation
-                            </Label>
-                            <Input
-                                id="organization_name"
-                                type="text"
-                                required
-                                autoFocus
-                                className="h-[46px] rounded-[11px] text-[15px]"
-                                name="organization_name"
-                                placeholder="ex. Famille Rakoto"
-                            />
-                            <InputError message={errors.organization_name} />
-                        </div>
 
                         <div className="flex flex-col gap-1.5">
                             <Label htmlFor="name">Prénom et nom</Label>
@@ -107,32 +85,6 @@ export default function Register({ passwordRules }: Props) {
                             <InputError
                                 message={errors.password_confirmation}
                             />
-                        </div>
-
-                        <div className="flex flex-col gap-1.5">
-                            <Label htmlFor="currency">
-                                Devise de mes projets
-                            </Label>
-                            <Select name="currency" defaultValue="MGA">
-                                <SelectTrigger
-                                    id="currency"
-                                    className="h-[46px] w-full rounded-[11px] text-[15px]"
-                                >
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="MGA">
-                                        Ariary (Ar)
-                                    </SelectItem>
-                                    <SelectItem value="EUR">
-                                        Euro (€)
-                                    </SelectItem>
-                                    <SelectItem value="XOF">
-                                        Franc CFA (FCFA)
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <InputError message={errors.currency} />
                         </div>
 
                         <label className="flex items-center gap-2.5 text-[13.5px] text-text2">

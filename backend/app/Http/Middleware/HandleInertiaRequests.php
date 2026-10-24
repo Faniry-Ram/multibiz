@@ -2,21 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Domain\Analytics\Services\ProjectResult;
-use App\Domain\Analytics\Services\ProjectVerdict;
-use App\Domain\Finance\Models\Category;
-use App\Domain\Project\Enums\ProjectStatus;
-use App\Domain\Project\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
-    public function __construct(
-        private ProjectResult $projectResult,
-        private ProjectVerdict $projectVerdict,
-    ) {}
-
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -52,55 +42,6 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'appearance' => $request->cookie('appearance', 'system'),
-            'sidebarProjects' => $this->sidebarProjects($request),
-            'syncStatus' => ['state' => 'synced'],
-            // Mobile-only feature (a project timer kept running on the phone); the
-            // web app has nothing to report yet — see docs/maquette/README.md §3.
-            'activeTimer' => null,
         ];
-    }
-
-    /**
-     * @return array<int, array<string, mixed>>
-     */
-    private function sidebarProjects(Request $request): array
-    {
-        $organization = $request->user()?->organizations()->first();
-
-        if ($organization === null) {
-            return [];
-        }
-
-        return Project::query()
-            ->where('organization_id', $organization->id)
-            ->where('status', ProjectStatus::Active)
-            ->orderBy('name')
-            ->get()
-            ->map(function (Project $project) {
-                $verdict = $this->projectVerdict->determine($project);
-
-                return [
-                    'id' => $project->id,
-                    'name' => $project->name,
-                    'color' => $project->color,
-                    'href' => route('projects.show', $project),
-                    'model' => $project->model->value,
-                    'capital_recovered_percent' => round($this->projectResult->capitalRecoveredPercent($project)),
-                    'verdict' => $verdict->value,
-                    'verdict_tone' => $verdict->tone(),
-                    'categories' => $project->categories()
-                        ->whereNull('archived_at')
-                        ->orderBy('kind')
-                        ->orderBy('name')
-                        ->get()
-                        ->map(fn (Category $category) => [
-                            'id' => $category->id,
-                            'name' => $category->name,
-                            'kind' => $category->kind->value,
-                        ]),
-                ];
-            })
-            ->values()
-            ->all();
     }
 }
