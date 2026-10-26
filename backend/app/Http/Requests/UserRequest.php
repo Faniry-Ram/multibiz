@@ -2,17 +2,21 @@
 
 namespace App\Http\Requests;
 
+use App\Concerns\PasswordValidationRules;
+use App\Concerns\ProfileValidationRules;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
+    use PasswordValidationRules, ProfileValidationRules;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +27,9 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            ...$this->profileRules(),
+            'password' => $this->passwordRules(),
+            'name' => ['required', 'string', 'min:2', 'max:255'],
         ];
     }
 }

@@ -56,8 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Phase 1 gives every user exactly one organization membership, created at
-     * registration — see App\Domain\Identity\Actions\RegisterOrganizationAndUser.
+     * Phase 1 gives every user exactly one organization membership.
      */
     public function organization(): Organization
     {

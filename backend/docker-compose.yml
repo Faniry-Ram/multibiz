@@ -10,6 +10,7 @@ services:
             DB_PORT: 5432
             REDIS_HOST: redis
             REDIS_PORT: 6379
+            MAIL_HOST: mailpit
         volumes:
             - '.:/var/www/html'
             - 'multibiz-vendor:/var/www/html/vendor'
@@ -34,6 +35,7 @@ services:
             DB_PORT: 5432
             REDIS_HOST: redis
             REDIS_PORT: 6379
+            MAIL_HOST: mailpit
         volumes:
             - '.:/var/www/html'
             - 'multibiz-vendor:/var/www/html/vendor'
@@ -43,6 +45,13 @@ services:
                 condition: service_healthy
             redis:
                 condition: service_healthy
+        networks:
+            - multibiz
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
         networks:
             - multibiz
     vite:

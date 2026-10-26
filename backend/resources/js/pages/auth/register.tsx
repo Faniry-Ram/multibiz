@@ -8,12 +8,16 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/register';
+import { useState } from 'react';
 
 type Props = {
     passwordRules: string;
 };
 
 export default function Register({ passwordRules }: Props) {
+
+    const [hasAcceptedTerms, setHasAcceptedTerms] = useState<boolean>(false);
+
     return (
         <>
             <Head title="Créer un compte" />
@@ -88,7 +92,13 @@ export default function Register({ passwordRules }: Props) {
                         </div>
 
                         <label className="flex items-center gap-2.5 text-[13.5px] text-text2">
-                            <Checkbox id="terms" name="terms" required />
+                            <Checkbox 
+                                id="terms" 
+                                name="terms" 
+                                required 
+                                checked={hasAcceptedTerms}
+                                onCheckedChange={(checked) => setHasAcceptedTerms(!!checked)}
+                            />
                             J'accepte les conditions d'utilisation
                         </label>
 
@@ -97,6 +107,7 @@ export default function Register({ passwordRules }: Props) {
                             size="lg"
                             className="w-full gap-2"
                             data-test="register-user-button"
+                            disabled={!hasAcceptedTerms}
                         >
                             {processing && <Spinner />}
                             Créer mon compte
