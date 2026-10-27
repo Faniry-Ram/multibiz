@@ -9,7 +9,7 @@ Route::get('/', fn () => redirect()->to(auth()->check() ? route('dashboard') : r
 // Placeholder landing page for authenticated users — replaced by the real
 // dashboard once the Project/Finance/Analytics domains are rebuilt.
 Route::middleware(['auth', 'verified'])
-    ->get('dashboard', fn () => Inertia::render('coming-soon', ['title' => 'Tableau de bord']))
+    ->get('dashboard', fn () => Inertia::render('dashboard/index'))
     ->name('dashboard');
 
 if (app()->environment('local')) {

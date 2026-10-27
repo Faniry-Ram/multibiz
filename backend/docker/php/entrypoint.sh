@@ -22,4 +22,11 @@ set -e
     php artisan migrate --force
 ) 9>storage/framework/docker-setup.lock
 
+# In a GitHub Codespace, generated links (emails sent from the queue
+# included) must use the forwarded URL, not localhost. A real env var takes
+# precedence over backend/.env.
+if [ -n "$CODESPACE_NAME" ] && [ -n "$GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN" ]; then
+    export APP_URL="https://${CODESPACE_NAME}-8000.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+fi
+
 exec "$@"

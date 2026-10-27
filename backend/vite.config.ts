@@ -6,6 +6,13 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig, lazyPlugins } from 'vite-plus';
 
+// In a GitHub Codespace the browser can't reach localhost:5173: point asset
+// URLs and HMR at the forwarded port instead (port 5173 must be public).
+const codespace = process.env.CODESPACE_NAME;
+const codespaceDomain = process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN;
+const codespaceHost = (port: number) =>
+    `${codespace}-${port}.${codespaceDomain}`;
+
 export default defineConfig({
     plugins: lazyPlugins(() => [
         laravel({
@@ -24,9 +31,21 @@ export default defineConfig({
     ]),
     server: {
         host: '0.0.0.0',
-        hmr: {
-            host: 'localhost',
-        },
+        ...(codespace && codespaceDomain
+            ? {
+                  origin: `https://${codespaceHost(5173)}`,
+                  cors: { origin: `https://${codespaceHost(8000)}` },
+                  hmr: {
+                      host: codespaceHost(5173),
+                      protocol: 'wss',
+                      clientPort: 443,
+                  },
+              }
+            : {
+                  hmr: {
+                      host: 'localhost',
+                  },
+              }),
         watch: {
             ignored: [
                 '**/.agents/**',

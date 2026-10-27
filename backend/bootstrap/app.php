@@ -16,6 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // GitHub Codespaces' port-forwarding proxy sends Host: localhost:8000
+        // and the real https host in X-Forwarded-*; only trust it there.
+        if (env('CODESPACE_NAME')) {
+            $middleware->trustProxies(at: '*');
+        }
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [
